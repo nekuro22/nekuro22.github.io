@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Countdown Stundenplan</title>
+<style>
+:root{
+  --bg:#ffffff;
+  --card:#ffffff;
+  --accent:#06b6d4;
+  --muted:#4a5568;
+  --glass: rgba(0,0,0,0.05);
+}
+
+*{box-sizing:border-box}
+html,body{
+  height:100%;
+  margin:0;
+  font-family:Inter,ui-sans-serif,system-ui;
+  color:#1a202c;
+  background:var(--bg);
+}
+
+.wrap{
+  min-height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+
+.card{
+  width:min(720px,96%);
+  background:var(--card);
+  border-radius:16px;
+  padding:28px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.12);
+  border:1px solid #e2e8f0;
+}
+
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+
+h1{
+  font-size:20px;
+  margin:0;
+  color:#1a202c;
+}
+
+.sub{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.countdown{
+  display:flex;
+  gap:20px;
+  align-items:center;
+}
+
+.time{
+  font-size:48px;
+  font-weight:600;
+  letter-spacing:0.5px;
+  color:#1a202c;
+}
+
+.label{
+  font-size:13px;
+  color:var(--muted);
+}
+
+.progress-wrap{flex:1}
+
+.progress-outer{
+  height:18px;
+  background:var(--glass);
+  border-radius:999px;
+  overflow:hidden;
+  position:relative;
+  border:1px solid rgba(0,0,0,0.08);
+}
+
+.progress-inner{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--accent),#60a5fa);
+  transition:width 200ms linear;
+}
+
+.progress-meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:8px;
+}
+
+@media (max-width:520px){
+  .time{font-size:36px}
+}
+
+button{
+  background:#f7fafc;
+  border:1px solid #e2e8f0;
+  color:#2d3748;
+  padding:8px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.15s;
+}
+
+button:hover{
+  background:#edf2f7;
+}
+
+.controls{
+  display:flex;
+  gap:8px;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="card">
+  <header>
+    <div>
+      <h1>Countdown Stundenplan</h1>
+      <div class="sub">Aktuelle Stunde und Fortschritt</div>
+    </div>
+    <div class="controls">
+      <button id="reset">Jetzt</button>
+      <!-- MM:SS Toggle Button entfernt -->
+    </div>
+  </header>
+
+  <div id="stundenToggle" style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap">
+    <button class="stundenBtn" data-stunde="1">1. Stunde: 60</button>
+    <button class="stundenBtn" data-stunde="3">3. Stunde: 60</button>
+    <button class="stundenBtn" data-stunde="4">4. Stunde: 60</button>
+    <button class="stundenBtn" data-stunde="5">5. Stunde: 60</button>
+  </div>
+
+  <div class="countdown">
+    <div style="width:170px;text-align:center">
+      <div id="timeText" class="time">--:--</div>
+      <div class="label">verbleibend</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-outer">
+        <div id="progressInner" class="progress-inner"></div>
+      </div>
+      <div class="progress-meta">
+        <div class="label" id="progressLabel">0% der Stunde</div>
+        <div class="label" id="nextHourLabel">--:--</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+const schedule60 = [
+  {start:"08:30",end:"09:30"},
+  {start:"09:40",end:"10:40"},
+  {start:"10:55",end:"11:55"},
+  {start:"12:50",end:"13:50"},
+  {start:"14:00",end:"15:00"}
+];
+
+const schedule75 = [
+  {start:"08:15",end:"09:40"},
+  {start:"10:55",end:"12:10"},
+  {start:"12:35",end:"13:50"},
+  {start:"14:00",end:"15:15"}
+];
+
+const toggles = {1:false,3:false,4:false,5:false};
+
+function $(id){ return document.getElementById(id); }
+
+const timeText      = $("timeText");
+const progressInner = $("progressInner");
+const progressLabel = $("progressLabel");
+const nextHourLabel = $("nextHourLabel");
+const resetBtn      = $("reset");
+const stundenBtns   = document.querySelectorAll(".stundenBtn");
+
+function pad(n){ return n.toString().padStart(2,"0"); }
+
+function parseTime(str){
+  const [h,m] = str.split(":").map(Number);
+  const d = new Date();
+  d.setHours(h,m,0,0);
+  return d;
+}
+
+function getActiveInterval() {
+  const now = new Date();
+  for (let i = 0; i < schedule60.length; i++) {
+    let s60 = schedule60[i];
+    let s75 = schedule75[[1,3,4,5].indexOf(i+1)];
+    const interval = (toggles[i+1] && s75) ? s75 : s60;
+    if (!interval) continue;
+    const start = parseTime(interval.start);
+    const end   = parseTime(interval.end);
+    if (now >= start && now <= end) return { start, end, idx: i+1 };
+  }
+  const pauseStart = parseTime("08:30");
+  const pauseEnd   = parseTime("15:00");
+  if(now >= pauseStart && now <= pauseEnd) return { start: now, end: now, idx:0, isPause:true };
+  return null;
+}
+
+function update() {
+  const interval = getActiveInterval();
+  const now = new Date();
+
+  if (!interval){
+    timeText.textContent = "--:--";
+    progressInner.style.width = "0%";
+    progressLabel.textContent = "Außerhalb des Stundenplans";
+    nextHourLabel.textContent = "";
+    return;
+  }
+
+  if(interval.isPause){
+    timeText.textContent = "PAUSE";
+    progressInner.style.width = "0%";
+    progressLabel.textContent = "Keine aktive Stunde";
+    nextHourLabel.textContent = "";
+    return;
+  }
+
+  const total = interval.end - interval.start;
+  const elapsed = now - interval.start;
+  const remaining = interval.end - now;
+
+  let percent = (elapsed / total) * 100;
+  percent = Math.min(100, Math.max(0, percent));
+  progressInner.style.width = percent + "%";
+
+  const mins = Math.floor(remaining / 60000);
+  const secs = Math.floor((remaining % 60000) / 1000);
+
+  timeText.textContent = `${pad(mins)}:${pad(secs)}`;
+  progressLabel.textContent = Math.round(percent) + "% der Stunde";
+  nextHourLabel.textContent = `Ende: ${pad(interval.end.getHours())}:${pad(interval.end.getMinutes())}`;
+}
+
+setInterval(update, 250);
+update();
+
+// Reset Button
+if(resetBtn){
+  resetBtn.addEventListener("click", update);
+}
+
+// 60/75-Toggle Buttons
+stundenBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const nr = parseInt(btn.dataset.stunde);
+    toggles[nr] = !toggles[nr];
+    btn.textContent = `${nr}. Stunde: ${toggles[nr] ? "75" : "60"}`;
+    update();
+  });
+});
+
+});
+</script>
+</body>
+</html>
