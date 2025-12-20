@@ -1,6 +1,6 @@
 // === KONFIGURATION ===
-const GITHUB_USERNAME = "niklas"; // 👈 ÄNDERN falls nötig
-const GITHUB_ORG = "deine-org";    // 👈 ÄNDERN auf deinen Org-Namen
+const GITHUB_USERNAME = "nekuro22"; // 👈 ÄNDERN falls nötig
+const GITHUB_ORG = "Junior-RoboAg-GHG ";    // 👈 ÄNDERN auf deinen Org-Namen
 
 // === Partikel Hintergrund ===
 tsParticles.load({
