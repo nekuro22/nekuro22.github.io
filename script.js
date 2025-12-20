@@ -1,6 +1,7 @@
 // === KONFIGURATION ===
-const GITHUB_USERNAME = "nekuro22"; // 👈 ÄNDERN falls nötig
-const GITHUB_ORG = "Junior-RoboAg-GHG ";    // 👈 ÄNDERN auf deinen Org-Namen
+const GITHUB_USERNAME = "nekuro22";
+const GITHUB_ORG = "Junior-RoboAg-GHG";
+const GITHUB_TOKEN = "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"; // 🔐 Nur für lokale Entwicklung!
 
 // === Partikel Hintergrund ===
 tsParticles.load({
@@ -48,13 +49,17 @@ async function fetchRepos(type, targetId) {
       : `https://api.github.com/orgs/${GITHUB_ORG}/repos?sort=updated&per_page=8`;
 
   try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Fehler: ${res.status}`);
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`
+      }
+    });
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
     const repos = await res.json();
 
     const container = document.getElementById(targetId);
     container.innerHTML = repos
-      .filter(repo => !repo.fork) // Optional: Forks ausblenden
+      .filter(repo => !repo.fork)
       .map(repo => `
         <div class="repo-card">
           <h3>${repo.name}</h3>
@@ -64,7 +69,7 @@ async function fetchRepos(type, targetId) {
       `).join('');
   } catch (err) {
     console.error(err);
-    document.getElementById(targetId).innerHTML = `<p style="color:#ff6b6b;">Fehler beim Laden der Repos. Prüfe den Org-Namen oder API-Limit.</p>`;
+    document.getElementById(targetId).innerHTML = `<p style="color:#ff6b6b;">Fehler beim Laden der Repos. Prüfe den Org-Namen oder Token.</p>`;
   }
 }
 
