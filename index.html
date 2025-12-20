@@ -1,13 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>niklas – GitHub Portfolio</title>
+  
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  
+  <!-- Eigenes Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+  
+  <link rel="icon" href="data:," /> <!-- leeres favicon, um Fehler zu vermeiden -->
 </head>
 <body>
-    <a href=countdown.html>a</a>
+
+  <!-- Interaktiver Hintergrund -->
+  <div id="tsparticles"></div>
+
+  <!-- Header -->
+  <header>
+    <h1>Willkommen, ich bin niklas</h1>
+    <p>Entwickler • Open Source • Linux-Enthusiast</p>
+  </header>
+
+  <!-- Swiper Slider -->
+  <div class="swiper" id="repoSwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <h2>Meine Repositories</h2>
+        <div id="user-repos" class="repo-grid">Lädt...</div>
+      </div>
+      <div class="swiper-slide">
+        <h2>Organisation</h2>
+        <div id="org-repos" class="repo-grid">Lädt...</div>
+      </div>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+
+  <!-- Skripte am Ende für bessere Performance -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@tsparticles/presets@3.7.1/browser/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
-
-
