@@ -1,0 +1,12 @@
+[
+  {
+    "title": "test",
+    "text": "blablabla",
+    "url": "https://example.com"
+  },
+  {
+    "title": "Zweites Projekt",
+    "text": "Dieses hat kein eigenes Icon.",
+    "url": "https://example2.com"
+  }
+]

@@ -1,4 +1,3 @@
-/* Grund-Reset & Schrift */
 * {
   margin: 0;
   padding: 0;
@@ -6,121 +5,238 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif;
-  background-color: #0f0f14;
-  color: #f0f0f0;
-  line-height: 1.6;
+  background: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
   overflow-x: hidden;
+  position: relative;
 }
 
-/* Partikel-Hintergrund */
-#tsparticles {
+/* Extrem dichter, mehrschichtiger Sternenhimmel */
+body::before {
+  content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 200%; height: 200%;
+  background:
+    /* Layer 1: Große, helle Sterne */
+    radial-gradient(circle at 10% 20%, #fff 0%, transparent 1px),
+    radial-gradient(circle at 90% 15%, #fff 0%, transparent 1px),
+    radial-gradient(circle at 50% 10%, #fff 0%, transparent 1px),
+    radial-gradient(circle at 70% 85%, #fff 0%, transparent 1px),
+    radial-gradient(circle at 30% 90%, #fff 0%, transparent 1px),
+    radial-gradient(circle at 60% 5%,  #fff 0%, transparent 1px),
+    radial-gradient(circle at 85% 75%, #fff 0%, transparent 1px),
+    radial-gradient(circle at 20% 60%, #fff 0%, transparent 1px),
+    radial-gradient(circle at 40% 30%, #fff 0%, transparent 1px),
+    radial-gradient(circle at 95% 50%, #fff 0%, transparent 1px),
+
+    /* Layer 2: Mittlere Sterne */
+    radial-gradient(circle at 5% 50%,  #eee 0%, transparent 0.8px),
+    radial-gradient(circle at 25% 40%, #ddd 0%, transparent 0.8px),
+    radial-gradient(circle at 40% 60%, #fff 0%, transparent 0.8px),
+    radial-gradient(circle at 60% 30%, #eee 0%, transparent 0.8px),
+    radial-gradient(circle at 80% 50%, #ddd 0%, transparent 0.8px),
+    radial-gradient(circle at 95% 70%, #fff 0%, transparent 0.8px),
+    radial-gradient(circle at 15% 10%, #eee 0%, transparent 0.8px),
+    radial-gradient(circle at 35% 85%, #ddd 0%, transparent 0.8px),
+    radial-gradient(circle at 55% 20%, #fff 0%, transparent 0.8px),
+    radial-gradient(circle at 75% 90%, #eee 0%, transparent 0.8px),
+    radial-gradient(circle at 88% 25%, #ddd 0%, transparent 0.8px),
+    radial-gradient(circle at 5% 80%,  #fff 0%, transparent 0.8px),
+    radial-gradient(circle at 92% 40%, #eee 0%, transparent 0.8px),
+    radial-gradient(circle at 48% 70%, #ddd 0%, transparent 0.8px),
+
+    /* Layer 3: Kleine, zahlreiche Sterne */
+    radial-gradient(circle at 7% 12%,   #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 13% 24%,  #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 18% 31%,  #999 0%, transparent 0.4px),
+    radial-gradient(circle at 22% 45%,  #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 27% 53%,  #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 33% 18%,  #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 38% 66%,  #999 0%, transparent 0.4px),
+    radial-gradient(circle at 42% 77%,  #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 47% 29%,  #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 52% 84%,  #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 57% 39%,  #999 0%, transparent 0.4px),
+    radial-gradient(circle at 62% 51%,  #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 67% 12%,  #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 72% 68%,  #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 77% 23%,  #999 0%, transparent 0.4px),
+    radial-gradient(circle at 82% 79%,  #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 87% 34%,  #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 92% 88%,  #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 5% 92%,   #999 0%, transparent 0.4px),
+    radial-gradient(circle at 97% 6%,   #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 11% 73%,  #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 16% 5%,   #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 21% 86%,  #999 0%, transparent 0.4px),
+    radial-gradient(circle at 26% 17%,  #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 31% 95%,  #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 36% 28%,  #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 41% 71%,  #999 0%, transparent 0.4px),
+    radial-gradient(circle at 46% 4%,   #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 51% 59%,  #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 56% 93%,  #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 61% 14%,  #999 0%, transparent 0.4px),
+    radial-gradient(circle at 66% 63%,  #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 71% 32%,  #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 76% 81%,  #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 81% 9%,   #999 0%, transparent 0.4px),
+    radial-gradient(circle at 86% 48%,  #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 91% 76%,  #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 96% 25%,  #bbb 0%, transparent 0.4px);
+
   z-index: -1;
+  animation: twinkle 8s infinite alternate;
+  transform: translateZ(0);
+  will-change: opacity;
 }
 
-/* Header */
-header {
-  text-align: center;
-  padding: 80px 20px 40px;
+@keyframes twinkle {
+  0%   { opacity: 0.25; }
+  20%  { opacity: 0.9; }
+  40%  { opacity: 0.4; }
+  60%  { opacity: 1; }
+  80%  { opacity: 0.6; }
+  100% { opacity: 0.35; }
 }
 
-header h1 {
-  font-size: 2.8rem;
-  margin-bottom: 12px;
-  background: linear-gradient(90deg, #4da6ff, #007bff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-header p {
-  font-size: 1.2rem;
-  color: #aaa;
+.nav-brand {
+  font-size: 1.4rem;
+  font-weight: bold;
 }
 
-/* Repo Grid */
-.repo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
-  padding: 0 20px;
-}
-
-.repo-card {
-  background: rgba(25, 25, 35, 0.8);
-  border: 1px solid rgba(60, 60, 80, 0.6);
-  border-radius: 12px;
-  padding: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.repo-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(0, 123, 255, 0.25);
-}
-
-.repo-card h3 {
-  color: #4da6ff;
-  margin-bottom: 10px;
-  font-size: 1.3rem;
-}
-
-.repo-card p {
-  color: #ccc;
-  font-size: 0.95rem;
-  margin-bottom: 14px;
-}
-
-.repo-card a {
-  color: #007bff;
+.nav-links a {
+  color: #fff;
   text-decoration: none;
-  font-weight: 600;
-  display: inline-block;
+  margin-left: 1.5rem;
+  font-size: 1rem;
 }
 
-.repo-card a:hover {
-  text-decoration: underline;
-}
-
-/* Swiper Styling */
-.swiper {
-  padding: 20px 0 60px;
-}
-
-.swiper-slide h2 {
+.main-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
   text-align: center;
-  margin-bottom: 24px;
-  font-size: 2rem;
-  color: #4da6ff;
+  padding: 2rem;
 }
 
-/* Swiper Navigation Buttons */
-.swiper-button-next,
-.swiper-button-prev {
-  color: #007bff !important;
-  background: rgba(0, 0, 0, 0.4);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-top: -20px;
+.main-center h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
 }
 
-.swiper-button-next:after,
-.swiper-button-prev:after {
-  font-size: 18px !important;
+/* Project Grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  width: 100%;
 }
 
-/* Responsive */
+.project-card {
+  background: rgba(30, 30, 40, 0.8);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.project-icon {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+.project-title {
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+
+.project-text {
+  font-size: 1rem;
+  margin-bottom: 1.25rem;
+  color: #ccc;
+}
+
+.project-button {
+  background: #4444ff;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.project-button:hover {
+  background: #5555ff;
+}
+
+/* Fallback text styling */
+#projects-container p {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+/* Mobile Navbar */
 @media (max-width: 600px) {
-  header h1 {
+  .navbar {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .nav-links a {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+
+  .main-center h1 {
     font-size: 2rem;
   }
-  .repo-grid {
+
+  .projects-grid {
     grid-template-columns: 1fr;
-    padding: 0 15px;
+    padding: 1rem;
   }
+}
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  z-index: -2;
+  animation: twinkleJS 3s infinite alternate;
+}
+
+@keyframes twinkleJS {
+  0% { opacity: 0.2; }
+  100% { opacity: 1; }
 }
