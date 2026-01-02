@@ -1,6 +1,6 @@
 // ========== STERNENGENERATOR ==========
 function createStars() {
-  if (document.getElementById('stars-container')) return; // vermeidet Duplikate
+  if (document.getElementById('stars-container')) return;
 
   const container = document.createElement('div');
   container.id = 'stars-container';
@@ -33,7 +33,6 @@ function createStars() {
 
   container.append(...stars);
 
-  // Animation dynamisch einfügen (nur einmal)
   if (!document.getElementById('star-anim-style')) {
     const style = document.createElement('style');
     style.id = 'star-anim-style';
@@ -52,7 +51,11 @@ function createStars() {
   let maintenanceActive = false;
 
   try {
-    const response = await fetch('options.json?_=' + Date.now(), { cache: 'no-store' });
+    const response = await fetch('options.json', {
+      cache: 'no-cache',
+      headers: { 'Cache-Control': 'no-cache' }
+    });
+
     if (response.ok) {
       const options = await response.json();
       maintenanceActive = options.maintenance_mode === true;
@@ -66,7 +69,6 @@ function createStars() {
     return;
   }
 
-  // Sterne erstellen (nur wenn NICHT im Wartungsmodus und nicht auf blank.html mit leerem Body Sinn macht)
   if (!window.location.pathname.endsWith('maintenance.html')) {
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', createStars);
@@ -75,7 +77,7 @@ function createStars() {
     }
   }
 
-  // Projekte laden
+  // Projekte laden – MIT OWNER
   if (document.getElementById('projects-container')) {
     fetch('projects.json')
       .then(response => response.ok ? response.json() : Promise.reject())
@@ -86,12 +88,14 @@ function createStars() {
           container.classList.add('projects-grid');
           data.forEach(project => {
             const icon = project.icon || 'icons/placeholder.ico';
+            const owner = project.owner || 'Niklas Leidert'; // ← Default
             const card = document.createElement('div');
             card.className = 'project-card';
             card.innerHTML = `
               <img src="${icon}" alt="Icon" class="project-icon">
               <h2 class="project-title">${project.title}</h2>
               <p class="project-text">${project.text}</p>
+              <p class="project-owner">Owner: ${owner}</p>
               <a href="${project.url}" target="_blank" class="project-button">Zum Projekt</a>
             `;
             container.appendChild(card);

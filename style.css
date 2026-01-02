@@ -10,6 +10,9 @@ body {
   font-family: Arial, sans-serif;
   overflow-x: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* Extrem dichter, mehrschichtiger Sternenhimmel */
@@ -112,6 +115,8 @@ body::before {
   position: sticky;
   top: 0;
   z-index: 100;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .nav-brand {
@@ -127,13 +132,13 @@ body::before {
 }
 
 .main-center {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 90vh;
   text-align: center;
-  padding: 2rem;
+  padding: 2rem 2rem 3rem;
 }
 
 .main-center h1 {
@@ -176,8 +181,15 @@ body::before {
 
 .project-text {
   font-size: 1rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   color: #ccc;
+}
+
+.project-owner {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 1rem;
+  font-style: italic;
 }
 
 .project-button {
@@ -200,11 +212,35 @@ body::before {
   color: #ccc;
 }
 
-/* Mobile Navbar */
+/* Impressum Card */
+.impressum-card {
+  background: rgba(10, 10, 20, 0.6);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 700px;
+  width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.impressum-card h3,
+.impressum-card p {
+  color: #fff;
+}
+
+.impressum-card p {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Mobile Anpassungen */
 @media (max-width: 600px) {
   .navbar {
     flex-direction: column;
     gap: 0.8rem;
+    padding: 1rem 1.5rem;
   }
 
   .nav-links {
@@ -227,16 +263,9 @@ body::before {
     grid-template-columns: 1fr;
     padding: 1rem;
   }
-}
-.star {
-  position: absolute;
-  background: white;
-  border-radius: 50%;
-  z-index: -2;
-  animation: twinkleJS 3s infinite alternate;
-}
 
-@keyframes twinkleJS {
-  0% { opacity: 0.2; }
-  100% { opacity: 1; }
+  .impressum-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
 }
