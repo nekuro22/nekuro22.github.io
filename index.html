@@ -19,5 +19,11 @@
     <h1>Niklas-Leidert.de</h1>
   </main>
   <script src="script.js"></script>
+  <script>
+  // Verhindert Scrollen auf der Startseite
+  document.body.style.height = '100dvh'; // dvh = dynamic viewport height (mobile-safe)
+  document.body.style.overflow = 'hidden';
+  document.querySelector('.main-center').style.minHeight = 'auto';
+</script>
 </body>
 </html>
