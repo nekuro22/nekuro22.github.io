@@ -6,7 +6,6 @@
   <title>Impressum – Niklas-Leidert.de</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* Spezieller Stil nur für Impressum-Inhalt */
     .impressum-card {
       background: rgba(20, 20, 30, 0.85);
       backdrop-filter: blur(10px);
@@ -19,37 +18,20 @@
       color: #fff;
     }
 
-    .impressum-card h3 {
-      font-size: 1.8rem;
-      margin-bottom: 1.2rem;
+    .impressum-card h3,
+    .impressum-card p {
       color: #fff;
-      text-align: center;
     }
 
     .impressum-card p {
-      margin-bottom: 1rem;
       line-height: 1.6;
-      color: #ccc;
+      margin-bottom: 1rem;
     }
 
-    .impressum-card a {
-      color: #60a5fa;
-      text-decoration: none;
-    }
-
-    .impressum-card a:hover {
-      text-decoration: underline;
-    }
-
-    /* Mobile Anpassung */
     @media (max-width: 600px) {
       .impressum-card {
         padding: 1.5rem;
         border-radius: 12px;
-      }
-
-      .impressum-card h3 {
-        font-size: 1.5rem;
       }
     }
   </style>
@@ -63,26 +45,24 @@
       <a href="impressum.html">Impressum</a>
     </div>
   </nav>
-
-  <main class="main-center" style="min-height: 80vh;">
+  <main class="main-center">
     <div class="impressum-card">
       <h3>Impressum</h3>
 
-      <p><strong>Angaben gemäß § 5 TMG:</strong><br>
+      <p>Angaben gemäß § 5 TMG:<br>
       Name: Niklas Leidert<br>
       Anschrift: [vollständige Adresse]<br>
-      E-Mail: <a href="mailto:[E-Mail-Adresse]">[E-Mail-Adresse]</a></p>
+      E-Mail: [E-Mail-Adresse]</p>
 
-      <p><strong>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:</strong><br>
+      <p>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:<br>
       Name: Niklas Leidert<br>
       Anschrift: [vollständige Adresse]<br>
-      E-Mail: <a href="mailto:[E-Mail-Adresse]">[E-Mail-Adresse]</a></p>
+      E-Mail: [E-Mail-Adresse]</p>
 
-      <p><strong>Haftung für Links:</strong><br>
+      <p>Haftung für Links:<br>
       Trotz sorgfältiger inhaltlicher Kontrolle übernehme ich keine Haftung für die Inhalte externer Links. Für den Inhalt verlinkter Seiten sind ausschließlich deren Betreiber verantwortlich.</p>
     </div>
   </main>
-
   <script src="script.js"></script>
 </body>
 </html>
