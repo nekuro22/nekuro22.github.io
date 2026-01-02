@@ -5,6 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Impressum – Niklas-Leidert.de</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .impressum-card {
+      background: rgba(10, 10, 20, 0.6); /* transparenter */
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 700px;
+      width: 90%;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08); /* neutraler, fast unsichtbarer Rand */
+      color: #fff;
+    }
+
+    .impressum-card h3,
+    .impressum-card p {
+      color: #fff;
+    }
+
+    .impressum-card p {
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .impressum-card {
+        padding: 1.5rem;
+        border-radius: 12px;
+      }
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
@@ -16,20 +46,22 @@
     </div>
   </nav>
   <main class="main-center">
-<h3>Impressum</h3>
+    <div class="impressum-card">
+      <h3>Impressum</h3>
 
-Angaben gemäß § 5 TMG:
-Name: Niklas Leidert
-Anschrift: [vollständige Adresse]
-E-Mail: [E-Mail-Adresse]
+      <p>Angaben gemäß § 5 TMG:<br>
+      Name: Niklas Leidert<br>
+      Anschrift: [vollständige Adresse]<br>
+      E-Mail: [E-Mail-Adresse]</p>
 
-Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:
-Name: Niklas Leidert
-Anschrift: [vollständige Adresse]
-E-Mail: [E-Mail-Adresse]
+      <p>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:<br>
+      Name: Niklas Leidert<br>
+      Anschrift: [vollständige Adresse]<br>
+      E-Mail: [E-Mail-Adresse]</p>
 
-Haftung für Links:
-Trotz sorgfältiger inhaltlicher Kontrolle übernehme ich keine Haftung für die Inhalte externer Links. Für den Inhalt verlinkter Seiten sind ausschließlich deren Betreiber verantwortlich.
+      <p>Haftung für Links:<br>
+      Trotz sorgfältiger inhaltlicher Kontrolle übernehme ich keine Haftung für die Inhalte externer Links. Für den Inhalt verlinkter Seiten sind ausschließlich deren Betreiber verantwortlich.</p>
+    </div>
   </main>
   <script src="script.js"></script>
 </body>
