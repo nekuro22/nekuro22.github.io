@@ -7,6 +7,17 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <script>
+  // Force correct height on mobile
+  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+    document.body.style.height = window.innerHeight + 'px';
+    document.body.style.overflow = 'hidden';
+    const main = document.querySelector('.main-center');
+    if (main) {
+      main.style.minHeight = 'auto';
+    }
+  }
+</script>
   <nav class="navbar">
     <div class="nav-brand">Niklas-Leidert.de</div>
     <div class="nav-links">
