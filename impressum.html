@@ -5,6 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Impressum – Niklas-Leidert.de</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Spezieller Stil nur für Impressum-Inhalt */
+    .impressum-card {
+      background: rgba(20, 20, 30, 0.85);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 700px;
+      width: 90%;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(100, 100, 255, 0.2);
+      color: #fff;
+    }
+
+    .impressum-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+      color: #fff;
+      text-align: center;
+    }
+
+    .impressum-card p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      color: #ccc;
+    }
+
+    .impressum-card a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+
+    .impressum-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mobile Anpassung */
+    @media (max-width: 600px) {
+      .impressum-card {
+        padding: 1.5rem;
+        border-radius: 12px;
+      }
+
+      .impressum-card h3 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
@@ -15,22 +63,26 @@
       <a href="impressum.html">Impressum</a>
     </div>
   </nav>
-  <main class="main-center">
-<h3>Impressum</h3>
 
-Angaben gemäß § 5 TMG:
-Name: Niklas Leidert
-Anschrift: [vollständige Adresse]
-E-Mail: [E-Mail-Adresse]
+  <main class="main-center" style="min-height: 80vh;">
+    <div class="impressum-card">
+      <h3>Impressum</h3>
 
-Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:
-Name: Niklas Leidert
-Anschrift: [vollständige Adresse]
-E-Mail: [E-Mail-Adresse]
+      <p><strong>Angaben gemäß § 5 TMG:</strong><br>
+      Name: Niklas Leidert<br>
+      Anschrift: [vollständige Adresse]<br>
+      E-Mail: <a href="mailto:[E-Mail-Adresse]">[E-Mail-Adresse]</a></p>
 
-Haftung für Links:
-Trotz sorgfältiger inhaltlicher Kontrolle übernehme ich keine Haftung für die Inhalte externer Links. Für den Inhalt verlinkter Seiten sind ausschließlich deren Betreiber verantwortlich.
+      <p><strong>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:</strong><br>
+      Name: Niklas Leidert<br>
+      Anschrift: [vollständige Adresse]<br>
+      E-Mail: <a href="mailto:[E-Mail-Adresse]">[E-Mail-Adresse]</a></p>
+
+      <p><strong>Haftung für Links:</strong><br>
+      Trotz sorgfältiger inhaltlicher Kontrolle übernehme ich keine Haftung für die Inhalte externer Links. Für den Inhalt verlinkter Seiten sind ausschließlich deren Betreiber verantwortlich.</p>
+    </div>
   </main>
+
   <script src="script.js"></script>
 </body>
 </html>
