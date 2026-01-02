@@ -8,11 +8,11 @@ body {
   background: #000;
   color: #fff;
   font-family: Arial, sans-serif;
-  overflow-x: hidden;
+  overflow: hidden;
   position: relative;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 
 /* Extrem dichter, mehrschichtiger Sternenhimmel */
@@ -112,8 +112,7 @@ body::before {
   padding: 1rem 2rem;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(5px);
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 100;
   width: 100%;
   box-sizing: border-box;
@@ -138,7 +137,8 @@ body::before {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 2rem 2rem 3rem;
+  padding: 0 2rem;
+  overflow: hidden;
 }
 
 .main-center h1 {
