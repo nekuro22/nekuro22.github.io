@@ -6,4 +6,9 @@
     "owner": "Niklas leidert und Susanne Leidert",
     "icon": "Project-data/icons/leidert-org-icon.png"
   }
+  {
+    "title": "Caelestia Extra",
+    "text": "a Plugin for Caelestia Dots",
+    "url": "https://github.com/nekuro22/caelestia-extra"
+  }
 ]
