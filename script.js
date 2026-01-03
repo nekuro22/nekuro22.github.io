@@ -87,7 +87,7 @@ function createStars() {
           container.innerHTML = '';
           container.classList.add('projects-grid');
           data.forEach(project => {
-            const icon = project.icon || 'icons/placeholder.ico';
+            const icon = project.icon || 'Project-data/icons/placeholder.ico';
             const owner = project.owner || 'Niklas Leidert'; // ← Default
             const card = document.createElement('div');
             card.className = 'project-card';
