@@ -177,6 +177,11 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+  height: 320px; /* ← feste Höhe */
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .project-icon {
@@ -187,22 +192,38 @@ body::before {
 }
 
 .project-title {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   margin-bottom: 0.75rem;
   color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.3;
 }
 
 .project-text {
-  font-size: 1rem;
+  font-size: 0.95rem;
   margin-bottom: 1rem;
   color: #ccc;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
 }
 
 .project-owner {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #888;
   margin-bottom: 1rem;
   font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .project-button {
@@ -213,6 +234,12 @@ body::before {
   border-radius: 6px;
   font-weight: bold;
   transition: background 0.2s;
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.project-button:hover {
+  background: #5555ff;
 }
 
 .project-button:hover {
