@@ -19,8 +19,10 @@ body {
 body::before {
   content: "";
   position: fixed;
-  top: 0; left: 0;
-  width: 200%; height: 200%;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
   background:
     /* Layer 1: Große, helle Sterne */
     radial-gradient(circle at 10% 20%, #fff 0%, transparent 1px),
@@ -28,14 +30,14 @@ body::before {
     radial-gradient(circle at 50% 10%, #fff 0%, transparent 1px),
     radial-gradient(circle at 70% 85%, #fff 0%, transparent 1px),
     radial-gradient(circle at 30% 90%, #fff 0%, transparent 1px),
-    radial-gradient(circle at 60% 5%,  #fff 0%, transparent 1px),
+    radial-gradient(circle at 60% 5%, #fff 0%, transparent 1px),
     radial-gradient(circle at 85% 75%, #fff 0%, transparent 1px),
     radial-gradient(circle at 20% 60%, #fff 0%, transparent 1px),
     radial-gradient(circle at 40% 30%, #fff 0%, transparent 1px),
     radial-gradient(circle at 95% 50%, #fff 0%, transparent 1px),
 
     /* Layer 2: Mittlere Sterne */
-    radial-gradient(circle at 5% 50%,  #eee 0%, transparent 0.8px),
+    radial-gradient(circle at 5% 50%, #eee 0%, transparent 0.8px),
     radial-gradient(circle at 25% 40%, #ddd 0%, transparent 0.8px),
     radial-gradient(circle at 40% 60%, #fff 0%, transparent 0.8px),
     radial-gradient(circle at 60% 30%, #eee 0%, transparent 0.8px),
@@ -46,49 +48,49 @@ body::before {
     radial-gradient(circle at 55% 20%, #fff 0%, transparent 0.8px),
     radial-gradient(circle at 75% 90%, #eee 0%, transparent 0.8px),
     radial-gradient(circle at 88% 25%, #ddd 0%, transparent 0.8px),
-    radial-gradient(circle at 5% 80%,  #fff 0%, transparent 0.8px),
+    radial-gradient(circle at 5% 80%, #fff 0%, transparent 0.8px),
     radial-gradient(circle at 92% 40%, #eee 0%, transparent 0.8px),
     radial-gradient(circle at 48% 70%, #ddd 0%, transparent 0.8px),
 
     /* Layer 3: Kleine, zahlreiche Sterne */
-    radial-gradient(circle at 7% 12%,   #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 13% 24%,  #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 18% 31%,  #999 0%, transparent 0.4px),
-    radial-gradient(circle at 22% 45%,  #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 27% 53%,  #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 33% 18%,  #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 38% 66%,  #999 0%, transparent 0.4px),
-    radial-gradient(circle at 42% 77%,  #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 47% 29%,  #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 52% 84%,  #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 57% 39%,  #999 0%, transparent 0.4px),
-    radial-gradient(circle at 62% 51%,  #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 67% 12%,  #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 72% 68%,  #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 77% 23%,  #999 0%, transparent 0.4px),
-    radial-gradient(circle at 82% 79%,  #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 87% 34%,  #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 92% 88%,  #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 5% 92%,   #999 0%, transparent 0.4px),
-    radial-gradient(circle at 97% 6%,   #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 11% 73%,  #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 16% 5%,   #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 21% 86%,  #999 0%, transparent 0.4px),
-    radial-gradient(circle at 26% 17%,  #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 31% 95%,  #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 36% 28%,  #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 41% 71%,  #999 0%, transparent 0.4px),
-    radial-gradient(circle at 46% 4%,   #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 51% 59%,  #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 56% 93%,  #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 61% 14%,  #999 0%, transparent 0.4px),
-    radial-gradient(circle at 66% 63%,  #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 71% 32%,  #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 76% 81%,  #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 81% 9%,   #999 0%, transparent 0.4px),
-    radial-gradient(circle at 86% 48%,  #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 91% 76%,  #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 96% 25%,  #bbb 0%, transparent 0.4px);
+    radial-gradient(circle at 7% 12%, #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 13% 24%, #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 18% 31%, #999 0%, transparent 0.4px),
+    radial-gradient(circle at 22% 45%, #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 27% 53%, #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 33% 18%, #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 38% 66%, #999 0%, transparent 0.4px),
+    radial-gradient(circle at 42% 77%, #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 47% 29%, #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 52% 84%, #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 57% 39%, #999 0%, transparent 0.4px),
+    radial-gradient(circle at 62% 51%, #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 67% 12%, #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 72% 68%, #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 77% 23%, #999 0%, transparent 0.4px),
+    radial-gradient(circle at 82% 79%, #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 87% 34%, #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 92% 88%, #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 5% 92%, #999 0%, transparent 0.4px),
+    radial-gradient(circle at 97% 6%, #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 11% 73%, #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 16% 5%, #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 21% 86%, #999 0%, transparent 0.4px),
+    radial-gradient(circle at 26% 17%, #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 31% 95%, #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 36% 28%, #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 41% 71%, #999 0%, transparent 0.4px),
+    radial-gradient(circle at 46% 4%, #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 51% 59%, #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 56% 93%, #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 61% 14%, #999 0%, transparent 0.4px),
+    radial-gradient(circle at 66% 63%, #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 71% 32%, #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 76% 81%, #bbb 0%, transparent 0.4px),
+    radial-gradient(circle at 81% 9%, #999 0%, transparent 0.4px),
+    radial-gradient(circle at 86% 48%, #ccc 0%, transparent 0.4px),
+    radial-gradient(circle at 91% 76%, #aaa 0%, transparent 0.4px),
+    radial-gradient(circle at 96% 25%, #bbb 0%, transparent 0.4px);
 
   z-index: -1;
   animation: twinkle 8s infinite alternate;
@@ -97,12 +99,29 @@ body::before {
 }
 
 @keyframes twinkle {
-  0%   { opacity: 0.25; }
-  20%  { opacity: 0.9; }
-  40%  { opacity: 0.4; }
-  60%  { opacity: 1; }
-  80%  { opacity: 0.6; }
-  100% { opacity: 0.35; }
+  0% {
+    opacity: 0.25;
+  }
+
+  20% {
+    opacity: 0.9;
+  }
+
+  40% {
+    opacity: 0.4;
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0.6;
+  }
+
+  100% {
+    opacity: 0.35;
+  }
 }
 
 .navbar {
@@ -129,6 +148,11 @@ body::before {
   text-decoration: none;
   margin-left: 1.5rem;
   font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: #4444ff;
 }
 
 .main-center {
@@ -140,17 +164,20 @@ body::before {
   text-align: center;
   padding: 2rem 2rem 3rem;
 }
+
 .home-logo {
   max-width: 100%;
   height: auto;
-  max-height: 320px; /* ← deutlich größer */
+  max-height: 320px;
+  /* ← deutlich größer */
   width: auto;
   object-fit: contain;
 }
 
 @media (max-width: 600px) {
   .home-logo {
-    max-height: 220px; /* ← größer auf Handy */
+    max-height: 220px;
+    /* ← größer auf Handy */
   }
 }
 
@@ -178,10 +205,17 @@ body::before {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 320px; /* ← feste Höhe */
+  height: 320px;
+  /* ← feste Höhe */
   width: 100%;
   max-width: 100%;
   overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
 }
 
 .project-icon {
@@ -242,15 +276,109 @@ body::before {
   background: #5555ff;
 }
 
-.project-button:hover {
-  background: #5555ff;
-}
-
 /* Fallback text styling */
 #projects-container p {
   font-size: 1.2rem;
   color: #ccc;
 }
+
+/* Members Grid */
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.member-card {
+  background: rgba(30, 30, 40, 0.8);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.member-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(68, 68, 255, 0.15);
+  border-color: rgba(68, 68, 255, 0.3);
+}
+
+.member-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1.5rem;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  /* background removed for transparency */
+}
+
+.member-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.member-role {
+  font-size: 0.9rem;
+  color: #4444ff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.member-bio {
+  font-size: 0.95rem;
+  color: #ccc;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.member-links {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.member-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.member-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.member-btn.primary {
+  background: #4444ff;
+}
+
+.member-btn.primary:hover {
+  background: #5555ff;
+}
+
 
 /* Impressum Card */
 .impressum-card {
@@ -301,7 +429,8 @@ body::before {
     font-size: 2rem;
   }
 
-  .projects-grid {
+  .projects-grid,
+  .members-grid {
     grid-template-columns: 1fr;
     padding: 1rem;
   }
