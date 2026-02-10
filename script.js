@@ -78,12 +78,12 @@ function createStars() {
   }
 
   // Projekte laden – MIT OWNER
-  if (document.getElementById('projects-container')) {
+  if (document.getElementById('projects-list')) {
     fetch('projects.json')
       .then(response => response.ok ? response.json() : Promise.reject())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
-          const container = document.getElementById('projects-container');
+          const container = document.getElementById('projects-list');
           container.innerHTML = '';
           container.classList.add('projects-grid');
           data.forEach(project => {
@@ -102,6 +102,6 @@ function createStars() {
           });
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }
 })();

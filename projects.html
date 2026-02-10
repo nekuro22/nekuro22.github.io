@@ -26,8 +26,20 @@
       </a>
     </div>
   </nav>
-  <main class="main-center" id="projects-container">
-    <p>Keine Öffentlich einsehbaren Projekte Gefunden</p>
+  <main class="main-center">
+    <!-- Container specifically for the project list -->
+    <div id="projects-list">
+      <p>Keine Öffentlich einsehbaren Projekte Gefunden</p>
+    </div>
+
+    <!-- Static content (GitHub Chart) remains safe here -->
+    <div style="margin-top: 2rem; width: 100%; display: flex; justify-content: center;">
+      <div
+        style="background-color: #0d1117; padding: 10px; border-radius: 5px; max-width: 100%; display: inline-block;">
+        <img src="https://ghchart.rshah.org/0b6623/nekuro22" alt="GitHub Kalender"
+          style="width: 100%; filter: invert(1) hue-rotate(180deg) brightness(1.7);" />
+      </div>
+    </div>
   </main>
   <script src="script.js"></script>
 </body>
