@@ -1,77 +1,24 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wartungsmodus – Niklas-Leidert.de</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .maintenance-card {
-      background: rgba(10, 10, 20, 0.6);
-      backdrop-filter: blur(8px);
-      border-radius: 16px;
-      padding: 3rem;
-      max-width: 600px;
-      width: 90%;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-      text-align: center;
-    }
-
-    .maintenance-icon {
-      font-size: 4rem;
-      margin-bottom: 1.5rem;
-      display: block;
-    }
-
-    .maintenance-card h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      color: #fff;
-    }
-
-    .maintenance-card p {
-      font-size: 1.1rem;
-      color: #ccc;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-    }
-
-    .maintenance-btn {
-      background: #4444ff;
-      color: #fff;
-      text-decoration: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: background 0.2s;
-      display: inline-block;
-    }
-
-    .maintenance-btn:hover {
-      background: #5555ff;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gleich wieder da – Niklas Leidert</title>
+  <meta name="description" content="Die Seite wird gerade überarbeitet." />
+  <meta name="theme-color" content="#0e1626" />
+  <link rel="icon" href="icon.png" />
+  <link rel="preload" href="assets/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-  <main class="main-center">
-    <div class="maintenance-card">
-      <span class="maintenance-icon">🛠️</span>
-      <h1>Wartungsmodus</h1>
-      <p>
-        Wir arbeiten gerade an der Seite, um sie noch besser zu machen.<br>
-        Bitte schaue später wieder vorbei!
-      </p>
-      <!-- Optional: Login/Override link if needed, otherwise just info -->
-      <div style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
-        Niklas-Leidert.de
-      </div>
+  <main id="inhalt" class="wartung">
+    <div>
+      <img src="icon.png" alt="Logo von Niklas Leidert" width="96" height="96" />
+      <h1>Gleich wieder da</h1>
+      <p class="muted">Ich überarbeite die Seite gerade. Schau in ein paar Minuten noch einmal vorbei – oder solange auf GitHub.</p>
+      <p style="margin-top:2rem"><a class="btn" href="https://github.com/nekuro22" target="_blank" rel="noopener">Zu GitHub</a></p>
     </div>
   </main>
-
   <script src="script.js"></script>
 </body>
-
 </html>

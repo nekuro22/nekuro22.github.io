@@ -1,449 +1,509 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ==========================================================
+   Niklas-Leidert.de — Stylesheet
+   Idee: Nachthimmel trifft Präzision. Navy wie das Logo,
+   Kreideweiß für Text, ein warmes Sternengold als einziger Akzent.
+   ========================================================== */
+
+@font-face {
+  font-family: "Bricolage";
+  src: url("assets/fonts/bricolage.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
 }
+
+:root {
+  --nacht: #0e1626;      /* Hintergrund */
+  --tinte: #16213a;      /* Flächen */
+  --tinte-2: #1d2a47;    /* Flächen, hover */
+  --kreide: #e8ecf4;     /* Text */
+  --nebel: #8d98b0;      /* Nebentext */
+  --gold: #f2c66d;       /* Sternengold – einziger Akzent */
+  --linie: rgba(232, 236, 244, 0.12);
+
+  --font: "Bricolage", ui-sans-serif, system-ui, sans-serif;
+  --maxw: 68rem;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --radius: 14px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
-  background: #000;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  overflow-x: hidden;
-  position: relative;
+  background: var(--nacht);
+  color: var(--kreide);
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Extrem dichter, mehrschichtiger Sternenhimmel */
-body::before {
+/* sanfter Horizont-Schein am unteren Rand */
+body::after {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 200%;
-  height: 200%;
-  background:
-    /* Layer 1: Große, helle Sterne */
-    radial-gradient(circle at 10% 20%, #fff 0%, transparent 1px),
-    radial-gradient(circle at 90% 15%, #fff 0%, transparent 1px),
-    radial-gradient(circle at 50% 10%, #fff 0%, transparent 1px),
-    radial-gradient(circle at 70% 85%, #fff 0%, transparent 1px),
-    radial-gradient(circle at 30% 90%, #fff 0%, transparent 1px),
-    radial-gradient(circle at 60% 5%, #fff 0%, transparent 1px),
-    radial-gradient(circle at 85% 75%, #fff 0%, transparent 1px),
-    radial-gradient(circle at 20% 60%, #fff 0%, transparent 1px),
-    radial-gradient(circle at 40% 30%, #fff 0%, transparent 1px),
-    radial-gradient(circle at 95% 50%, #fff 0%, transparent 1px),
-
-    /* Layer 2: Mittlere Sterne */
-    radial-gradient(circle at 5% 50%, #eee 0%, transparent 0.8px),
-    radial-gradient(circle at 25% 40%, #ddd 0%, transparent 0.8px),
-    radial-gradient(circle at 40% 60%, #fff 0%, transparent 0.8px),
-    radial-gradient(circle at 60% 30%, #eee 0%, transparent 0.8px),
-    radial-gradient(circle at 80% 50%, #ddd 0%, transparent 0.8px),
-    radial-gradient(circle at 95% 70%, #fff 0%, transparent 0.8px),
-    radial-gradient(circle at 15% 10%, #eee 0%, transparent 0.8px),
-    radial-gradient(circle at 35% 85%, #ddd 0%, transparent 0.8px),
-    radial-gradient(circle at 55% 20%, #fff 0%, transparent 0.8px),
-    radial-gradient(circle at 75% 90%, #eee 0%, transparent 0.8px),
-    radial-gradient(circle at 88% 25%, #ddd 0%, transparent 0.8px),
-    radial-gradient(circle at 5% 80%, #fff 0%, transparent 0.8px),
-    radial-gradient(circle at 92% 40%, #eee 0%, transparent 0.8px),
-    radial-gradient(circle at 48% 70%, #ddd 0%, transparent 0.8px),
-
-    /* Layer 3: Kleine, zahlreiche Sterne */
-    radial-gradient(circle at 7% 12%, #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 13% 24%, #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 18% 31%, #999 0%, transparent 0.4px),
-    radial-gradient(circle at 22% 45%, #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 27% 53%, #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 33% 18%, #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 38% 66%, #999 0%, transparent 0.4px),
-    radial-gradient(circle at 42% 77%, #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 47% 29%, #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 52% 84%, #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 57% 39%, #999 0%, transparent 0.4px),
-    radial-gradient(circle at 62% 51%, #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 67% 12%, #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 72% 68%, #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 77% 23%, #999 0%, transparent 0.4px),
-    radial-gradient(circle at 82% 79%, #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 87% 34%, #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 92% 88%, #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 5% 92%, #999 0%, transparent 0.4px),
-    radial-gradient(circle at 97% 6%, #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 11% 73%, #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 16% 5%, #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 21% 86%, #999 0%, transparent 0.4px),
-    radial-gradient(circle at 26% 17%, #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 31% 95%, #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 36% 28%, #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 41% 71%, #999 0%, transparent 0.4px),
-    radial-gradient(circle at 46% 4%, #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 51% 59%, #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 56% 93%, #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 61% 14%, #999 0%, transparent 0.4px),
-    radial-gradient(circle at 66% 63%, #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 71% 32%, #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 76% 81%, #bbb 0%, transparent 0.4px),
-    radial-gradient(circle at 81% 9%, #999 0%, transparent 0.4px),
-    radial-gradient(circle at 86% 48%, #ccc 0%, transparent 0.4px),
-    radial-gradient(circle at 91% 76%, #aaa 0%, transparent 0.4px),
-    radial-gradient(circle at 96% 25%, #bbb 0%, transparent 0.4px);
-
+  inset: auto 0 0 0;
+  height: 45vh;
+  background: radial-gradient(120% 100% at 50% 100%, rgba(64, 92, 160, 0.22), transparent 70%);
+  pointer-events: none;
   z-index: -1;
-  animation: twinkle 8s infinite alternate;
-  transform: translateZ(0);
-  will-change: opacity;
 }
 
-@keyframes twinkle {
-  0% {
-    opacity: 0.25;
-  }
-
-  20% {
-    opacity: 0.9;
-  }
-
-  40% {
-    opacity: 0.4;
-  }
-
-  60% {
-    opacity: 1;
-  }
-
-  80% {
-    opacity: 0.6;
-  }
-
-  100% {
-    opacity: 0.35;
-  }
+a { color: inherit; }
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
-.navbar {
+.skip {
+  position: absolute; left: -999px; top: 0;
+  background: var(--gold); color: var(--nacht); padding: .5rem 1rem; z-index: 50;
+}
+.skip:focus { left: 1rem; top: 1rem; }
+
+/* ---------- Sternenhimmel (Canvas aus script.js) ---------- */
+#sky {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* ---------- Navigation ---------- */
+.nav {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 1.25rem var(--gutter);
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand {
+  display: flex;
   align-items: center;
-  padding: 1rem 2rem;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(5px);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  width: 100%;
-  box-sizing: border-box;
+  gap: .6rem;
+  text-decoration: none;
+  font-weight: 650;
+  letter-spacing: -0.01em;
 }
+.brand img { width: 34px; height: 34px; border-radius: 50%; }
 
-.nav-brand {
-  font-size: 1.4rem;
-  font-weight: bold;
-}
-
+.nav-links { display: flex; align-items: center; gap: .25rem; }
 .nav-links a {
-  color: #fff;
   text-decoration: none;
-  margin-left: 1.5rem;
-  font-size: 1rem;
-  transition: color 0.2s;
+  color: var(--nebel);
+  padding: .4rem .75rem;
+  border-radius: 999px;
+  transition: color .2s, background .2s;
 }
+.nav-links a:hover { color: var(--kreide); }
+.nav-links a[aria-current="page"] { color: var(--kreide); background: var(--tinte); }
+.nav-links svg { display: block; }
 
-.nav-links a:hover {
-  color: #4444ff;
-}
-
-.main-center {
+/* ---------- Allgemeines Layout ---------- */
+main {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 2rem 2rem 3rem;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
 }
 
-.home-logo {
-  max-width: 100%;
-  height: auto;
-  max-height: 320px;
-  /* ← deutlich größer */
-  width: auto;
-  object-fit: contain;
-}
+section { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
 
-@media (max-width: 600px) {
-  .home-logo {
-    max-height: 220px;
-    /* ← größer auf Handy */
-  }
-}
+h1, h2, h3 { font-weight: 700; letter-spacing: -0.025em; line-height: 1.08; }
+h2 { font-size: clamp(1.6rem, 3.2vw, 2.25rem); margin-bottom: 1.5rem; }
+h3 { font-size: 1.2rem; letter-spacing: -0.01em; }
 
-.main-center h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
+p { max-width: 62ch; }
+.muted { color: var(--nebel); }
 
-/* Project Grid */
-.projects-grid {
+/* ---------- Startseite: Hero ---------- */
+.hero {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  padding: 2rem;
-  width: 100%;
-}
-
-.project-card {
-  background: rgba(30, 30, 40, 0.8);
-  border-radius: 12px;
-  padding: 1.5rem;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: 1.15fr 1fr;
   align-items: center;
-  justify-content: flex-start;
-  height: 320px;
-  /* ← feste Höhe */
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
+  gap: clamp(2rem, 6vw, 5rem);
+  min-height: calc(100dvh - 160px);
+  padding-block: 2rem 4rem;
 }
 
-.project-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-}
-
-.project-icon {
-  width: 64px;
-  height: 64px;
-  object-fit: contain;
-  margin-bottom: 1rem;
-}
-
-.project-title {
-  font-size: 1.3rem;
-  margin-bottom: 0.75rem;
-  color: #fff;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  line-clamp: 2;
-  line-height: 1.3;
-}
-
-.project-text {
-  font-size: 0.95rem;
-  margin-bottom: 1rem;
-  color: #ccc;
-  flex: 1;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  line-clamp: 3;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.4;
-}
-
-.project-owner {
-  font-size: 0.85rem;
-  color: #888;
-  margin-bottom: 1rem;
-  font-style: italic;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.project-button {
-  background: #4444ff;
-  color: white;
-  text-decoration: none;
-  padding: 0.5rem 1.25rem;
-  border-radius: 6px;
-  font-weight: bold;
-  transition: background 0.2s;
-  margin-top: auto;
-  flex-shrink: 0;
-}
-
-.project-button:hover {
-  background: #5555ff;
-}
-
-/* Fallback text styling */
-#projects-container p {
-  font-size: 1.2rem;
-  color: #ccc;
-}
-
-/* Members Grid */
-.members-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  padding: 2rem;
-  width: 100%;
-  max-width: 1200px;
-}
-
-.member-card {
-  background: rgba(30, 30, 40, 0.8);
-  border-radius: 16px;
-  padding: 2rem;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform 0.2s, box-shadow 0.2s;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.member-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(68, 68, 255, 0.15);
-  border-color: rgba(68, 68, 255, 0.3);
-}
-
-.member-avatar {
-  width: 40px;
-  /* 5x smaller? 120/5 = 24. Let's go with ~30-40px for visibility, or strictly 24px if desired. I'll stick to 30px as "5x smaller" usually implies "much smaller" */
-  height: 40px;
-  border-radius: 50%;
-  object-fit: contain;
-  /* changed to contain for icon */
-  margin-bottom: 0.5rem;
-  border: none;
-  /* background removed for transparency */
-}
-
-.member-name {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 0.25rem;
-  color: #fff;
-}
-
-/* Remove bio text if I can, but user wants it gone in HTML. I will style it to be hidden or just remove from HTML. */
-
-
-.member-role {
-  font-size: 0.9rem;
-  color: #4444ff;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 1rem;
-  font-weight: bold;
-}
-
-.member-bio {
-  font-size: 0.95rem;
-  color: #ccc;
-  line-height: 1.5;
+.hero h1 {
+  font-size: clamp(3rem, 8.5vw, 6.25rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: .95;
   margin-bottom: 1.5rem;
 }
+.hero h1 span { display: block; }
+.hero h1 .nachname { color: var(--nebel); font-weight: 300; }
 
-.member-links {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 100%;
+.hero .lead {
+  font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+  line-height: 1.5;
+  max-width: 34ch;
+  margin-bottom: 1.75rem;
 }
 
-.member-btn {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  transition: all 0.2s;
-  border: 1px solid transparent;
+.clock {
+  display: block;
+  color: var(--nebel);
+  font-size: .98rem;
+}
+.clock::before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  margin: -2px .6rem 0 4px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 4px rgba(242, 198, 109, .15);
+}
+.clock time { color: var(--kreide); font-variant-numeric: tabular-nums; }
+
+.actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+
+.btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: .5rem;
+  padding: .75rem 1.25rem;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--linie);
+  background: transparent;
+  color: var(--kreide);
+  cursor: pointer;
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.btn:hover { background: var(--tinte); border-color: rgba(232, 236, 244, .25); }
+.btn-primary { background: var(--kreide); color: var(--nacht); border-color: var(--kreide); }
+.btn-primary:hover { background: #fff; transform: translateY(-1px); }
+
+/* ---------- Das Siegel (rotierender Logo-Ring) ---------- */
+.siegel {
+  position: relative;
+  width: min(100%, 440px);
+  aspect-ratio: 1;
+  justify-self: center;
+  border: 0;
+  background: none;
+  color: var(--kreide);
+  cursor: pointer;
+  border-radius: 50%;
+  -webkit-tap-highlight-color: transparent;
+}
+.siegel svg { width: 100%; height: 100%; overflow: visible; }
+
+.siegel .ring {
+  transform-origin: 200px 200px;
+  animation: drehen 48s linear infinite;
+}
+.siegel:hover .ring { animation-duration: 16s; }
+.siegel.spin .ring { animation-duration: 1.6s; }
+
+.siegel .ring text {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 23px;
+  letter-spacing: .32em;
+  fill: var(--kreide);
+}
+.siegel .kern {
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 150px;
+  fill: var(--kreide);
+}
+.siegel .bahn { fill: none; stroke: var(--linie); }
+.siegel .punkt { fill: none; stroke: var(--nebel); stroke-width: 2.5; }
+.siegel .stern { fill: var(--gold); transition: opacity .3s; }
+
+.siegel-hint {
+  text-align: center;
+  color: var(--nebel);
+  font-size: .9rem;
+  margin-top: .5rem;
+  min-height: 1.4em;
 }
 
-.member-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.3);
+@keyframes drehen { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .siegel .ring, .siegel:hover .ring { animation: none; }
 }
 
-.member-btn.primary {
-  background: #4444ff;
+/* ---------- Startseite: Inhalte ---------- */
+.felder {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--linie);
+}
+.feld {
+  padding: 1.75rem 1.5rem 1.75rem 0;
+}
+.feld + .feld { padding-left: 1.5rem; border-left: 1px solid var(--linie); }
+.feld h3 { margin-bottom: .6rem; }
+.feld p { color: var(--nebel); }
+
+.werkzeug {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  list-style: none;
+}
+.werkzeug li {
+  padding: .45rem .9rem;
+  border-radius: 999px;
+  background: var(--tinte);
+  border: 1px solid var(--linie);
+  font-size: .95rem;
 }
 
-.member-btn.primary:hover {
-  background: #5555ff;
+.kontakt {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 2rem;
+  padding: clamp(1.75rem, 4vw, 3rem);
+  background: var(--tinte);
+  border-radius: calc(var(--radius) * 1.5);
+  border: 1px solid var(--linie);
 }
+.kontakt h2 { margin-bottom: .75rem; }
 
-
-/* Impressum Card */
-.impressum-card {
-  background: rgba(10, 10, 20, 0.6);
-  backdrop-filter: blur(8px);
-  border-radius: 16px;
-  padding: 2rem;
-  max-width: 700px;
-  width: 90%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #fff;
-}
-
-.impressum-card h3,
-.impressum-card p {
-  color: #fff;
-}
-
-.impressum-card p {
-  line-height: 1.6;
+/* ---------- Projekte ---------- */
+.seitenkopf { padding-block: clamp(2rem, 6vw, 4rem) 1rem; }
+.seitenkopf h1 {
+  font-size: clamp(2.6rem, 7vw, 4.75rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
   margin-bottom: 1rem;
 }
+.seitenkopf p { font-size: 1.15rem; }
 
-/* Mobile Anpassungen */
-@media (max-width: 600px) {
-  .navbar {
-    flex-direction: column;
-    gap: 0.8rem;
-    padding: 1rem 1.5rem;
-    position: relative;
-    top: 0;
-  }
+.sternbild {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 6;
+  min-height: 220px;
+  margin-block: 1.5rem 2.5rem;
+  border-radius: calc(var(--radius) * 1.5);
+  background:
+    radial-gradient(80% 120% at 50% 0%, rgba(64, 92, 160, .18), transparent 70%),
+    var(--tinte);
+  border: 1px solid var(--linie);
+  overflow: hidden;
+}
+.sternbild svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.sternbild .verbindung {
+  stroke: rgba(232, 236, 244, .28);
+  stroke-width: 1;
+  stroke-dasharray: 4 6;
+  fill: none;
+}
+.sternbild .verbindung.zeichnen {
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+  animation: linie 1.4s ease-out forwards;
+}
+@keyframes linie { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .sternbild .verbindung.zeichnen { animation: none; stroke-dashoffset: 0; stroke-dasharray: 4 6; }
+}
 
-  .nav-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-  }
+.sternbild a { cursor: pointer; }
+.sternbild .glanz { fill: var(--gold); opacity: .18; transition: r .25s, opacity .25s; }
+.sternbild .kern-stern { fill: var(--kreide); transition: fill .25s; }
+.sternbild .name {
+  font-family: var(--font);
+  font-size: 13px;
+  fill: var(--nebel);
+  transition: fill .25s;
+}
+.sternbild a:hover .glanz, .sternbild a:focus .glanz, .sternbild .aktiv .glanz { opacity: .45; r: 18; }
+.sternbild a:hover .kern-stern, .sternbild a:focus .kern-stern, .sternbild .aktiv .kern-stern { fill: var(--gold); }
+.sternbild a:hover .name, .sternbild a:focus .name, .sternbild .aktiv .name { fill: var(--kreide); }
 
-  .nav-links a {
-    margin: 0;
-    font-size: 1.1rem;
-  }
+.filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.suche {
+  flex: 1 1 260px;
+  max-width: 360px;
+  font: inherit;
+  color: var(--kreide);
+  background: var(--tinte);
+  border: 1px solid var(--linie);
+  border-radius: 999px;
+  padding: .65rem 1.1rem;
+}
+.suche::placeholder { color: var(--nebel); }
 
-  .main-center h1 {
-    font-size: 2rem;
-  }
+.projektliste { list-style: none; border-top: 1px solid var(--linie); }
+.projekt {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem .75rem;
+  border-bottom: 1px solid var(--linie);
+  border-radius: 10px;
+  transition: background .2s;
+}
+.projekt:hover, .projekt.aktiv { background: rgba(29, 42, 71, .55); }
+.projekt img {
+  width: 56px; height: 56px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: var(--tinte-2);
+}
+.monogramm {
+  display: grid; place-items: center;
+  width: 56px; height: 56px; border-radius: 12px;
+  background: var(--tinte-2); border: 1px solid var(--linie);
+  color: var(--gold); font-weight: 800; font-size: 1.5rem;
+}
+.projekt h3 { margin-bottom: .2rem; }
+.projekt p { color: var(--nebel); }
+.projekt .wer { font-size: .9rem; margin-top: .35rem; color: var(--nebel); }
+.projekt .wer span { color: var(--kreide); }
+.leer { padding: 2rem .75rem; color: var(--nebel); }
 
-  .projects-grid,
-  .members-grid {
-    grid-template-columns: 1fr;
-    padding: 1rem;
-  }
+.repos { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+.repo {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--linie);
+  text-decoration: none;
+  height: 100%;
+  transition: background .2s, border-color .2s;
+}
+.repo:hover { background: var(--tinte); border-color: rgba(232, 236, 244, .25); }
+.repo strong { font-weight: 650; }
+.repo p { color: var(--nebel); font-size: .95rem; flex: 1; }
+.repo p:empty { display: none; }
+.repo .meta { margin-top: auto; }
+.repo .meta { display: flex; gap: 1rem; font-size: .85rem; color: var(--nebel); }
+.repo .sprache::before {
+  content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--farbe, var(--nebel)); margin-right: .4rem;
+}
 
-  .impressum-card {
-    padding: 1.5rem;
-    border-radius: 12px;
-  }
+/* ---------- Rechtliches ---------- */
+.recht { max-width: 46rem; padding-block: clamp(2rem, 6vw, 4rem) 4rem; }
+.recht h1 { font-size: clamp(2.2rem, 5vw, 3.25rem); font-weight: 800; letter-spacing: -0.04em; margin-bottom: 2rem; }
+.recht h2 { font-size: 1.5rem; margin: 2.5rem 0 1rem; }
+.recht h3 { font-size: 1.05rem; margin: 1.5rem 0 .4rem; }
+.recht p, .recht address { color: #c8cfdd; font-style: normal; margin-bottom: .75rem; }
+.platzhalter { color: var(--gold); }
+
+/* ---------- Wartung ---------- */
+.wartung {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  min-height: 80dvh;
+}
+.wartung h1 { font-size: clamp(2.4rem, 6vw, 3.5rem); font-weight: 800; letter-spacing: -0.04em; margin: 1.5rem 0 1rem; }
+.wartung p { margin-inline: auto; }
+.wartung img { width: 96px; height: 96px; border-radius: 50%; animation: drehen 20s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .wartung img { animation: none; } }
+
+/* ---------- Footer ---------- */
+.footer {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 2rem var(--gutter) 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--nebel);
+  font-size: .92rem;
+  border-top: 1px solid var(--linie);
+}
+.footer a { text-decoration: none; }
+.footer a:hover { color: var(--kreide); }
+.footer nav { display: flex; gap: 1.25rem; }
+
+/* ---------- Präzisionsmodus (Easter Egg) ---------- */
+body.praezision main,
+body.praezision .nav,
+body.praezision .footer {
+  background-image:
+    linear-gradient(to right, rgba(242, 198, 109, .16) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(242, 198, 109, .1) 1px, transparent 1px);
+  background-size: 8px 8px;
+  outline: 1px dashed rgba(242, 198, 109, .6);
+  outline-offset: -1px;
+}
+body.praezision main * { outline: 1px solid rgba(242, 198, 109, .25); }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translate(-50%, 1rem);
+  background: var(--kreide);
+  color: var(--nacht);
+  padding: .7rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: .95rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  z-index: 60;
+  max-width: calc(100% - 2rem);
+  text-align: center;
+}
+.toast.zeigen { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- Responsiv ---------- */
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; min-height: 0; padding-top: 1rem; }
+  .siegel { width: min(78%, 340px); }
+  .felder { grid-template-columns: 1fr; }
+  .feld, .feld + .feld { padding: 1.5rem 0; border-left: 0; }
+  .feld + .feld { border-top: 1px solid var(--linie); }
+  .kontakt { grid-template-columns: 1fr; align-items: start; }
+}
+
+@media (max-width: 560px) {
+  .nav { padding-block: 1rem; }
+  .brand span { display: none; }
+  .nav-links a { padding: .4rem .6rem; }
+  .projekt { grid-template-columns: 44px 1fr; gap: 1rem; }
+  .projekt img, .monogramm { width: 44px; height: 44px; }
+  .projekt .btn { grid-column: 1 / -1; justify-self: start; }
+  .sternbild { aspect-ratio: 16 / 8; min-height: 0; }
+  .sternbild .name { display: none; }
+  .sternbild .kern-stern { r: 9; }
+  .sternbild .glanz { r: 22; }
+  .siegel { width: min(70%, 300px); }
 }

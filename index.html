@@ -1,49 +1,98 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Niklas-Leidert.de</title>
+  <title>Niklas Leidert – Entwickler</title>
+  <meta name="description" content="Niklas Leidert baut Minecraft-Mods, kleine Werkzeuge und Webseiten." />
+  <meta name="theme-color" content="#0e1626" />
+  <link rel="icon" href="icon.png" />
+  <link rel="preload" href="assets/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-  <script>
-    // Force correct height on mobile
-    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-      document.body.style.height = window.innerHeight + 'px';
-      document.body.style.overflow = 'hidden';
-      const main = document.querySelector('.main-center');
-      if (main) {
-        main.style.minHeight = 'auto';
-      }
-    }
-  </script>
-  <nav class="navbar">
-    <div class="nav-brand">Niklas-Leidert.de</div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
+  <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+  <header class="nav">
+    <a class="brand" href="index.html"><img src="icon.png" alt="" width="34" height="34" /><span>Niklas Leidert</span></a>
+    <nav class="nav-links" aria-label="Hauptnavigation">
+      <a href="index.html" aria-current="page">Start</a>
       <a href="projects.html">Projekte</a>
-      <a href="legal.html">Impressum | Datenschutz</a>
-      <a href="https://github.com/nekuro22" target="_blank" class="nav-github" aria-label="GitHub">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path
-            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-        </svg>
-      </a>
-    </div>
-  </nav>
-  <main class="main-center">
-    <img src="icon-t.png" alt="Logo" class="home-logo">
-  </main>
-  <script src="script.js"></script>
-  <script>
-    // Verhindert Scrollen auf der Startseite
-    document.body.style.height = '100dvh'; // dvh = dynamic viewport height (mobile-safe)
-    document.body.style.overflow = 'hidden';
-    document.querySelector('.main-center').style.minHeight = 'auto';
-  </script>
-</body>
+      <a href="https://github.com/nekuro22" target="_blank" rel="noopener" aria-label="GitHub-Profil von Niklas"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+    </nav>
+  </header>
 
+  <main id="inhalt">
+    <section class="hero">
+      <div>
+        <h1><span>Niklas</span><span class="nachname">Leidert</span></h1>
+        <p class="lead">Ich baue Minecraft-Mods, kleine Werkzeuge und Webseiten – am liebsten Dinge, die danach einfach funktionieren.</p>
+        <p class="clock" data-uhr>Bei mir ist es <time>--:--</time> – <span data-uhr-text>gut möglich, dass ich gerade etwas baue.</span></p>
+        <div class="actions">
+          <a class="btn btn-primary" href="projects.html">Projekte ansehen</a>
+          <a class="btn" href="https://github.com/nekuro22" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+
+      <div>
+        <button class="siegel" type="button" aria-label="Siegel drehen">
+          <svg viewBox="0 0 400 400" aria-hidden="true">
+            <defs>
+              <path id="kreis" d="M200,200 m-148,0 a148,148 0 1,1 296,0 a148,148 0 1,1 -296,0" />
+            </defs>
+            <circle class="bahn" cx="200" cy="200" r="188" />
+            <g class="ring">
+              <text><textPath href="#kreis" textLength="915" lengthAdjust="spacing">NIKLAS LEIDERT • ALWAYS PRECISION •</textPath></text>
+              <circle class="stern" cx="200" cy="12" r="5" />
+            </g>
+            <text class="kern" x="200" y="205" text-anchor="middle" dominant-baseline="central">N</text>
+          </svg>
+        </button>
+        <p class="siegel-hint" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section aria-labelledby="woran">
+      <h2 id="woran">Woran ich arbeite</h2>
+      <div class="felder">
+        <article class="feld">
+          <h3>Minecraft-Mods</h3>
+          <p>Addons für Create und Co., meistens mit NeoForge. Zahnräder, Physik und viel zu viele Testwelten.</p>
+        </article>
+        <article class="feld">
+          <h3>Werkzeuge</h3>
+          <p>Kleine Programme, die nervige Aufgaben übernehmen – vom Kommandozeilen-Tool bis zur App.</p>
+        </article>
+        <article class="feld">
+          <h3>Web &amp; Linux</h3>
+          <p>Webseiten wie diese, eigene Dotfiles und ein Server, der öfter neu aufgesetzt wird als nötig.</p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="werkzeug">
+      <h2 id="werkzeug">Mein Werkzeugkasten</h2>
+      <ul class="werkzeug">
+        <li>Java</li><li>Kotlin</li><li>Python</li><li>C#</li><li>JavaScript</li><li>React</li><li>HTML &amp; CSS</li><li>Linux</li><li>Git</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="kontakt">
+      <div class="kontakt">
+        <div>
+          <h2 id="kontakt">Idee, Bug oder Frage?</h2>
+          <p class="muted">Am schnellsten erreichst du mich über GitHub – ein Issue im passenden Projekt oder eine Nachricht reicht.</p>
+        </div>
+        <a class="btn btn-primary" href="https://github.com/nekuro22" target="_blank" rel="noopener">Auf GitHub schreiben</a>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <span>© <span data-jahr>2026</span> Niklas Leidert · Always Precision</span>
+    <nav aria-label="Rechtliches">
+      <a href="legal.html">Impressum</a>
+      <a href="legal.html#datenschutz">Datenschutz</a>
+    </nav>
+  </footer>
+  <script src="script.js"></script>
+</body>
 </html>
