@@ -1,112 +1,77 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Impressum – Niklas-Leidert.de</title>
+  <title>Impressum & Datenschutz – Niklas Leidert</title>
+  <meta name="description" content="Impressum und Datenschutzerklärung von niklas-leidert.de." />
+  <meta name="theme-color" content="#0e1626" />
+  <link rel="icon" href="icon.png" />
+  <link rel="preload" href="assets/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="style.css" />
-  <style>
-    .impressum-card {
-      background: rgba(10, 10, 20, 0.6);
-      /* transparenter */
-      backdrop-filter: blur(8px);
-      border-radius: 16px;
-      padding: 2rem;
-      max-width: 700px;
-      width: 90%;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      /* neutraler, fast unsichtbarer Rand */
-      color: #fff;
-    }
-
-    .impressum-card h3,
-    .impressum-card p {
-      color: #fff;
-    }
-
-    .impressum-card p {
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-
-    @media (max-width: 600px) {
-      .impressum-card {
-        padding: 1.5rem;
-        border-radius: 12px;
-      }
-    }
-  </style>
 </head>
-
 <body>
-  <nav class="navbar">
-    <div class="nav-brand">Niklas-Leidert.de</div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
+  <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+  <header class="nav">
+    <a class="brand" href="index.html"><img src="icon.png" alt="" width="34" height="34" /><span>Niklas Leidert</span></a>
+    <nav class="nav-links" aria-label="Hauptnavigation">
+      <a href="index.html">Start</a>
       <a href="projects.html">Projekte</a>
-      <a href="legal.html">Impressum | Datenschutz</a>
-      <a href="https://github.com/nekuro22" target="_blank" class="nav-github" aria-label="GitHub">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path
-            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-        </svg>
-      </a>
-    </div>
-  </nav>
-  </nav>
-  <main class="main-center">
-  
-      <h3>Impressum</h3>
-      Angaben gemäß § 5 DDG
+      <a href="https://github.com/nekuro22" target="_blank" rel="noopener" aria-label="GitHub-Profil von Niklas"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+    </nav>
+  </header>
 
-      Name:
-      [Dein Vorname Nachname]
+  <main id="inhalt">
+    <article class="recht">
+      <h1>Impressum &amp; Datenschutz</h1>
 
-      Anschrift:
-      [Straße Hausnummer]
-[PLZ Ort]
-Deutschland
+      <h2 id="impressum">Impressum</h2>
+      <p>Angaben gemäß § 5 DDG</p>
+      <address>
+        <span class="platzhalter">[Vorname Nachname]</span><br />
+        <span class="platzhalter">[Straße Hausnummer]</span><br />
+        <span class="platzhalter">[PLZ Ort]</span><br />
+        Deutschland
+      </address>
 
-Kontakt:
-E-Mail: [deine@email.de]
+      <h3>Kontakt</h3>
+      <p>E-Mail: <span class="platzhalter">[deine@email.de]</span></p>
 
-Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:
-[Vorname Nachname]
-[Adresse wie oben]
+      <h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3>
+      <p><span class="platzhalter">[Vorname Nachname]</span>, Anschrift wie oben</p>
 
-Hinweis:
-Diese Website dient ausschließlich der Präsentation privater Projekte und verweist teilweise auf externe Websites.
-<br>
-<br>
-<h3>Datenschutzerklärung</h3>
+      <h3>Hinweis</h3>
+      <p>Diese Website dient ausschließlich der Präsentation privater Projekte und verweist teilweise auf externe Websites.</p>
 
-Allgemeine Hinweise
+      <h2 id="datenschutz">Datenschutzerklärung</h2>
 
-Diese Website dient ausschließlich der Darstellung persönlicher Projekte.
+      <h3>Allgemeine Hinweise</h3>
+      <p>Diese Website dient ausschließlich der Darstellung persönlicher Projekte. Sie setzt keine Cookies und verwendet kein Tracking und keine Analyse-Werkzeuge.</p>
 
-Hosting
+      <h3>Hosting</h3>
+      <p>Diese Website wird über GitHub Pages bereitgestellt. Anbieter: GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
+      <p>Beim Aufruf der Website können durch den Hostinganbieter technische Zugriffsdaten (z. B. IP-Adresse, Datum und Uhrzeit des Zugriffs) in Server-Logfiles gespeichert werden. Diese Daten dienen der technischen Bereitstellung und Sicherheit der Website.</p>
 
-Diese Website wird über GitHub Pages bereitgestellt.
+      <h3>Abruf von Projektdaten über GitHub</h3>
+      <p>Auf der Projektseite lädt dein Browser die Liste meiner öffentlichen Repositories direkt von der Schnittstelle api.github.com. Dabei wird deine IP-Adresse an GitHub, Inc. übermittelt. Rechtsgrundlage ist mein berechtigtes Interesse an einer aktuellen Darstellung meiner Projekte (Art. 6 Abs. 1 lit. f DSGVO).</p>
 
-Anbieter:
-GitHub, Inc.
-88 Colin P. Kelly Jr. Street
-San Francisco, CA 94107
-USA
+      <h3>Schriftarten</h3>
+      <p>Die verwendete Schriftart wird direkt von diesem Server geladen. Es findet keine Verbindung zu externen Schriftanbietern statt.</p>
 
-Beim Aufruf der Website können durch den Hostinganbieter technische Zugriffsdaten (z. B. IP-Adresse, Datum und Uhrzeit des Zugriffs) in Server-Logfiles gespeichert werden. Diese Daten dienen der technischen Bereitstellung und Sicherheit der Website.
+      <h3>Externe Links</h3>
+      <p>Diese Website enthält Links zu externen Websites. Für deren Inhalte und Datenschutzbestimmungen ist der jeweilige Betreiber verantwortlich.</p>
 
-Externe Links
-
-Diese Website enthält Links zu externen Websites. Für deren Inhalte und Datenschutzbestimmungen ist der jeweilige Betreiber verantwortlich.
-
-Kontakt
-
-Bei Fragen zum Datenschutz können Sie sich jederzeit unter der im Impressum angegebenen E-Mail-Adresse melden.
+      <h3>Kontakt</h3>
+      <p>Bei Fragen zum Datenschutz kannst du dich jederzeit unter der im Impressum angegebenen E-Mail-Adresse melden.</p>
+    </article>
   </main>
+  <footer class="footer">
+    <span>© <span data-jahr>2026</span> Niklas Leidert · Always Precision</span>
+    <nav aria-label="Rechtliches">
+      <a href="legal.html">Impressum</a>
+      <a href="legal.html#datenschutz">Datenschutz</a>
+    </nav>
+  </footer>
   <script src="script.js"></script>
 </body>
-
 </html>
