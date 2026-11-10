@@ -1,49 +1,42 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Niklas-Leidert.de</title>
+  <meta name="description" content="Hub – ein Projekt von Niklas Leidert. Bald verfügbar." />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="showcase.css" />
 </head>
-
-<body>
-  <script>
-    // Force correct height on mobile
-    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-      document.body.style.height = window.innerHeight + 'px';
-      document.body.style.overflow = 'hidden';
-      const main = document.querySelector('.main-center');
-      if (main) {
-        main.style.minHeight = 'auto';
-      }
-    }
-  </script>
+<body class="showcase">
+  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
   <nav class="navbar">
     <div class="nav-brand">Niklas-Leidert.de</div>
     <div class="nav-links">
       <a href="index.html">Home</a>
+      <a href="hub.html" class="nav-hub">Hub</a>
       <a href="projects.html">Projekte</a>
       <a href="legal.html">Impressum | Datenschutz</a>
       <a href="https://github.com/nekuro22" target="_blank" class="nav-github" aria-label="GitHub">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path
-            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" /></svg>
       </a>
     </div>
   </nav>
-  <main class="main-center">
-    <img src="icon-t.png" alt="Logo" class="home-logo">
+  <main class="hero" style="grid-template-columns:1fr">
+    <div class="rv" style="text-align:center;display:flex;flex-direction:column;align-items:center">
+      <img src="icon-t.png" alt="Logo" class="home-logo" style="margin-bottom:1.5rem">
+      <span class="badge"><i></i> Neu: Hub</span>
+      <h1 style="font-size:clamp(2.4rem,6vw,4.4rem);margin:1rem 0">Ideen, die <span class="grad">wirklich laufen.</span></h1>
+      <p class="lead">Projekte von Niklas Leidert. Entdecke Hub, das nächste große Ding.</p>
+      <div class="cta-row" style="justify-content:center">
+        <a class="btn primary" href="hub.html">Hub ansehen →</a>
+        <a class="btn" href="projects.html">Projekte</a>
+      </div>
+    </div>
   </main>
+  <div class="marquee"><div class="marquee-track"><span>Hub</span><span>Leidert.org</span><span>Caelestia Extra</span><span>MuchBetterUntis</span><span>Open Source</span><span>Made in Germany</span><span>Hub</span><span>Leidert.org</span><span>Caelestia Extra</span><span>MuchBetterUntis</span><span>Open Source</span><span>Made in Germany</span></div></div>
+  <footer class="sc-foot">© Niklas Leidert · <a href="legal.html">Impressum | Datenschutz</a></footer>
   <script src="script.js"></script>
-  <script>
-    // Verhindert Scrollen auf der Startseite
-    document.body.style.height = '100dvh'; // dvh = dynamic viewport height (mobile-safe)
-    document.body.style.overflow = 'hidden';
-    document.querySelector('.main-center').style.minHeight = 'auto';
-  </script>
+  <script src="showcase.js"></script>
 </body>
-
 </html>

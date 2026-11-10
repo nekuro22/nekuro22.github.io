@@ -1,5 +1,11 @@
 [
   {
+    "title": "Hub",
+    "text": "Alles an einem Ort. Bald verfügbar.",
+    "url": "hub.html",
+    "owner": "Niklas Leidert"
+  },
+  {
     "title": "Leidert.org",
     "text": "Familien Webseite der Familie Leidert",
     "url": "https://github.com/nekuro22/leidert.org",

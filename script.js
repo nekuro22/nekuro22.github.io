@@ -96,7 +96,7 @@ function createStars() {
               <h2 class="project-title">${project.title}</h2>
               <p class="project-text">${project.text}</p>
               <p class="project-owner">Owner: ${owner}</p>
-              <a href="${project.url}" target="_blank" class="project-button">Zum Projekt</a>
+              <a href="${project.url}" target="${project.url.startsWith('http') ? '_blank' : '_self'}" class="project-button">Zum Projekt</a>
             `;
             container.appendChild(card);
           });
