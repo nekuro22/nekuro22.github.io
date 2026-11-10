@@ -53,3 +53,7 @@
     })();
   }
 })();
+(function () {
+  const f = () => document.body.classList.toggle('scrolled', scrollY > 60);
+  addEventListener('scroll', f, { passive: true }); f();
+})();
