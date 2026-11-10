@@ -87,21 +87,26 @@ function createStars() {
         if (Array.isArray(data) && data.length > 0) {
           const container = document.getElementById('projects-list');
           container.innerHTML = '';
-          container.classList.add('projects-grid');
+          container.classList.remove('projects-grid');
+          const list = document.createElement('ul');
+          list.className = 'plist';
+          const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
           data.forEach(project => {
-            const icon = project.icon || 'Project-data/icons/placeholder.ico';
-            const owner = project.owner || 'Niklas Leidert'; // ← Default
-            const card = document.createElement('div');
-            card.className = 'project-card';
-            card.innerHTML = `
-              <img src="${icon}" alt="Icon" class="project-icon">
-              <h2 class="project-title">${project.title}</h2>
-              <p class="project-text">${project.text}</p>
-              <p class="project-owner">Owner: ${owner}</p>
-              <a href="${project.url}" target="${project.url.startsWith('http') ? '_blank' : '_self'}" class="project-button">Zum Projekt</a>
-            `;
-            container.appendChild(card);
+            const owner = project.owner || 'Niklas Leidert';
+            const ext = /^https?:/.test(project.url);
+            const icon = project.icon ? `<img src="${esc(project.icon)}" alt="" width="48" height="48">` : `<span class="noicon" aria-hidden="true">${esc(project.title.charAt(0))}</span>`;
+            const li = document.createElement('li');
+            li.innerHTML = `
+              ${icon}
+              <div>
+                <h2>${esc(project.title)}</h2>
+                <p>${esc(project.text)}</p>
+                <p class="owner">Von ${esc(owner)}</p>
+              </div>
+              <a class="go" href="${esc(project.url)}"${ext ? ' target="_blank" rel="noopener"' : ''}>Zum Projekt</a>`;
+            list.appendChild(li);
           });
+          container.appendChild(list);
         }
       })
       .catch(() => { });
