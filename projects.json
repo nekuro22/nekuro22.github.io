@@ -4,23 +4,5 @@
     "text": "Dein persönlicher Hub: Alltag, Cloud und Apps an einem Ort. In Entwicklung.",
     "url": "hub.html",
     "owner": "Niklas Leidert"
-  },
-  {
-    "title": "Leidert.org",
-    "text": "Familien Webseite der Familie Leidert",
-    "url": "https://github.com/nekuro22/leidert.org",
-    "owner": "Niklas leidert und Susanne Leidert",
-    "icon": "Project-data/icons/leidert-org-icon.png"
-  },
-  {
-    "title": "Caelestia Extra",
-    "text": "a Plugin for Caelestia Dots",
-    "url": "https://github.com/nekuro22/caelestia-extra"
-  },
-  {
-    "title": "MuchBetterUntis",
-    "text": "a Better",
-    "url": "https://RoboAg.github.io/MuchBetterUntis",
-    "owner": "Niklas und RoboAg-GHG"
   }
 ]

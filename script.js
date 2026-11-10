@@ -1,49 +1,56 @@
-// ========== STERNENGENERATOR ==========
+// ========== STERNENHIMMEL ==========
+// Zwei Canvas-Ebenen, einmal gezeichnet. Nur die Deckkraft der Ebenen
+// pulsiert (läuft auf der GPU), statt 900 einzeln animierter Elemente.
 function createStars() {
   if (document.getElementById('stars-container')) return;
 
   const container = document.createElement('div');
   container.id = 'stars-container';
-  container.style.position = 'fixed';
-  container.style.top = '0';
-  container.style.left = '0';
-  container.style.width = '200%';
-  container.style.height = '200%';
-  container.style.zIndex = '-2';
-  container.style.pointerEvents = 'none';
+  container.style.cssText = 'position:fixed;inset:0;z-index:-2;pointer-events:none';
+  const layers = [0, 1].map(i => {
+    const c = document.createElement('canvas');
+    c.style.cssText = `position:absolute;inset:0;width:100%;height:100%;animation:twinkleAnim ${i ? 9 : 6}s ease-in-out ${i ? -4 : 0}s infinite alternate`;
+    container.appendChild(c);
+    return c;
+  });
   document.body.appendChild(container);
-
-  const starCount = 900;
-  const stars = [];
-
-  for (let i = 0; i < starCount; i++) {
-    const star = document.createElement('div');
-    const size = Math.random() * 2.8 + 0.4;
-    star.style.position = 'absolute';
-    star.style.background = 'white';
-    star.style.borderRadius = '50%';
-    star.style.width = `${size}px`;
-    star.style.height = `${size}px`;
-    star.style.left = `${Math.random() * 200}%`;
-    star.style.top = `${Math.random() * 200}%`;
-    star.style.opacity = Math.random() * 0.85 + 0.15;
-    star.style.animation = `twinkleAnim ${3 + Math.random() * 7}s infinite alternate`;
-    stars.push(star);
-  }
-
-  container.append(...stars);
 
   if (!document.getElementById('star-anim-style')) {
     const style = document.createElement('style');
     style.id = 'star-anim-style';
     style.textContent = `
-      @keyframes twinkleAnim {
-        0% { opacity: 0.2; transform: scale(1); }
-        100% { opacity: 1; transform: scale(1.05); }
-      }
+      @keyframes twinkleAnim { from { opacity: 0.35; } to { opacity: 1; } }
+      @media (prefers-reduced-motion: reduce) { #stars-container canvas { animation: none !important; } }
     `;
     document.head.appendChild(style);
   }
+
+  let drawnW = 0, drawnH = 0;
+  function draw() {
+    const w = window.innerWidth;
+    const h = Math.max(window.innerHeight, screen.height || 0);
+    if (w === drawnW && h <= drawnH) return;
+    drawnW = w; drawnH = h;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const perLayer = Math.round((w * h) / 9000);
+    layers.forEach(c => {
+      c.width = Math.round(w * dpr);
+      c.height = Math.round(h * dpr);
+      const ctx = c.getContext('2d');
+      ctx.scale(dpr, dpr);
+      ctx.fillStyle = '#fff';
+      for (let i = 0; i < perLayer; i++) {
+        const r = (Math.random() * 2.4 + 0.4) / 2;
+        ctx.globalAlpha = Math.random() * 0.7 + 0.3;
+        ctx.beginPath();
+        ctx.arc(Math.random() * w, Math.random() * h, r, 0, 6.2832);
+        ctx.fill();
+      }
+    });
+  }
+  draw();
+  let t;
+  window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 200); });
 }
 
 // ========== WARTUNGSMODUS + PROJEKTE ==========
@@ -79,36 +86,59 @@ function createStars() {
     }
   }
 
-  // Projekte laden – MIT OWNER
-  if (document.getElementById('projects-list')) {
-    fetch('projects.json')
-      .then(response => response.ok ? response.json() : Promise.reject())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          const container = document.getElementById('projects-list');
-          container.innerHTML = '';
-          container.classList.remove('projects-grid');
-          const list = document.createElement('ul');
-          list.className = 'plist';
-          const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-          data.forEach(project => {
-            const owner = project.owner || 'Niklas Leidert';
-            const ext = /^https?:/.test(project.url);
-            const icon = project.icon ? `<img src="${esc(project.icon)}" alt="" width="48" height="48">` : `<span class="noicon" aria-hidden="true">${esc(project.title.charAt(0))}</span>`;
-            const li = document.createElement('li');
-            li.innerHTML = `
-              ${icon}
-              <div>
-                <h2>${esc(project.title)}</h2>
-                <p>${esc(project.text)}</p>
-                <p class="owner">Von ${esc(owner)}</p>
-              </div>
-              <a class="go" href="${esc(project.url)}"${ext ? ' target="_blank" rel="noopener"' : ''}>Zum Projekt</a>`;
-            list.appendChild(li);
-          });
-          container.appendChild(list);
-        }
-      })
-      .catch(() => { });
+  // Projekte: angeheftete aus projects.json, dazu die beliebtesten öffentlichen GitHub-Repos
+  const list = document.getElementById('projects-list');
+  if (list) {
+    const GH_USER = 'nekuro22';
+    const SKIP = [GH_USER + '.github.io'];
+    const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const month = d => new Date(d).toLocaleDateString('de-DE', { month: 'long', year: 'numeric' });
+
+    const loadPinned = () => fetch('projects.json').then(r => r.ok ? r.json() : []).catch(() => []);
+    const loadRepos = async () => {
+      const key = 'gh-repos-' + GH_USER;
+      try {
+        const c = JSON.parse(localStorage.getItem(key) || 'null');
+        if (c && Date.now() - c.t < 3600e3) return c.d;
+      } catch (e) { }
+      try {
+        const r = await fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&type=owner`);
+        if (!r.ok) throw 0;
+        const d = (await r.json())
+          .filter(x => !x.fork && !x.private && !x.archived && !SKIP.includes(x.name))
+          .sort((a, b) => b.stargazers_count - a.stargazers_count || new Date(b.pushed_at) - new Date(a.pushed_at))
+          .slice(0, 6)
+          .map(x => ({ name: x.name, text: x.description, url: x.html_url, lang: x.language, stars: x.stargazers_count, pushed: x.pushed_at }));
+        try { localStorage.setItem(key, JSON.stringify({ t: Date.now(), d })); } catch (e) { }
+        return d;
+      } catch (e) {
+        try { const c = JSON.parse(localStorage.getItem(key) || 'null'); if (c) return c.d; } catch (e2) { }
+        return [];
+      }
+    };
+
+    const item = (title, text, meta, url, icon) => {
+      const ext = /^https?:/.test(url);
+      const ic = icon ? `<img src="${esc(icon)}" alt="" width="48" height="48" loading="lazy" decoding="async">` : `<span class="noicon" aria-hidden="true">${esc(title.charAt(0).toUpperCase())}</span>`;
+      return `<li>${ic}<div><h2>${esc(title)}</h2><p>${esc(text)}</p><p class="owner">${esc(meta)}</p></div><a class="go" href="${esc(url)}"${ext ? ' target="_blank" rel="noopener"' : ''}>${ext ? 'Auf GitHub' : 'Ansehen'}</a></li>`;
+    };
+
+    Promise.all([loadPinned(), loadRepos()]).then(([pinned, repos]) => {
+      if (!pinned.length && !repos.length) return;
+      let html = '';
+      if (pinned.length) {
+        html += '<ul class="plist">' + pinned.map(p => item(p.title, p.text, 'Von ' + (p.owner || 'Niklas Leidert'), p.url, p.icon)).join('') + '</ul>';
+      }
+      if (repos.length) {
+        html += '<h2 class="sec plist-head">Beliebteste öffentliche Repos</h2><ul class="plist">' + repos.map(r => {
+          const parts = [];
+          if (r.lang) parts.push(r.lang);
+          parts.push(r.stars === 1 ? '1 Stern' : r.stars + ' Sterne');
+          parts.push('zuletzt ' + month(r.pushed));
+          return item(r.name, r.text || 'Keine Beschreibung.', parts.join(', '), r.url);
+        }).join('') + '</ul>';
+      }
+      list.innerHTML = html;
+    });
   }
 })();

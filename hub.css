@@ -162,3 +162,4 @@ body.home { background: var(--color-void); line-height: normal; font-family: var
 .prose h3 { margin-bottom: 0; }
 .prose h4 { white-space: normal; color: var(--color-ink); font-size: var(--text-lg); font-weight: 700; margin: var(--space-xl) 0 var(--space-xs); }
 .prose h3 + h4 { margin-top: var(--space-lg); }
+h2.plist-head { font-size: var(--text-xl); margin: var(--space-2xl) 0 var(--space-md); }
