@@ -163,3 +163,16 @@ body.home { background: var(--color-void); line-height: normal; font-family: var
 .prose h4 { white-space: normal; color: var(--color-ink); font-size: var(--text-lg); font-weight: 700; margin: var(--space-xl) 0 var(--space-xs); }
 .prose h3 + h4 { margin-top: var(--space-lg); }
 h2.plist-head { font-size: var(--text-xl); margin: var(--space-2xl) 0 var(--space-md); }
+
+/* Seitenwechsel: weich überblenden, Navigation und Himmel bleiben stehen */
+@view-transition { navigation: auto; }
+.navbar { view-transition-name: nav; }
+#stars-container { view-transition-name: sky; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 180ms; }
+::view-transition-group(nav), ::view-transition-group(sky) { animation: none; }
+
+/* Einblendung nur beim ersten Besuch pro Sitzung */
+.seen .hero-text > *, .seen .block, .seen .nv { animation: none; }
+
+/* Projektliste: Platz freihalten, damit nichts springt */
+.js #projects-list:not(.loaded) { min-height: 67rem; }

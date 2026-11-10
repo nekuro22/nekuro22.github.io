@@ -25,6 +25,8 @@ function createStars() {
     document.head.appendChild(style);
   }
 
+  // Fester Zufall: auf jeder Seite derselbe Himmel, kein Springen beim Seitenwechsel
+  const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
   let drawnW = 0, drawnH = 0;
   function draw() {
     const w = window.innerWidth;
@@ -33,17 +35,18 @@ function createStars() {
     drawnW = w; drawnH = h;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const perLayer = Math.round((w * h) / 9000);
-    layers.forEach(c => {
+    layers.forEach((c, li) => {
+      const rand = rng(1337 + li);
       c.width = Math.round(w * dpr);
       c.height = Math.round(h * dpr);
       const ctx = c.getContext('2d');
       ctx.scale(dpr, dpr);
       ctx.fillStyle = '#fff';
       for (let i = 0; i < perLayer; i++) {
-        const r = (Math.random() * 2.4 + 0.4) / 2;
-        ctx.globalAlpha = Math.random() * 0.7 + 0.3;
+        const r = (rand() * 2.4 + 0.4) / 2;
+        ctx.globalAlpha = rand() * 0.7 + 0.3;
         ctx.beginPath();
-        ctx.arc(Math.random() * w, Math.random() * h, r, 0, 6.2832);
+        ctx.arc(rand() * w, rand() * h, r, 0, 6.2832);
         ctx.fill();
       }
     });
@@ -58,6 +61,8 @@ function createStars() {
   let maintenanceActive = false;
   // GitHub Pages liefert /maintenance.html unter /maintenance aus, beides zählt
   const onMaintenance = /\/maintenance(\.html)?\/?$/.test(window.location.pathname);
+  // Himmel sofort zeichnen, nicht erst nach dem Laden der Optionen
+  if (document.body) createStars(); else document.addEventListener('DOMContentLoaded', createStars);
 
   try {
     const response = await fetch('options.json', {
@@ -76,14 +81,6 @@ function createStars() {
   if (maintenanceActive && !onMaintenance) {
     window.location.replace('maintenance.html');
     return;
-  }
-
-  if (!onMaintenance) {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', createStars);
-    } else {
-      createStars();
-    }
   }
 
   // Projekte: angeheftete aus projects.json, dazu die beliebtesten öffentlichen GitHub-Repos
@@ -123,8 +120,8 @@ function createStars() {
       return `<li>${ic}<div><h2>${esc(title)}</h2><p>${esc(text)}</p><p class="owner">${esc(meta)}</p></div><a class="go" href="${esc(url)}"${ext ? ' target="_blank" rel="noopener"' : ''}>${ext ? 'Auf GitHub' : 'Ansehen'}</a></li>`;
     };
 
-    Promise.all([loadPinned(), loadRepos()]).then(([pinned, repos]) => {
-      if (!pinned.length && !repos.length) return;
+    const render = (pinned, repos) => {
+      if (!pinned.length && !repos.length) { list.innerHTML = '<p class="owner">Gerade keine Projekte abrufbar. Schau auf GitHub vorbei.</p>'; return; }
       let html = '';
       if (pinned.length) {
         html += '<ul class="plist">' + pinned.map(p => item(p.title, p.text, 'Von ' + (p.owner || 'Niklas Leidert'), p.url, p.icon)).join('') + '</ul>';
@@ -138,7 +135,20 @@ function createStars() {
           return item(r.name, r.text || 'Keine Beschreibung.', parts.join(', '), r.url);
         }).join('') + '</ul>';
       }
+      if (list.dataset.html === html) return;
+      list.dataset.html = html;
       list.innerHTML = html;
+      list.classList.add('loaded');
+    };
+    // Sofort aus dem Zwischenspeicher zeichnen, dann frisch laden
+    try {
+      const c = JSON.parse(localStorage.getItem('gh-repos-' + GH_USER) || 'null');
+      const p = JSON.parse(localStorage.getItem('pinned') || 'null');
+      if (c && p) render(p, c.d);
+    } catch (e) { }
+    Promise.all([loadPinned(), loadRepos()]).then(([pinned, repos]) => {
+      try { localStorage.setItem('pinned', JSON.stringify(pinned)); } catch (e) { }
+      render(pinned, repos);
     });
   }
 })();
