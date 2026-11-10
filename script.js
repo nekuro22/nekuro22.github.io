@@ -49,6 +49,8 @@ function createStars() {
 // ========== WARTUNGSMODUS + PROJEKTE ==========
 (async function () {
   let maintenanceActive = false;
+  // GitHub Pages liefert /maintenance.html unter /maintenance aus, beides zählt
+  const onMaintenance = /\/maintenance(\.html)?\/?$/.test(window.location.pathname);
 
   try {
     const response = await fetch('options.json', {
@@ -64,12 +66,12 @@ function createStars() {
     maintenanceActive = false;
   }
 
-  if (maintenanceActive && !window.location.pathname.endsWith('maintenance.html')) {
+  if (maintenanceActive && !onMaintenance) {
     window.location.replace('maintenance.html');
     return;
   }
 
-  if (!window.location.pathname.endsWith('maintenance.html')) {
+  if (!onMaintenance) {
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', createStars);
     } else {

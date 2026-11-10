@@ -107,3 +107,4 @@ body.home { background: var(--color-void); line-height: normal; font-family: var
 .facts dt { font-size: var(--text-display-s); font-weight: 700; line-height: 1; letter-spacing: var(--tracking-display); font-variant-numeric: tabular-nums; }
 .facts dd { margin: var(--space-md) 0 0; color: var(--color-ink-2); max-width: 24ch; }
 @media (max-width: 40rem) { .facts { grid-template-columns: 1fr; } }
+.maint { display: flex; flex-direction: column; justify-content: center; min-height: 100dvh; }
