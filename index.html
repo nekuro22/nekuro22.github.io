@@ -4,17 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Niklas-Leidert.de</title>
-  <meta name="description" content="Hub – ein Projekt von Niklas Leidert. Bald verfügbar." />
+  <meta name="description" content="Projekte von Niklas Leidert." />
+  <script>document.documentElement.className = 'js';</script>
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="showcase.css" />
+  <link rel="stylesheet" href="hub.css" />
 </head>
-<body class="showcase home">
-  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+<body class="home">
   <nav class="navbar">
     <div class="nav-brand">Niklas-Leidert.de</div>
     <div class="nav-links">
       <a href="index.html">Home</a>
-      <a href="hub.html" class="nav-hub">Hub</a>
+      <a href="hub.html">Hub</a>
       <a href="projects.html">Projekte</a>
       <a href="legal.html">Impressum | Datenschutz</a>
       <a href="https://github.com/nekuro22" target="_blank" class="nav-github" aria-label="GitHub">
@@ -25,40 +25,27 @@
   <main class="main-center first-screen">
     <img src="icon-t.png" alt="Logo" class="home-logo">
   </main>
-  <div class="marquee"><div class="marquee-track"><span>Hub</span><span>Leidert.org</span><span>Caelestia Extra</span><span>MuchBetterUntis</span><span>Open Source</span><span>Made in Germany</span><span>Hub</span><span>Leidert.org</span><span>Caelestia Extra</span><span>MuchBetterUntis</span><span>Open Source</span><span>Made in Germany</span></div></div>
-  <section class="hero below">
-    <div class="rv">
-      <span class="badge"><i></i> In Entwicklung</span>
-      <h1>Dein Alltag.<br><span class="grad">Ein Hub.</span></h1>
-      <p class="lead">Aufgaben, Termine, Cloud und Medien in einer persönlichen Oberfläche, auf all deinen Geräten.</p>
-      <div class="cta-row">
-        <a class="btn primary" href="hub.html">Hub entdecken →</a>
-        <a class="btn" href="projects.html">Alle Projekte</a>
-      </div>
+  <section class="wrap home-more">
+    <div class="hero-text rv">
+      <h2 class="sec">Aktuell: der Hub.</h2>
+      <p class="lede">Aufgaben, Termine, Cloud und Medien, selbst gebaut und auf meinem eigenen Server.</p>
+      <div class="actions"><a class="btn" href="hub.html">Hub ansehen</a></div>
     </div>
-      <div class="stage rv">
-        <div class="chip c1">Live synchronisiert</div>
-        <div class="chip c2">Details unter Verschluss</div>
-        <div class="mock">
-          <div class="scan"></div>
-          <div class="mock-bar"><b></b><b></b><b></b><span>HUB</span></div>
-          <div class="mock-body">
-            <div class="mock-side"><i></i><i></i><i></i><i></i></div>
-            <div class="mock-main">
-              <div class="tile wide"><div class="bar m"></div><div class="bar s"></div><div class="redact"><div class="bar m"></div></div></div>
-              <div class="tile"><div class="redact"><div class="bar s"></div><div class="bar m"></div></div></div>
-              <div class="tile"><div class="bar s"></div><div class="redact"><div class="bar m"></div></div></div>
-              <div class="tile"><div class="redact"><div class="bar m"></div><div class="bar s"></div></div></div>
-              <div class="tile"><div class="bar m"></div><div class="redact"><div class="bar s"></div></div></div>
-              <div class="chart"><svg viewBox="0 0 400 130" preserveAspectRatio="none"><path d="M0 100 C60 90 80 30 140 50 S230 110 290 55 S360 20 400 35"/><path class="b" d="M0 115 C70 105 100 85 160 90 S250 40 310 70 S380 60 400 50"/></svg></div>
-            </div>
+    <div class="hero-day rv">
+      <div class="day" aria-hidden="true">
+            <div class="scan"></div>
+            <div class="slot"><time>07</time><div class="block " style="--i:1"><i></i><i></i></div></div>
+            <div class="slot"><time>09</time><div class="block tall" style="--i:2"><i></i><i></i></div></div>
+            <div class="slot"><time>12</time><div class="block now" style="--i:3"><i></i><i></i></div></div>
+            <div class="slot"><time>14</time><div class="block " style="--i:4"><i></i><i></i></div></div>
+            <div class="slot"><time>16</time><div class="block tall" style="--i:5"><i></i><i></i></div></div>
+            <div class="slot"><time>19</time><div class="block empty" style="--i:6"></div></div>
+            <div class="slot"><time>21</time><div class="block " style="--i:7"><i></i><i></i></div></div>
           </div>
-          <div class="lock">▮▮▮ CLASSIFIED</div>
-        </div>
-      </div>
+    </div>
   </section>
-  <footer class="sc-foot">© Niklas Leidert · <a href="legal.html">Impressum | Datenschutz</a></footer>
+  <footer class="wrap foot"><span>Niklas Leidert</span><a href="legal.html">Impressum | Datenschutz</a></footer>
   <script src="script.js"></script>
-  <script src="showcase.js"></script>
+  <script src="hub.js"></script>
 </body>
 </html>
