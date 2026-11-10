@@ -31,7 +31,7 @@ h2.sec { font-size: var(--text-section); line-height: 1.08; font-weight: 700; le
 }
 
 /* Tagesplan: das Motiv */
-.day { position: relative; display: grid; gap: var(--space-xs); padding-block: var(--space-md); }
+.day { position: relative; display: grid; gap: var(--space-xs); padding-top: var(--space-sm); }
 .slot { display: grid; grid-template-columns: 3ch minmax(0, 1fr); align-items: center; column-gap: var(--space-md); min-height: 44px; }
 .slot time { font-size: var(--text-sm); color: var(--color-muted); font-variant-numeric: tabular-nums; }
 .block { color: var(--color-ink); display: grid; gap: var(--space-2xs); align-content: center; padding: var(--space-xs) var(--space-sm); min-height: 44px; border-left: 2px solid var(--color-rule); background: var(--color-paper-2); transform-origin: left center; animation: block-in var(--dur-long) var(--ease-out) backwards; animation-delay: calc(var(--i) * 70ms + 200ms); }
@@ -83,3 +83,21 @@ h2.sec { font-size: var(--text-section); line-height: 1.08; font-weight: 700; le
 body.home { background: var(--color-void); line-height: normal; font-family: var(--font-legacy); }
 .first-screen { min-height: calc(100dvh - 3.9rem); }
 .navbar svg { display: inline-block; vertical-align: middle; }
+
+/* Hub-Oberfläche, anonymisiert: Aufbau wie in der App, Inhalt unscharf */
+.panel { display: grid; grid-template-columns: 76px minmax(0, 1fr); background: var(--color-paper-2); border: 1px solid var(--color-rule); border-radius: var(--radius-card); overflow: hidden; }
+.side { position: relative; display: grid; align-content: start; gap: var(--space-xs); padding: var(--space-md) var(--space-xs); border-right: 1px solid var(--color-rule); background: color-mix(in oklab, var(--color-paper) 55%, var(--color-paper-2)); }
+.nv { position: relative; z-index: 1; display: grid; justify-items: center; gap: var(--space-2xs); min-height: 56px; align-content: center; animation: block-in var(--dur-long) var(--ease-out) backwards; animation-delay: calc(var(--i) * 70ms + 100ms); }
+.nv b { width: 22px; height: 22px; border: 2px solid var(--color-muted); border-radius: 6px; opacity: 0.7; }
+.nv i { width: 36px; height: 6px; border-radius: 3px; background: color-mix(in oklab, var(--color-ink) 28%, transparent); filter: blur(2px); }
+.sel { position: absolute; left: var(--space-xs); right: var(--space-xs); top: var(--space-md); height: 56px; border-radius: var(--radius-card); background: color-mix(in oklab, var(--color-accent) 20%, transparent); border: 1px solid color-mix(in oklab, var(--color-accent) 55%, transparent); animation: sel 12s var(--ease-out) infinite; }
+@keyframes sel { 0%, 20% { transform: translateY(0); } 25%, 45% { transform: translateY(64px); } 50%, 70% { transform: translateY(128px); } 75%, 95% { transform: translateY(64px); } 100% { transform: translateY(0); } }
+.main { padding: var(--space-md); min-width: 0; }
+.ph i { display: block; width: 45%; height: 22px; border-radius: 6px; background: color-mix(in oklab, var(--color-ink) 70%, transparent); filter: blur(6px); }
+.tabs { display: flex; gap: var(--space-xs); margin-top: var(--space-md); }
+.tabs span { width: 64px; height: 28px; border-radius: var(--radius-card); background: var(--color-paper-3); filter: blur(1px); }
+.tabs .on { background: color-mix(in oklab, var(--color-accent) 30%, var(--color-paper-3)); }
+.panel .block { background: var(--color-paper-3); }
+.panel .block.now { background: color-mix(in oklab, var(--color-accent) 18%, var(--color-paper-3)); }
+.panel .slot { grid-template-columns: 2.4ch minmax(0, 1fr); column-gap: var(--space-sm); }
+@media (prefers-reduced-motion: reduce) { .sel { animation: none; } }
