@@ -115,9 +115,10 @@ function createStars() {
     };
 
     const item = (title, text, meta, url, icon) => {
+      const desc = text ? `<p>${esc(text)}</p>` : '';
       const ext = /^https?:/.test(url);
       const ic = icon ? `<img src="${esc(icon)}" alt="" width="48" height="48" loading="lazy" decoding="async">` : `<span class="noicon" aria-hidden="true">${esc(title.charAt(0).toUpperCase())}</span>`;
-      return `<li>${ic}<div><h2>${esc(title)}</h2><p>${esc(text)}</p><p class="owner">${esc(meta)}</p></div><a class="go" href="${esc(url)}"${ext ? ' target="_blank" rel="noopener"' : ''}>${ext ? 'Auf GitHub' : 'Ansehen'}</a></li>`;
+      return `<li>${ic}<div><h2>${esc(title)}</h2>${desc}<p class="owner">${esc(meta)}</p></div><a class="go" href="${esc(url)}"${ext ? ' target="_blank" rel="noopener"' : ''}>${ext ? 'Auf GitHub' : 'Ansehen'}</a></li>`;
     };
 
     const render = (pinned, repos) => {
@@ -130,9 +131,9 @@ function createStars() {
         html += '<h2 class="sec plist-head">Beliebteste öffentliche Repos</h2><ul class="plist">' + repos.map(r => {
           const parts = [];
           if (r.lang) parts.push(r.lang);
-          parts.push(r.stars === 1 ? '1 Stern' : r.stars + ' Sterne');
+          if (r.stars > 0) parts.push(r.stars === 1 ? '1 Stern' : r.stars + ' Sterne');
           parts.push('zuletzt ' + month(r.pushed));
-          return item(r.name, r.text || 'Keine Beschreibung.', parts.join(', '), r.url);
+          return item(r.name, r.text || '', parts.join(', ').replace(/^./, c => c.toUpperCase()), r.url);
         }).join('') + '</ul>';
       }
       if (list.dataset.html === html) return;
