@@ -59,6 +59,7 @@ function createStars() {
 // ========== WARTUNGSMODUS + PROJEKTE ==========
 (async function () {
   let maintenanceActive = false;
+  let apiBase = '';
   // GitHub Pages liefert /maintenance.html unter /maintenance aus, beides zählt
   const onMaintenance = /\/maintenance(\.html)?\/?$/.test(window.location.pathname);
   // Himmel sofort zeichnen, nicht erst nach dem Laden der Optionen
@@ -73,6 +74,7 @@ function createStars() {
     if (response.ok) {
       const options = await response.json();
       maintenanceActive = options.maintenance_mode === true;
+      if (typeof options.api_base === 'string') apiBase = options.api_base.replace(/\/+$/, '');
     }
   } catch (e) {
     maintenanceActive = false;
@@ -98,6 +100,19 @@ function createStars() {
         const c = JSON.parse(localStorage.getItem(key) || 'null');
         if (c && Date.now() - c.t < 3600e3) return c.d;
       } catch (e) { }
+      // Zuerst das eigene Backend fragen, falls eingetragen
+      if (apiBase) {
+        try {
+          const r = await fetch(apiBase + '/api/projects');
+          if (r.ok) {
+            const d = await r.json();
+            if (Array.isArray(d)) {
+              try { localStorage.setItem(key, JSON.stringify({ t: Date.now(), d })); } catch (e) { }
+              return d;
+            }
+          }
+        } catch (e) { }
+      }
       try {
         const r = await fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&type=owner`);
         if (!r.ok) throw 0;

@@ -1,3 +1,4 @@
 {
-  "maintenance_mode": false
+  "maintenance_mode": false,
+  "api_base": ""
 }
