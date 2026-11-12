@@ -83,7 +83,7 @@ function createStars() {
           const a = document.createElement('a');
           a.href = 'freunde.html';
           a.className = 'nav-friends';
-          a.textContent = 'Freunde';
+          a.textContent = 'Private Pages';
           if (/\/(freunde|admin|login)(\.html)?$/.test(location.pathname)) a.setAttribute('aria-current', 'page');
           links.insertBefore(a, gh);
         }
