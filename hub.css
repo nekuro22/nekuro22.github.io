@@ -218,6 +218,12 @@ p.ok { color: var(--color-success); margin-block: var(--space-md); }
 .friends-top { display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); flex-wrap: wrap; }
 .friends-actions { display: flex; gap: var(--space-sm); flex-wrap: wrap; }
 button.go { font: inherit; font-weight: 700; background: transparent; cursor: pointer; }
+/* Adminboard und Abmelden: gleiche Knöpfe wie in der Liste, gut lesbar auf dunklem Grund */
+.friends-actions .go { display: inline-flex; align-items: center; min-height: 44px; padding-inline: var(--space-md); border: 1px solid var(--color-rule); border-radius: var(--radius-card); color: var(--color-ink); text-decoration: none; font-weight: 700; transition: border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
+.friends-actions .go:active { transform: scale(0.97); }
+.friends-actions .go:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; transition: none; }
+@media (hover: hover) and (pointer: fine) { .friends-actions .go:hover { border-color: var(--color-accent); color: var(--color-accent); } }
+@media (prefers-reduced-motion: reduce) { .friends-actions .go:active { transform: none; } }
 .friends .lede { margin-bottom: var(--space-xl); }
 .md { max-width: 68ch; color: var(--color-ink-2); line-height: 1.65; margin-top: var(--space-lg); }
 .md h1, .md h2, .md h3 { color: var(--color-ink); margin: var(--space-xl) 0 var(--space-sm); line-height: 1.2; }
