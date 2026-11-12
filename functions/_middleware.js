@@ -19,12 +19,15 @@ export async function onRequest({ request, next, env }) {
     res.headers.set('X-Robots-Tag', 'noindex, nofollow');
     res.headers.set('X-Frame-Options', 'DENY');
     res.headers.set('Referrer-Policy', 'same-origin');
+    // Nur eigene Skripte: eingeschleuster Code soll das Admin-Token nicht lesen können
+    res.headers.set('Content-Security-Policy', "frame-ancestors 'none'; script-src 'self'; object-src 'none'; base-uri 'none'");
     return res;
   }
 
   if (url.hostname === 'privat.' + DOMAIN || url.hostname.startsWith('privat.')) return privat(request, url, api);
 
-  const res = await next();
+  // Ohne Range: Ein Teilstück ohne <head> würde die Prüfung unten umgehen
+  const res = await next(withoutRange(request));
   if (!(res.headers.get('Content-Type') || '').includes('text/html')) return res;
   const html = await res.text();
   const page = protectedPage(html);
@@ -71,14 +74,24 @@ async function privat(request, url, api) {
   } catch {
     return gateResponse({ code: 502, message: 'Die Seite ist gerade nicht erreichbar. Versuch es gleich noch einmal.' }, headers);
   }
-  const out = new Response(res.body, res);
-  // Weiterleitungen des Projekts auf den Pfad unter privat. umschreiben
-  const loc = out.headers.get('Location');
-  if (loc) {
-    if (loc.startsWith('/') && !loc.startsWith('//')) out.headers.set('Location', `/${path}${loc}`);
-    else if (loc.startsWith(route.origin)) out.headers.set('Location', `/${path}${loc.slice(route.origin.length) || '/'}`);
+  // Nur harmlose Header des Projekts übernehmen
+  const out = new Response(res.body, { status: res.status, statusText: res.statusText });
+  for (const h of ['Content-Type', 'Content-Length', 'Content-Range', 'Accept-Ranges', 'Content-Language', 'ETag', 'Last-Modified']) {
+    if (res.headers.get(h)) out.headers.set(h, res.headers.get(h));
   }
-  out.headers.delete('Set-Cookie');
+  out.headers.set('X-Content-Type-Options', 'nosniff');
+  out.headers.set('X-Frame-Options', 'DENY');
+  // Weiterleitungen nur innerhalb des Projekts, auf den Pfad unter privat. umgeschrieben
+  const loc = res.headers.get('Location');
+  if (loc) {
+    let to = null;
+    try {
+      const u = new URL(loc, up);
+      if (u.origin === route.origin) to = `/${path}${u.pathname}${u.search}`;
+    } catch { }
+    if (!to) return gateResponse({ code: 502, message: 'Die Seite leitet auf eine fremde Adresse weiter.' }, headers);
+    out.headers.set('Location', to);
+  }
   out.headers.set('Cache-Control', 'private, no-store');
   out.headers.set('X-Robots-Tag', 'noindex, nofollow');
   out.headers.set('Referrer-Policy', 'same-origin');
@@ -86,6 +99,13 @@ async function privat(request, url, api) {
 }
 
 // ---------- gemeinsam ----------
+function withoutRange(request) {
+  if (!request.headers.has('Range') && !request.headers.has('If-Range')) return request;
+  const h = new Headers(request.headers);
+  h.delete('Range'); h.delete('If-Range');
+  return new Request(request, { headers: h });
+}
+
 async function gate(api, page, url, request) {
   try {
     const r = await fetch(`${api}/api/gate?page=${encodeURIComponent(page)}&url=${encodeURIComponent(url.origin + url.pathname + url.search)}`, {

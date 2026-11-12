@@ -345,9 +345,10 @@ $('gh-list').addEventListener('click', ev => {
 $('pw-form').addEventListener('submit', ev => {
   ev.preventDefault();
   busy(ev.submitter || $('pw-form').querySelector('.btn'), 'Ändert …', async () => {
-    await api('POST', '/api/admin/password', { current: $('pw-old').value, password: $('pw-new').value });
+    const d = await api('POST', '/api/admin/password', { current: $('pw-old').value, password: $('pw-new').value });
+    if (d.token) token.set(d.token); // andere Geräte sind jetzt abgemeldet, dieses bleibt angemeldet
     $('pw-old').value = ''; $('pw-new').value = '';
-    say('Dein Passwort ist geändert.');
+    say('Dein Passwort ist geändert. Alle anderen Geräte sind abgemeldet.');
   });
 });
 $('logout-all').addEventListener('click', ev => {

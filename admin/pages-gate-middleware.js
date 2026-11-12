@@ -7,7 +7,14 @@
 const API = 'https://api.niklas-leidert.de';
 
 export async function onRequest({ request, next }) {
-  const res = await next();
+  // Ohne Range: Ein Teilstück ohne <head> würde die Prüfung unten umgehen
+  let req = request;
+  if (request.headers.has('Range') || request.headers.has('If-Range')) {
+    const h = new Headers(request.headers);
+    h.delete('Range'); h.delete('If-Range');
+    req = new Request(request, { headers: h });
+  }
+  const res = await next(req);
   if (!(res.headers.get('Content-Type') || '').includes('text/html')) return res;
   const html = await res.text();
   const page = protectedPage(html);
