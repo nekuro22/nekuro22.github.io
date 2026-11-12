@@ -227,6 +227,13 @@ async function loadFriends() {
     ${g.fixed ? '' : `<div class="btns"><button class="ghost small" data-del-gh="${esc(g.login)}">Sperren</button></div>`}
   </li>`).join('') : '<li class="empty">Noch niemand.</li>';
   $('gh-hint').hidden = f.githubReady;
+  $('link-list').innerHTML = (f.links || []).length ? f.links.map(l => `<li>
+    <div><div class="name">${esc(l.github)} (GitHub) = ${esc(l.user)}</div>${l.fixed ? '<div class="note">aus der Konfiguration, dort ändern</div>' : ''}</div>
+    ${l.fixed ? '' : `<div class="btns"><button class="ghost small" data-unlink="${esc(l.github)}">Lösen</button></div>`}
+  </li>`).join('') : '<li class="empty">Noch keine Verknüpfung.</li>';
+  const sel = $('lk-user'), keep = sel.value;
+  sel.innerHTML = f.users.map(u => `<option value="${esc(u.name)}">${esc(u.name)}</option>`).join('');
+  if (keep) sel.value = keep;
   accounts = [...f.users.map(u => ({ tag: u.tag || 'pw:' + u.name, label: u.name + ' (Passwort)' })), ...f.github.map(g => ({ tag: g.tag || 'github:' + g.login, label: g.login + ' (GitHub)' }))];
   // Auswahl im Seiten-Editor mit den neuen Accounts neu zeichnen, aktuelle Wahl behalten
   if ($('p-access').firstChild) {
@@ -253,6 +260,19 @@ $('user-list').addEventListener('click', ev => {
   const b = ev.target.closest('button[data-del-user]');
   if (!b || !confirm(`${b.dataset.delUser} entfernen? Der Zugang endet sofort.`)) return;
   busy(b, 'Entfernt …', async () => { await api('DELETE', '/api/admin/users/' + encodeURIComponent(b.dataset.delUser)); say('Freund entfernt.'); await loadFriends(); await loadGates(); });
+});
+$('link-form').addEventListener('submit', ev => {
+  ev.preventDefault();
+  busy(ev.submitter || $('link-form').querySelector('.btn'), 'Verknüpft …', async () => {
+    await api('POST', '/api/admin/links', { github: $('lk-gh').value, user: $('lk-user').value });
+    say(`${$('lk-gh').value.trim()} ist jetzt mit ${$('lk-user').value} verknüpft.`); $('lk-gh').value = '';
+    await loadFriends();
+  });
+});
+$('link-list').addEventListener('click', ev => {
+  const b = ev.target.closest('button[data-unlink]');
+  if (!b || !confirm(`Verknüpfung von ${b.dataset.unlink} lösen? Eine Anmeldung über GitHub endet sofort.`)) return;
+  busy(b, 'Löst …', async () => { await api('DELETE', '/api/admin/links/' + encodeURIComponent(b.dataset.unlink)); say('Verknüpfung gelöst.'); await loadFriends(); });
 });
 $('gh-form').addEventListener('submit', ev => {
   ev.preventDefault();

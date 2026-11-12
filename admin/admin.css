@@ -29,7 +29,7 @@ h3 { font-size: 1.2rem; margin: 0 0 8px; }
 
 .login { max-width: 420px; }
 .form label { display: block; font-weight: 700; margin: 16px 0 6px; }
-.form input, .form textarea { width: 100%; min-height: 48px; padding: 12px 14px; font: inherit; color: var(--ink); background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; }
+.form input, .form textarea, .form select { width: 100%; min-height: 48px; padding: 12px 14px; font: inherit; color: var(--ink); background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; }
 .form textarea { min-height: 300px; resize: vertical; font-family: var(--mono); font-size: 0.95rem; line-height: 1.5; }
 .grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 16px; }
 .editor { margin-top: 24px; padding: 24px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; }

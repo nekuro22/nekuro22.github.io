@@ -103,6 +103,19 @@
         </form>
       </section>
 
+      <section class="sec">
+        <h2>Verknüpfte Konten</h2>
+        <p class="muted">Gleiche Person mit Passwort und GitHub: Wer sich dann mit GitHub anmeldet, ist danach dasselbe Konto wie mit Passwort, mit denselben Rechten und Seiten.</p>
+        <ul class="rows" id="link-list"></ul>
+        <form id="link-form" class="form">
+          <div class="grid2">
+            <div><label for="lk-gh">GitHub-Name</label><input id="lk-gh" required autocapitalize="none" spellcheck="false" /></div>
+            <div><label for="lk-user">Passwort-Konto</label><select id="lk-user" required></select></div>
+          </div>
+          <button class="btn" type="submit">Verknüpfen</button>
+        </form>
+      </section>
+
       <section class="sec" id="pw-sec" hidden>
         <h2>Dein Passwort</h2>
         <form id="pw-form" class="form">
