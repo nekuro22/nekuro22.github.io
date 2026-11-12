@@ -136,8 +136,8 @@ body.home { background: var(--color-void); line-height: normal; font-family: var
 
 /* Projektliste */
 .plist { list-style: none; margin: 0; padding: 0; }
-.plist li { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; column-gap: var(--space-lg); align-items: center; padding-block: var(--space-lg); border-top: 1px solid var(--color-rule); }
-.plist li:last-child { border-bottom: 1px solid var(--color-rule); }
+.plist > li { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; column-gap: var(--space-lg); align-items: center; padding-block: var(--space-lg); border-top: 1px solid var(--color-rule); }
+.plist > li:last-child { border-bottom: 1px solid var(--color-rule); }
 .plist img, .plist .noicon { width: 48px; height: 48px; object-fit: contain; border-radius: var(--radius-card); background: var(--color-paper-2); }
 .plist h2 { font-size: var(--text-xl); font-weight: 700; line-height: 1.2; }
 .plist p { color: var(--color-ink-2); margin-top: var(--space-2xs); max-width: 48ch; }
@@ -147,7 +147,7 @@ body.home { background: var(--color-void); line-height: normal; font-family: var
 @media (hover: hover) and (pointer: fine) { .plist .go:hover { border-color: var(--color-accent); color: var(--color-accent); } }
 .chart { margin-top: var(--space-2xl); }
 .chart img { width: 100%; max-width: 720px; padding: var(--space-sm); background: var(--color-paper-2); border-radius: var(--radius-card); filter: invert(1) hue-rotate(180deg) brightness(1.4); }
-@media (max-width: 40rem) { .plist li { grid-template-columns: 48px minmax(0, 1fr); } .plist .go { grid-column: 2; justify-self: start; margin-top: var(--space-sm); } }
+@media (max-width: 40rem) { .plist > li { grid-template-columns: 48px minmax(0, 1fr); } .plist .go { grid-column: 2; justify-self: start; margin-top: var(--space-sm); } }
 
 /* Rechtstexte */
 .prose { max-width: 68ch; padding-block: var(--space-2xl) var(--section-gap-s); }
@@ -187,3 +187,15 @@ h2.plist-head { font-size: var(--text-xl); margin: var(--space-2xl) 0 var(--spac
 .more-projects { padding-bottom: var(--section-gap-s); font-family: var(--font-body); line-height: 1.55; }
 .more-projects h2.sec { margin-bottom: var(--space-xl); }
 .plist h3 { font-size: var(--text-xl); font-weight: 700; line-height: 1.2; }
+
+/* Kurzfassung zum Aufklappen */
+.more { margin-top: var(--space-xs); }
+.more summary { display: inline-flex; align-items: center; gap: var(--space-xs); min-height: 44px; cursor: pointer; color: var(--color-ink-2); font-weight: 700; list-style: none; }
+.more summary::-webkit-details-marker { display: none; }
+.more summary::before { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg); transition: transform var(--dur-short) var(--ease-out); }
+.more[open] summary::before { transform: rotate(45deg); }
+@media (hover: hover) and (pointer: fine) { .more summary:hover { color: var(--color-accent); } }
+.more ul { margin: 0 0 var(--space-xs); padding-left: 1.1em; color: var(--color-ink-2); max-width: 60ch; }
+.more li + li { margin-top: var(--space-2xs); }
+.more code { font-size: 0.92em; color: var(--color-ink); }
+.plist .owner a { color: var(--color-ink-2); }
