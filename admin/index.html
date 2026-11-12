@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#000000" />
+  <title>Adminboard: Niklas-Leidert.de</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <header class="bar">
+    <span class="brand">Adminboard</span>
+    <nav class="bar-links">
+      <a href="https://niklas-leidert.de/">Zur Seite</a>
+      <button class="ghost" id="logout" type="button" hidden>Abmelden</button>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <p id="msg" role="status" hidden></p>
+    <p id="loading" class="muted">Lädt …</p>
+
+    <!-- Anmeldung -->
+    <section id="login" class="login" hidden>
+      <h1>Adminboard.</h1>
+      <p class="lede">Nur für Niklas. Melde dich an.</p>
+      <a class="btn gh" id="gh" href="#" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Mit GitHub anmelden</a>
+      <form id="login-form" class="form">
+        <label for="l-name">Name</label>
+        <input id="l-name" autocomplete="username" autocapitalize="none" spellcheck="false" required />
+        <label for="l-pw">Passwort</label>
+        <input id="l-pw" type="password" autocomplete="current-password" required />
+        <button class="btn" type="submit">Anmelden</button>
+      </form>
+    </section>
+
+    <!-- Board -->
+    <div id="board" hidden>
+      <h1>Adminboard.</h1>
+      <p class="lede">Angemeldet als <span id="who"></span>. Hier legst du geschützte Seiten an und bestimmst, wer sie sehen darf.</p>
+
+      <section class="sec">
+        <h2>Geschützte Seiten</h2>
+        <p class="muted">Nur angemeldete Freunde sehen sie, unter niklas-leidert.de/freunde.html. Inhalt in Markdown: # Überschrift, **fett**, - Liste, [Link](https://…).</p>
+        <ul class="rows" id="page-list"></ul>
+        <form id="page-form" class="form editor">
+          <h3 id="editor-title">Neue Seite</h3>
+          <div class="grid2">
+            <div><label for="p-title">Titel</label><input id="p-title" required maxlength="120" /></div>
+            <div><label for="p-slug">Adresse</label><input id="p-slug" required pattern="[a-z0-9]([a-z0-9\-]{0,62}[a-z0-9])?" title="Kleinbuchstaben, Ziffern und Striche" autocapitalize="none" spellcheck="false" /></div>
+          </div>
+          <label for="p-content">Inhalt</label>
+          <textarea id="p-content" rows="14"></textarea>
+          <div class="actions">
+            <button class="btn" type="submit">Seite speichern</button>
+            <button class="ghost" type="button" id="p-preview-btn">Vorschau</button>
+            <button class="ghost" type="button" id="p-new">Neue Seite</button>
+          </div>
+          <div class="md" id="p-preview" hidden></div>
+        </form>
+      </section>
+
+      <section class="sec">
+        <h2>Freunde mit Passwort</h2>
+        <ul class="rows" id="user-list"></ul>
+        <form id="user-form" class="form">
+          <div class="grid2">
+            <div><label for="u-name">Name</label><input id="u-name" required autocapitalize="none" spellcheck="false" pattern="[A-Za-z0-9._\-]{2,32}" title="2 bis 32 Zeichen: Buchstaben, Ziffern, Punkt, Strich" /></div>
+            <div><label for="u-pw">Passwort</label><input id="u-pw" type="password" autocomplete="new-password" minlength="10" /></div>
+          </div>
+          <p class="muted">Passwort leer lassen, dann wird ein sicheres erzeugt und einmal angezeigt.</p>
+          <button class="btn" type="submit">Freund anlegen</button>
+        </form>
+      </section>
+
+      <section class="sec">
+        <h2>Freunde mit GitHub</h2>
+        <p class="muted" id="gh-hint" hidden>Der GitHub-Login ist noch nicht eingerichtet. Die Liste gilt, sobald er läuft.</p>
+        <ul class="rows" id="gh-list"></ul>
+        <form id="gh-form" class="form">
+          <label for="g-name">GitHub-Name</label>
+          <input id="g-name" required autocapitalize="none" spellcheck="false" />
+          <button class="btn" type="submit">Freischalten</button>
+        </form>
+      </section>
+
+      <section class="sec" id="pw-sec" hidden>
+        <h2>Dein Passwort</h2>
+        <form id="pw-form" class="form">
+          <div class="grid2">
+            <div><label for="pw-old">Aktuelles Passwort</label><input id="pw-old" type="password" autocomplete="current-password" required /></div>
+            <div><label for="pw-new">Neues Passwort</label><input id="pw-new" type="password" autocomplete="new-password" minlength="12" required /></div>
+          </div>
+          <button class="btn" type="submit">Passwort ändern</button>
+        </form>
+      </section>
+
+      <section class="sec">
+        <h2>Sitzungen</h2>
+        <p class="muted">Meldet alle ab, auch dich. Gut, wenn ein Gerät verloren gegangen ist.</p>
+        <button class="ghost" type="button" id="logout-all">Alle abmelden</button>
+      </section>
+    </div>
+  </main>
+  <script type="module" src="admin.js"></script>
+</body>
+</html>

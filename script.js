@@ -75,15 +75,16 @@ function createStars() {
       const options = await response.json();
       maintenanceActive = options.maintenance_mode === true;
       if (typeof options.api_base === 'string') apiBase = options.api_base.replace(/\/+$/, '');
-      // Link zum Freundes-Bereich, sobald die Adresse eingetragen ist
-      if (typeof options.friends_url === 'string' && /^https:\/\//.test(options.friends_url)) {
+      // Link zum Freundes-Bereich, sobald das Backend eingetragen ist
+      if (apiBase) {
         const links = document.querySelector('.nav-links');
         const gh = links && links.querySelector('.nav-github');
         if (links && !links.querySelector('.nav-friends')) {
           const a = document.createElement('a');
-          a.href = options.friends_url;
+          a.href = 'freunde.html';
           a.className = 'nav-friends';
           a.textContent = 'Freunde';
+          if (/\/(freunde|admin|login)(\.html)?$/.test(location.pathname)) a.setAttribute('aria-current', 'page');
           links.insertBefore(a, gh);
         }
       }
