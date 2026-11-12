@@ -8,7 +8,7 @@ body {
   background: #000;
   color: #fff;
   font-family: Arial, sans-serif;
-  overflow-x: hidden;
+  overflow-x: clip;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -366,7 +366,7 @@ body::before {
   padding: 0.5rem 1rem;
   border-radius: 6px;
   font-size: 0.9rem;
-  transition: all 0.2s;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
   border: 1px solid transparent;
   display: inline-flex;
   align-items: center;

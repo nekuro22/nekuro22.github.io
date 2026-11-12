@@ -283,13 +283,13 @@ async function loadFriends() {
     <div><div class="name">${esc(l.github)} (GitHub) = ${esc(l.user)}</div>${l.fixed ? '<div class="note">aus der Konfiguration, dort ändern</div>' : ''}</div>
     ${l.fixed ? '' : `<div class="btns"><button class="ghost small" data-unlink="${esc(l.github)}">Lösen</button></div>`}
   </li>`).join('') : '<li class="empty">Noch keine Verknüpfung.</li>';
+  accounts = [...f.users.map(u => ({ tag: u.tag || 'pw:' + u.name, label: u.name + ' (Passwort)' })), ...f.github.map(g => ({ tag: g.tag || 'github:' + g.login, label: g.login + ' (GitHub)' }))];
   const ia = $('i-acc'), keepA = ia.value;
   ia.innerHTML = accounts.map(a => `<option value="${esc(a.tag)}">${esc(a.label)}</option>`).join('');
   if (keepA) ia.value = keepA;
   const sel = $('lk-user'), keep = sel.value;
   sel.innerHTML = f.users.map(u => `<option value="${esc(u.name)}">${esc(u.name)}</option>`).join('');
   if (keep) sel.value = keep;
-  accounts = [...f.users.map(u => ({ tag: u.tag || 'pw:' + u.name, label: u.name + ' (Passwort)' })), ...f.github.map(g => ({ tag: g.tag || 'github:' + g.login, label: g.login + ' (GitHub)' }))];
   // Auswahl im Seiten-Editor mit den neuen Accounts neu zeichnen, aktuelle Wahl behalten
   if ($('p-access').firstChild) {
     const root = $('page-form');

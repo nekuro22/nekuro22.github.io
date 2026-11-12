@@ -67,11 +67,7 @@ h3 { font-size: 1.2rem; margin: 0 0 8px; }
 .md a { color: var(--accent); }
 .md pre { background: var(--paper); padding: 12px; border-radius: 4px; overflow-x: auto; }
 
-@media (max-width: 40rem) {
-  .grid2 { grid-template-columns: 1fr; }
-  .rows li { flex-wrap: wrap; }
-  .wrap { padding-top: 32px; }
-}
+
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 .md ul, .md ol { padding-left: 1.4em; }
 
@@ -105,10 +101,40 @@ h3 { font-size: 1.2rem; margin: 0 0 8px; }
 .chk input { width: 18px; height: 18px; accent-color: var(--accent); }
 .chk:has(input:checked) { border-color: var(--accent); }
 .tutorial { margin: 8px 0 24px; padding: 16px 20px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; }
-.tutorial summary { font-weight: 700; cursor: pointer; min-height: 32px; }
+.tutorial summary { font-weight: 700; cursor: pointer; min-height: 44px; display: flex; align-items: center; gap: 8px; }
+.tutorial summary::before { content: ""; width: 0; height: 0; border-left: 6px solid currentColor; border-block: 5px solid transparent; transition: transform 120ms var(--ease-out); }
+.tutorial[open] summary::before { transform: rotate(90deg); }
+.tutorial summary::-webkit-details-marker { display: none; }
+.tutorial summary { list-style: none; }
+.tutorial summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; transition: none; }
 .tutorial ol { margin: 12px 0 8px; padding-left: 1.3em; }
 .tutorial li { margin-bottom: 12px; color: var(--ink-2); }
 .tutorial li strong { color: var(--ink); }
 .tutorial a { color: var(--accent); }
 .tutorial code { font-family: var(--mono); font-size: 0.9em; color: var(--ink); }
 .tutorial .snippet { background: var(--paper); }
+
+/* Handy (am Ende, damit es die Regeln oben überschreibt) */
+@media (max-width: 40rem) {
+  .grid2 { grid-template-columns: 1fr; }
+  .rows li { flex-wrap: wrap; }
+  .wrap { padding-top: 32px; }
+  /* Kopfzeile: eine Zeile, nichts bricht um */
+  .bar { padding: 8px 16px; gap: 12px; }
+  .bar-links { gap: 12px; }
+  .bar-links a { display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; }
+  /* Freigabe-Zeilen: erst die Angaben über volle Breite, darunter die Knöpfe */
+  .gate-info { flex: 1 1 100%; }
+  .gates .btns { justify-content: flex-start; }
+  .dom { max-width: none; }
+  /* Wer darf sehen: drei gleich breite Felder statt Umbruch mit schiefer Linie */
+  .seg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
+  .seg label { display: flex; }
+  .seg span { flex: 1; justify-content: center; text-align: center; height: 100%; padding: 8px; line-height: 1.2; }
+  /* Code-Zeile oben, Kopieren darunter */
+  .snippet code { flex-basis: 100%; }
+  .tutorial ol { padding-left: 20px; }
+  .rows .btns { flex-wrap: wrap; }
+  .editor { padding: 16px; }
+  .rows .note a { overflow-wrap: anywhere; }
+}

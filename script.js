@@ -1,3 +1,24 @@
+// Handy: Menü-Knopf für die Navigation (ohne JavaScript bleiben die Links sichtbar)
+(() => {
+  document.documentElement.classList.add('js');
+  const nav = document.querySelector('.navbar');
+  if (!nav || nav.querySelector('.nav-menu')) return;
+  const links = nav.querySelector('.nav-links');
+  if (!links) return;
+  links.id = links.id || 'nav-links';
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'nav-menu';
+  btn.textContent = 'Menü';
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', links.id);
+  nav.insertBefore(btn, links);
+  const set = open => { nav.classList.toggle('open', open); btn.setAttribute('aria-expanded', String(open)); btn.textContent = open ? 'Schließen' : 'Menü'; };
+  btn.addEventListener('click', () => set(!nav.classList.contains('open')));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && nav.classList.contains('open')) { set(false); btn.focus(); } });
+  links.addEventListener('click', e => { if (e.target.closest('a')) set(false); });
+})();
+
 // ========== STERNENHIMMEL ==========
 // Zwei Canvas-Ebenen, einmal gezeichnet. Nur die Deckkraft der Ebenen
 // pulsiert (läuft auf der GPU), statt 900 einzeln animierter Elemente.
