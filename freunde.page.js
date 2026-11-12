@@ -8,14 +8,8 @@ const slug = new URLSearchParams(location.search).get('p');
 
 async function main() {
   if (!base) { $('loading').hidden = true; show($('msg'), 'Der Login ist noch nicht eingerichtet.'); return; }
-  if (!token.get()) return toLogin();
-  let me;
-  try { me = await api(base, 'GET', '/api/auth/me'); } catch (e) {
-    if (e.status === 401) return toLogin();
-    $('loading').hidden = true; show($('msg'), e.message); return;
-  }
-
   if (slug) {
+    // Seiten für "Alle" gehen auch ohne Login, sonst führt 401 zum Login
     try {
       const pg = await api(base, 'GET', '/api/pages/' + encodeURIComponent(slug));
       document.title = pg.title + ': Niklas-Leidert.de';
@@ -23,10 +17,18 @@ async function main() {
       $('page-body').innerHTML = marked.parse(pg.content || ''); // Inhalt schreibt nur der Admin
       $('page-view').hidden = false;
     } catch (e) {
+      if (e.status === 401) return toLogin();
       show($('msg'), e.message);
     }
     $('loading').hidden = true;
     return;
+  }
+
+  if (!token.get()) return toLogin();
+  let me;
+  try { me = await api(base, 'GET', '/api/auth/me'); } catch (e) {
+    if (e.status === 401) return toLogin();
+    $('loading').hidden = true; show($('msg'), e.message); return;
   }
 
   $('who').textContent = ', ' + me.name;

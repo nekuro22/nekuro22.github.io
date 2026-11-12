@@ -85,6 +85,32 @@ $('login-form').addEventListener('submit', ev => {
 });
 $('logout').addEventListener('click', async () => { try { await api('POST', '/api/auth/logout'); } catch { } token.clear(); say(''); showLogin(); });
 
+// ---------- Wer darf sehen? (Umschalter) ----------
+let accounts = []; // [{ tag, label }]
+const ACCESS = [['all', 'Alle'], ['friends', 'Nur Freunde'], ['some', 'Einzelne Accounts']];
+const accessLabel = r => r.access === 'all' ? 'für alle' : r.access === 'some' ? `für ${(r.allow || []).length} ${(r.allow || []).length === 1 ? 'Account' : 'Accounts'}` : 'nur Freunde';
+let widgetId = 0;
+function accessWidget(rec = {}) {
+  const id = 'acc' + (++widgetId);
+  const a = rec.access || 'friends';
+  const allow = new Set(rec.allow || []);
+  return `<fieldset class="access"><legend>Wer darf die Seite sehen?</legend>
+    <div class="seg" role="radiogroup">${ACCESS.map(([v, l]) => `<label><input type="radio" name="${id}" value="${v}"${a === v ? ' checked' : ''}><span>${l}</span></label>`).join('')}</div>
+    <div class="pick"${a === 'some' ? '' : ' hidden'}>${accounts.length
+      ? accounts.map(x => `<label class="chk"><input type="checkbox" value="${esc(x.tag)}"${allow.has(x.tag) ? ' checked' : ''}><span>${esc(x.label)}</span></label>`).join('')
+      : '<span class="muted">Noch keine Freunde angelegt.</span>'}</div>
+  </fieldset>`;
+}
+function readWidget(root) {
+  const access = (root.querySelector('.access input[type=radio]:checked') || {}).value || 'friends';
+  const allow = [...root.querySelectorAll('.access .pick input:checked')].map(i => i.value);
+  if (access === 'some' && !allow.length) throw new Error('Wähle mindestens einen Account aus, der die Seite sehen darf.');
+  return { access, allow };
+}
+document.addEventListener('change', e => {
+  if (e.target.matches('.access input[type=radio]')) e.target.closest('.access').querySelector('.pick').hidden = e.target.value !== 'some';
+});
+
 // ---------- Seiten ----------
 const slugify = t => t.toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
   .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 64);
@@ -97,12 +123,13 @@ function newPage() {
   $('p-title').value = ''; $('p-slug').value = ''; $('p-content').value = '';
   $('p-slug').readOnly = false;
   $('p-preview').hidden = true;
+  $('p-access').innerHTML = accessWidget();
 }
 
 async function loadPages() {
   const pages = await api('GET', '/api/pages');
   $('page-list').innerHTML = pages.length ? pages.map(p => `<li>
-    <div><div class="name">${esc(p.title)}</div><div class="note">freunde.html?p=${esc(p.slug)}, geändert am ${esc(new Date(p.updated).toLocaleDateString('de-DE'))}</div></div>
+    <div><div class="name">${esc(p.title)}</div><div class="note">${esc(accessLabel(p))}, freunde.html?p=${esc(p.slug)}, geändert am ${esc(new Date(p.updated).toLocaleDateString('de-DE'))}</div></div>
     <div class="btns"><button class="ghost small" data-edit="${esc(p.slug)}">Bearbeiten</button><button class="ghost small" data-del-page="${esc(p.slug)}" data-title="${esc(p.title)}">Löschen</button></div>
   </li>`).join('') : '<li class="empty">Noch keine Seiten.</li>';
 }
@@ -119,7 +146,7 @@ $('page-form').addEventListener('submit', ev => {
   ev.preventDefault();
   busy(ev.submitter || $('page-form').querySelector('.btn'), 'Speichert …', async () => {
     const slug = $('p-slug').value.trim();
-    await api('PUT', '/api/pages/' + encodeURIComponent(slug), { title: $('p-title').value, content: $('p-content').value });
+    await api('PUT', '/api/pages/' + encodeURIComponent(slug), { title: $('p-title').value, content: $('p-content').value, ...readWidget($('page-form')) });
     say(`Gespeichert. Freunde sehen die Seite unter freunde.html?p=${slug}.`);
     editing = slug; $('p-slug').readOnly = true; $('editor-title').textContent = 'Seite bearbeiten';
     await loadPages();
@@ -134,6 +161,7 @@ $('page-list').addEventListener('click', ev => {
       editing = p.slug;
       $('editor-title').textContent = 'Seite bearbeiten';
       $('p-title').value = p.title; $('p-slug').value = p.slug; $('p-slug').readOnly = true; $('p-content').value = p.content;
+      $('p-access').innerHTML = accessWidget(p);
       $('p-preview').hidden = true;
       $('page-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
@@ -155,10 +183,11 @@ async function loadGates() {
   const gates = await api('GET', '/api/admin/gates');
   $('gate-list').innerHTML = gates.length ? gates.map(g => `<li data-gate="${esc(g.name)}">
     <div class="gate-info">
-      <div class="name">${esc(g.name)} <span class="badge ${esc(g.status)}">${esc(STATUS[g.status] || g.status)}</span></div>
+      <div class="name">${esc(g.name)} <span class="badge ${esc(g.status)}">${esc(STATUS[g.status] || g.status)}</span>${g.status === 'accepted' ? ` <span class="note">${esc(accessLabel(g))}</span>` : ''}</div>
       ${g.seen ? `<div class="note">gesehen auf <a href="${esc(g.seen.url)}" target="_blank" rel="noopener">${esc(g.seen.url)}</a></div>` : ''}
       <label class="small-label" for="dom-${esc(g.name)}">Erlaubte Domain oder Subdomain</label>
       <input class="dom" id="dom-${esc(g.name)}" value="${esc((g.domains || []).join(', '))}" placeholder="spiel.niklas-leidert.de" autocapitalize="none" spellcheck="false" />
+      ${accessWidget(g)}
     </div>
     <div class="btns">
       <button class="btn small" data-act="accepted">${g.status === 'accepted' ? 'Speichern' : 'Freigeben'}</button>
@@ -176,7 +205,7 @@ $('gate-list').addEventListener('click', ev => {
     return busy(b, 'Löscht …', async () => { await api('DELETE', '/api/admin/gates/' + encodeURIComponent(name)); say('Gelöscht.'); await loadGates(); });
   }
   busy(b, b.dataset.act === 'accepted' ? 'Speichert …' : 'Lehnt ab …', async () => {
-    await api('PUT', '/api/admin/gates/' + encodeURIComponent(name), { status: b.dataset.act, domains: li.querySelector('.dom').value });
+    await api('PUT', '/api/admin/gates/' + encodeURIComponent(name), { status: b.dataset.act, domains: li.querySelector('.dom').value, ...readWidget(li) });
     say(b.dataset.act === 'accepted' ? `„${name}" ist freigegeben. Angemeldete Freunde sehen die Seite jetzt.` : `„${name}" ist abgelehnt.`);
     await loadGates();
   });
@@ -198,6 +227,16 @@ async function loadFriends() {
     ${g.fixed ? '' : `<div class="btns"><button class="ghost small" data-del-gh="${esc(g.login)}">Sperren</button></div>`}
   </li>`).join('') : '<li class="empty">Noch niemand.</li>';
   $('gh-hint').hidden = f.githubReady;
+  accounts = [...f.users.map(u => ({ tag: u.tag || 'pw:' + u.name, label: u.name + ' (Passwort)' })), ...f.github.map(g => ({ tag: g.tag || 'github:' + g.login, label: g.login + ' (GitHub)' }))];
+  // Auswahl im Seiten-Editor mit den neuen Accounts neu zeichnen, aktuelle Wahl behalten
+  if ($('p-access').firstChild) {
+    const root = $('page-form');
+    const cur = {
+      access: (root.querySelector('.access input[type=radio]:checked') || {}).value || 'friends',
+      allow: [...root.querySelectorAll('.access .pick input:checked')].map(i => i.value),
+    };
+    $('p-access').innerHTML = accessWidget(cur);
+  }
 }
 
 $('user-form').addEventListener('submit', ev => {
@@ -207,26 +246,26 @@ $('user-form').addEventListener('submit', ev => {
     if (d.password) say(`${esc(d.name)} ist angelegt. Das Passwort wird nur jetzt angezeigt, gib es weiter:<span class="secret">${esc(d.password)}</span>`, 'ok', true);
     else say(`${d.name} ist angelegt.`);
     $('u-name').value = ''; $('u-pw').value = '';
-    await loadFriends();
+    await loadFriends(); await loadGates();
   });
 });
 $('user-list').addEventListener('click', ev => {
   const b = ev.target.closest('button[data-del-user]');
   if (!b || !confirm(`${b.dataset.delUser} entfernen? Der Zugang endet sofort.`)) return;
-  busy(b, 'Entfernt …', async () => { await api('DELETE', '/api/admin/users/' + encodeURIComponent(b.dataset.delUser)); say('Freund entfernt.'); await loadFriends(); });
+  busy(b, 'Entfernt …', async () => { await api('DELETE', '/api/admin/users/' + encodeURIComponent(b.dataset.delUser)); say('Freund entfernt.'); await loadFriends(); await loadGates(); });
 });
 $('gh-form').addEventListener('submit', ev => {
   ev.preventDefault();
   busy(ev.submitter || $('gh-form').querySelector('.btn'), 'Schaltet frei …', async () => {
     await api('POST', '/api/admin/github', { login: $('g-name').value });
     say('GitHub-Konto freigeschaltet.'); $('g-name').value = '';
-    await loadFriends();
+    await loadFriends(); await loadGates();
   });
 });
 $('gh-list').addEventListener('click', ev => {
   const b = ev.target.closest('button[data-del-gh]');
   if (!b || !confirm(`${b.dataset.delGh} sperren? Der Zugang endet sofort.`)) return;
-  busy(b, 'Sperrt …', async () => { await api('DELETE', '/api/admin/github/' + encodeURIComponent(b.dataset.delGh)); say('GitHub-Konto gesperrt.'); await loadFriends(); });
+  busy(b, 'Sperrt …', async () => { await api('DELETE', '/api/admin/github/' + encodeURIComponent(b.dataset.delGh)); say('GitHub-Konto gesperrt.'); await loadFriends(); await loadGates(); });
 });
 $('pw-form').addEventListener('submit', ev => {
   ev.preventDefault();
@@ -251,7 +290,7 @@ async function start() {
   $('pw-sec').hidden = me.via !== 'password';
   $('login').hidden = true;
   $('logout').hidden = false;
-  try { await Promise.all([loadPages(), loadFriends(), loadGates()]); } catch (e) { say(e.message, 'error'); }
+  try { await loadFriends(); await Promise.all([loadPages(), loadGates()]); newPage(); } catch (e) { say(e.message, 'error'); }
   $('loading').hidden = true;
   $('board').hidden = false;
 }

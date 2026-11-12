@@ -50,6 +50,7 @@
             <div><label for="p-title">Titel</label><input id="p-title" required maxlength="120" /></div>
             <div><label for="p-slug">Adresse</label><input id="p-slug" required pattern="[a-z0-9]([a-z0-9\-]{0,62}[a-z0-9])?" title="Kleinbuchstaben, Ziffern und Striche" autocapitalize="none" spellcheck="false" /></div>
           </div>
+          <div id="p-access"></div>
           <label for="p-content">Inhalt</label>
           <textarea id="p-content" rows="14"></textarea>
           <div class="actions">
@@ -63,9 +64,18 @@
 
       <section class="sec">
         <h2>Eigene HTML-Seiten schützen</h2>
-        <p class="muted">Füge diese Zeile ganz oben in den &lt;head&gt; deiner Seite ein und ersetze den Namen. Beim ersten Aufruf erscheint die Seite hier, dann gibst du sie frei.</p>
-        <div class="snippet"><code id="snippet">&lt;script src="https://api.niklas-leidert.de/protect.js" data-page="name-der-seite"&gt;&lt;/script&gt;</code><button class="ghost small" type="button" id="copy-snippet">Kopieren</button></div>
-        <p class="muted">Liegt die Seite auf deinem Cloudflare-Pages-Projekt, ist sie wirklich geschützt: Ohne Login wird das HTML gar nicht ausgeliefert. Auf anderen Servern versteckt das Skript den Inhalt nur, der Quelltext bleibt abrufbar.</p>
+        <details class="tutorial" open>
+          <summary>Anleitung</summary>
+          <ol>
+            <li><strong>Seite auf Cloudflare Pages legen.</strong> Entweder in das Webseiten-Repo (zum Beispiel <code>spiel/index.html</code>) oder in ein eigenes Pages-Projekt. Die Adresse muss niklas-leidert.de oder eine Subdomain davon sein, etwa <code>spiel.niklas-leidert.de</code>. Eine neue Subdomain trägst du im Cloudflare-Dashboard beim Pages-Projekt unter „Custom domains" ein.</li>
+            <li><strong>Eigenes Pages-Projekt?</strong> Dann lade die <a href="pages-gate-middleware.js" download="_middleware.js">Prüf-Datei</a> herunter und lege sie dort als <code>functions/_middleware.js</code> ab. Im Webseiten-Repo ist sie schon drin.</li>
+            <li><strong>Diese Zeile ganz oben in den <code>&lt;head&gt;</code> einfügen</strong> und den Namen ersetzen (nur Kleinbuchstaben, Ziffern und Striche):
+              <div class="snippet"><code id="snippet">&lt;script src="https://api.niklas-leidert.de/protect.js" data-page="name-der-seite"&gt;&lt;/script&gt;</code><button class="ghost small" type="button" id="copy-snippet">Kopieren</button></div></li>
+            <li><strong>Seite einmal aufrufen.</strong> Sie erscheint unten als „wartet auf Freigabe".</li>
+            <li><strong>Freigeben:</strong> Domain eintragen, festlegen, wer sie sehen darf (alle, nur Freunde oder einzelne Accounts), dann „Freigeben".</li>
+          </ol>
+          <p class="muted">Nur so ist die Seite wirklich geschützt: Die Prüf-Datei liefert das HTML ohne Freigabe gar nicht aus. Liegt die Seite woanders, versteckt das Skript den Inhalt nur, der Quelltext bleibt dort abrufbar.</p>
+        </details>
         <ul class="rows gates" id="gate-list"></ul>
       </section>
 
