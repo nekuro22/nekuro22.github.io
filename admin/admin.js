@@ -83,7 +83,7 @@ $('login-form').addEventListener('submit', ev => {
     await start();
   });
 });
-$('logout').addEventListener('click', () => { token.clear(); say(''); showLogin(); });
+$('logout').addEventListener('click', async () => { try { await api('POST', '/api/auth/logout'); } catch { } token.clear(); say(''); showLogin(); });
 
 // ---------- Seiten ----------
 const slugify = t => t.toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
@@ -147,6 +147,43 @@ $('page-list').addEventListener('click', ev => {
       await loadPages();
     });
   }
+});
+
+// ---------- Eigene HTML-Seiten (Schutz-Skript) ----------
+const STATUS = { pending: 'wartet auf Freigabe', accepted: 'freigegeben', rejected: 'abgelehnt' };
+async function loadGates() {
+  const gates = await api('GET', '/api/admin/gates');
+  $('gate-list').innerHTML = gates.length ? gates.map(g => `<li data-gate="${esc(g.name)}">
+    <div class="gate-info">
+      <div class="name">${esc(g.name)} <span class="badge ${esc(g.status)}">${esc(STATUS[g.status] || g.status)}</span></div>
+      ${g.seen ? `<div class="note">gesehen auf <a href="${esc(g.seen.url)}" target="_blank" rel="noopener">${esc(g.seen.url)}</a></div>` : ''}
+      <label class="small-label" for="dom-${esc(g.name)}">Erlaubte Domain oder Subdomain</label>
+      <input class="dom" id="dom-${esc(g.name)}" value="${esc((g.domains || []).join(', '))}" placeholder="spiel.niklas-leidert.de" autocapitalize="none" spellcheck="false" />
+    </div>
+    <div class="btns">
+      <button class="btn small" data-act="accepted">${g.status === 'accepted' ? 'Speichern' : 'Freigeben'}</button>
+      ${g.status === 'rejected' ? '' : '<button class="ghost small" data-act="rejected">Ablehnen</button>'}
+      <button class="ghost small" data-act="delete">Löschen</button>
+    </div>
+  </li>`).join('') : '<li class="empty">Noch keine Seite mit Schutz-Skript aufgerufen.</li>';
+}
+$('gate-list').addEventListener('click', ev => {
+  const b = ev.target.closest('button[data-act]');
+  if (!b) return;
+  const li = b.closest('li'); const name = li.dataset.gate;
+  if (b.dataset.act === 'delete') {
+    if (!confirm(`„${name}" aus der Liste löschen? Ruft jemand die Seite wieder auf, erscheint sie erneut als wartend.`)) return;
+    return busy(b, 'Löscht …', async () => { await api('DELETE', '/api/admin/gates/' + encodeURIComponent(name)); say('Gelöscht.'); await loadGates(); });
+  }
+  busy(b, b.dataset.act === 'accepted' ? 'Speichert …' : 'Lehnt ab …', async () => {
+    await api('PUT', '/api/admin/gates/' + encodeURIComponent(name), { status: b.dataset.act, domains: li.querySelector('.dom').value });
+    say(b.dataset.act === 'accepted' ? `„${name}" ist freigegeben. Angemeldete Freunde sehen die Seite jetzt.` : `„${name}" ist abgelehnt.`);
+    await loadGates();
+  });
+});
+$('copy-snippet').addEventListener('click', async ev => {
+  try { await navigator.clipboard.writeText($('snippet').textContent); ev.currentTarget.textContent = 'Kopiert'; }
+  catch { say('Kopieren ging nicht. Markiere die Zeile und kopiere sie von Hand.', 'error'); }
 });
 
 // ---------- Freunde ----------
@@ -214,7 +251,7 @@ async function start() {
   $('pw-sec').hidden = me.via !== 'password';
   $('login').hidden = true;
   $('logout').hidden = false;
-  try { await Promise.all([loadPages(), loadFriends()]); } catch (e) { say(e.message, 'error'); }
+  try { await Promise.all([loadPages(), loadFriends(), loadGates()]); } catch (e) { say(e.message, 'error'); }
   $('loading').hidden = true;
   $('board').hidden = false;
 }

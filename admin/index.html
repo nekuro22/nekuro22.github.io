@@ -62,6 +62,14 @@
       </section>
 
       <section class="sec">
+        <h2>Eigene HTML-Seiten schützen</h2>
+        <p class="muted">Füge diese Zeile ganz oben in den &lt;head&gt; deiner Seite ein und ersetze den Namen. Beim ersten Aufruf erscheint die Seite hier, dann gibst du sie frei.</p>
+        <div class="snippet"><code id="snippet">&lt;script src="https://api.niklas-leidert.de/protect.js" data-page="name-der-seite"&gt;&lt;/script&gt;</code><button class="ghost small" type="button" id="copy-snippet">Kopieren</button></div>
+        <p class="muted">Liegt die Seite auf deinem Cloudflare-Pages-Projekt, ist sie wirklich geschützt: Ohne Login wird das HTML gar nicht ausgeliefert. Auf anderen Servern versteckt das Skript den Inhalt nur, der Quelltext bleibt abrufbar.</p>
+        <ul class="rows gates" id="gate-list"></ul>
+      </section>
+
+      <section class="sec">
         <h2>Freunde mit Passwort</h2>
         <ul class="rows" id="user-list"></ul>
         <form id="user-form" class="form">

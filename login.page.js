@@ -4,7 +4,13 @@ const msg = document.getElementById('msg');
 const form = document.getElementById('f');
 const next = (() => {
   const n = new URLSearchParams(location.search).get('next') || 'freunde.html';
-  return /^[a-z0-9-]+(\.html)?(\?[^#]*)?$/i.test(n) ? n : 'freunde.html'; // nur eigene Seiten
+  if (/^[a-z0-9-]+(\.html)?(\?[^#]*)?$/i.test(n)) return n;
+  // Rücksprung zu einer geschützten Seite auf der eigenen Domain oder einer Subdomain
+  try {
+    const u = new URL(n);
+    if (u.protocol === 'https:' && (u.hostname === 'niklas-leidert.de' || u.hostname.endsWith('.niklas-leidert.de'))) return u.toString();
+  } catch { }
+  return 'freunde.html';
 })();
 
 const hashError = takeHash();
@@ -15,7 +21,11 @@ if (!base) {
 } else {
   // Schon angemeldet (oder gerade von GitHub zurück)? Dann direkt weiter.
   if (token.get()) {
-    try { await api(base, 'GET', '/api/auth/me'); location.replace(next); } catch { }
+    try {
+      await api(base, 'GET', '/api/auth/me');
+      await api(base, 'POST', '/api/auth/cookie'); // Cookie für geschützte Seiten auffrischen
+      location.replace(next);
+    } catch { }
   }
   if (hashError) show(msg, hashError);
   try {

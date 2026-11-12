@@ -42,5 +42,9 @@ async function main() {
   $('list-view').hidden = false;
 }
 
-$('logout').addEventListener('click', () => { token.clear(); location.replace('login.html'); });
+$('logout').addEventListener('click', async () => {
+  try { await api(base, 'POST', '/api/auth/logout'); } catch { }
+  token.clear();
+  location.replace('login.html');
+});
 main();

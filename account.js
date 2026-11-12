@@ -22,6 +22,7 @@ export async function api(base, method, path, body) {
   try {
     r = await fetch(base + path, {
       method,
+      credentials: 'include', // setzt das Login-Cookie für geschützte HTML-Seiten
       headers: {
         ...(token.get() ? { Authorization: 'Bearer ' + token.get() } : {}),
         ...(body ? { 'Content-Type': 'application/json' } : {}),
