@@ -13,6 +13,8 @@ const next = (() => {
   return 'freunde.html';
 })();
 
+// Einmal-Link (#invite=…) merken, bevor der #-Teil aus der Adresse verschwindet
+const invite = new URLSearchParams(location.hash.slice(1)).get('invite') || '';
 const hashError = takeHash();
 const base = await apiBase();
 
@@ -20,12 +22,23 @@ if (!base) {
   show(msg, 'Der Login ist noch nicht eingerichtet.');
 } else {
   // Schon angemeldet (oder gerade von GitHub zurück)? Dann direkt weiter.
-  if (token.get()) {
+  // Ein Einmal-Link hat Vorrang: Er meldet dieses Gerät mit seinem Konto an.
+  if (token.get() && !invite) {
     try {
       await api(base, 'GET', '/api/auth/me');
       await api(base, 'POST', '/api/auth/cookie'); // Cookie für geschützte Seiten auffrischen
       location.replace(next);
     } catch { }
+  }
+  if (invite) {
+    show(msg, 'Link wird eingelöst …', 'ok');
+    try {
+      const d = await api(base, 'POST', '/api/auth/invite', { code: invite });
+      token.set(d.token);
+      location.replace(next);
+    } catch (e) {
+      show(msg, e.message);
+    }
   }
   if (hashError) show(msg, hashError);
   try {

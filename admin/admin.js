@@ -181,6 +181,9 @@ $('page-list').addEventListener('click', ev => {
 const STATUS = { pending: 'wartet auf Freigabe', accepted: 'freigegeben', rejected: 'abgelehnt' };
 async function loadGates() {
   const gates = await api('GET', '/api/admin/gates');
+  const rp = $('r-page'), keepP = rp.value;
+  rp.innerHTML = gates.length ? gates.map(g => `<option value="${esc(g.name)}">${esc(g.name)}</option>`).join('') : '<option value="">Erst eine Seite mit Schutz-Skript aufrufen</option>';
+  if (keepP) rp.value = keepP;
   $('gate-list').innerHTML = gates.length ? gates.map(g => `<li data-gate="${esc(g.name)}">
     <div class="gate-info">
       <div class="name">${esc(g.name)} <span class="badge ${esc(g.status)}">${esc(STATUS[g.status] || g.status)}</span>${g.status === 'accepted' ? ` <span class="note">${esc(accessLabel(g))}</span>` : ''}</div>
@@ -215,6 +218,55 @@ $('copy-snippet').addEventListener('click', async ev => {
   catch { say('Kopieren ging nicht. Markiere die Zeile und kopiere sie von Hand.', 'error'); }
 });
 
+// ---------- Adressen unter privat. ----------
+async function loadRoutes() {
+  const routes = await api('GET', '/api/admin/routes');
+  $('route-list').innerHTML = routes.length ? routes.map(r => `<li>
+    <div><div class="name"><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.url)}</a></div><div class="note">zeigt ${esc(r.origin.replace('https://', ''))}, Seite „${esc(r.page)}"</div></div>
+    <div class="btns"><button class="ghost small" data-del-route="${esc(r.path)}">Entfernen</button></div>
+  </li>`).join('') : '<li class="empty">Noch keine Adresse festgelegt.</li>';
+}
+$('route-form').addEventListener('submit', ev => {
+  ev.preventDefault();
+  busy(ev.submitter || $('route-form').querySelector('.btn'), 'Speichert …', async () => {
+    const path = $('r-path').value.trim().toLowerCase();
+    const r = await api('PUT', '/api/admin/routes/' + encodeURIComponent(path), { origin: $('r-origin').value, page: $('r-page').value });
+    say(`Festgelegt: ${r.url}`);
+    $('r-path').value = ''; $('r-origin').value = '';
+    await loadRoutes();
+  });
+});
+$('route-list').addEventListener('click', ev => {
+  const b = ev.target.closest('button[data-del-route]');
+  if (!b || !confirm(`privat.niklas-leidert.de/${b.dataset.delRoute} entfernen?`)) return;
+  busy(b, 'Entfernt …', async () => { await api('DELETE', '/api/admin/routes/' + encodeURIComponent(b.dataset.delRoute)); say('Adresse entfernt.'); await loadRoutes(); });
+});
+
+// ---------- Einmal-Links ----------
+async function loadInvites() {
+  const inv = await api('GET', '/api/admin/invites');
+  $('invite-list').innerHTML = inv.length ? inv.map(i => `<li>
+    <div><div class="name">für ${esc(i.name)}</div><div class="note">gültig bis ${esc(new Date(i.exp).toLocaleString('de-DE', { dateStyle: 'short', timeStyle: 'short' }))}</div></div>
+    <div class="btns"><button class="ghost small" data-del-invite="${esc(i.id)}">Widerrufen</button></div>
+  </li>`).join('') : '<li class="empty">Kein offener Link.</li>';
+}
+$('invite-form').addEventListener('submit', ev => {
+  ev.preventDefault();
+  busy(ev.submitter || $('invite-form').querySelector('.btn'), 'Erstellt …', async () => {
+    const d = await api('POST', '/api/admin/invites', { account: $('i-acc').value, hours: Number($('i-hours').value) });
+    say(`Link für ${esc(d.name)}. Er wird nur jetzt angezeigt und funktioniert einmal:<span class="secret" id="invite-url">${esc(d.url)}</span><button class="ghost small" type="button" id="copy-invite">Kopieren</button>`, 'ok', true);
+    $('copy-invite').addEventListener('click', async e => {
+      try { await navigator.clipboard.writeText(d.url); e.currentTarget.textContent = 'Kopiert'; } catch { }
+    });
+    await loadInvites();
+  });
+});
+$('invite-list').addEventListener('click', ev => {
+  const b = ev.target.closest('button[data-del-invite]');
+  if (!b || !confirm('Diesen Link widerrufen?')) return;
+  busy(b, 'Widerruft …', async () => { await api('DELETE', '/api/admin/invites/' + encodeURIComponent(b.dataset.delInvite)); say('Link widerrufen.'); await loadInvites(); });
+});
+
 // ---------- Freunde ----------
 async function loadFriends() {
   const f = await api('GET', '/api/admin/friends');
@@ -231,6 +283,9 @@ async function loadFriends() {
     <div><div class="name">${esc(l.github)} (GitHub) = ${esc(l.user)}</div>${l.fixed ? '<div class="note">aus der Konfiguration, dort ändern</div>' : ''}</div>
     ${l.fixed ? '' : `<div class="btns"><button class="ghost small" data-unlink="${esc(l.github)}">Lösen</button></div>`}
   </li>`).join('') : '<li class="empty">Noch keine Verknüpfung.</li>';
+  const ia = $('i-acc'), keepA = ia.value;
+  ia.innerHTML = accounts.map(a => `<option value="${esc(a.tag)}">${esc(a.label)}</option>`).join('');
+  if (keepA) ia.value = keepA;
   const sel = $('lk-user'), keep = sel.value;
   sel.innerHTML = f.users.map(u => `<option value="${esc(u.name)}">${esc(u.name)}</option>`).join('');
   if (keep) sel.value = keep;
@@ -310,7 +365,7 @@ async function start() {
   $('pw-sec').hidden = me.via !== 'password';
   $('login').hidden = true;
   $('logout').hidden = false;
-  try { await loadFriends(); await Promise.all([loadPages(), loadGates()]); newPage(); } catch (e) { say(e.message, 'error'); }
+  try { await loadFriends(); await Promise.all([loadPages(), loadGates(), loadRoutes(), loadInvites()]); newPage(); } catch (e) { say(e.message, 'error'); }
   $('loading').hidden = true;
   $('board').hidden = false;
 }

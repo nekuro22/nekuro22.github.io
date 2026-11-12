@@ -80,6 +80,34 @@
       </section>
 
       <section class="sec">
+        <h2>Adressen unter privat.niklas-leidert.de</h2>
+        <p class="muted">Statt einer eigenen Subdomain pro Projekt: Lege einen Pfad fest, zum Beispiel <code>privat.niklas-leidert.de/itwp</code>. Die Seite wird dort angezeigt, der Login wird vorher geprüft. Das Projekt braucht die aktuelle Prüf-Datei aus der Anleitung oben.</p>
+        <ul class="rows" id="route-list"></ul>
+        <form id="route-form" class="form">
+          <div class="grid2">
+            <div><label for="r-path">Pfad</label><input id="r-path" required placeholder="itwp" pattern="[a-z0-9]([a-z0-9\-]{0,38}[a-z0-9])?" title="Kleinbuchstaben, Ziffern und Striche" autocapitalize="none" spellcheck="false" /></div>
+            <div><label for="r-page">Geschützte Seite</label><select id="r-page" required></select></div>
+          </div>
+          <label for="r-origin">pages.dev-Adresse des Projekts</label>
+          <input id="r-origin" required placeholder="it-wp-html-linux-etc.pages.dev" autocapitalize="none" spellcheck="false" />
+          <button class="btn" type="submit">Adresse festlegen</button>
+        </form>
+      </section>
+
+      <section class="sec">
+        <h2>Einmal-Links</h2>
+        <p class="muted">Ein Link, der ein Gerät einmal anmeldet, ohne Passwort. Danach ist er verbraucht. Gut fürs Handy oder für Freunde, die sich ihr Passwort nicht merken.</p>
+        <ul class="rows" id="invite-list"></ul>
+        <form id="invite-form" class="form">
+          <div class="grid2">
+            <div><label for="i-acc">Konto</label><select id="i-acc" required></select></div>
+            <div><label for="i-hours">Gültig für</label><select id="i-hours"><option value="1">1 Stunde</option><option value="24" selected>1 Tag</option><option value="168">7 Tage</option></select></div>
+          </div>
+          <button class="btn" type="submit">Link erstellen</button>
+        </form>
+      </section>
+
+      <section class="sec">
         <h2>Freunde mit Passwort</h2>
         <ul class="rows" id="user-list"></ul>
         <form id="user-form" class="form">
