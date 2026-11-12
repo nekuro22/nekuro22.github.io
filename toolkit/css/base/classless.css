@@ -1,0 +1,316 @@
+/*
+ * Klassenloses Styling
+ * Gestaltet semantisches HTML direkt über Element-Selektoren, ganz ohne Klassen:
+ * Seitenrahmen, Navigation, Überschriften, Listen, Bilder, Karten (<article>),
+ * Tabellen, Formulare, Buttons, <details>, <dialog>.
+ *
+ * Alle Selektoren stehen in :where() (Spezifität 0). Dadurch überschreiben
+ * Klassen und Komponenten dieses Toolkits sowie eigene Styles die Regeln
+ * jederzeit, ohne Spezifitäts-Kämpfe.
+ *
+ * Opt-out für Seiten, die den Rahmen selbst bauen (z. B. mit .container):
+ *   <body class="fluid">
+ */
+
+@layer base {
+  /* Seitenrahmen: <body> ist der zentrierte Inhaltsbereich */
+  :where(body:not(.fluid)) {
+    max-width: calc(var(--container-lg) + 2 * var(--space-6));
+    margin-inline: auto;
+    padding: 0 var(--space-6) var(--space-16);
+  }
+
+  /* Kopfbereich und Fußbereich */
+  :where(body > :is(header, .header)) {
+    margin-block-end: var(--space-8);
+    padding-block: var(--space-6) var(--space-4);
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  :where(body > footer) {
+    margin-block-start: var(--space-12);
+    padding-block-start: var(--space-6);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  /* Abschnitte und Überschriften */
+  :where(section) {
+    margin-block: var(--space-10);
+  }
+
+  :where(h2, h3, h4):not(:first-child) {
+    margin-block-start: var(--space-8);
+  }
+
+  /* Listen im Inhalt */
+  :where(ul, ol) {
+    margin-block: 0 var(--space-4);
+    padding-inline-start: var(--space-6);
+  }
+
+  :where(li + li) {
+    margin-block-start: var(--space-1);
+  }
+
+  :where(li)::marker {
+    color: var(--color-text-muted);
+  }
+
+  /* Navigation: <nav> oder <div class="nav"> – Listen werden zur horizontalen Leiste.
+     Kopfbereich: <header> oder <div class="header"> */
+  :where(header, .header, nav, .nav, footer) :is(ul, ol) {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  :where(nav, .nav) :is(ul, ol) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1) var(--space-6);
+  }
+
+  :where(:is(nav, .nav) li + li) {
+    margin: 0;
+  }
+
+  /* <h1> in der Navigation = Titel/Marke links, Links rechts */
+  :where(:is(nav, .nav) li:has(> h1)) {
+    margin-inline-end: auto;
+  }
+
+  :where(nav, .nav) h1 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-tight);
+    letter-spacing: -0.01em;
+  }
+
+  /* Überschriften um Links herum (z. B. <li><h2><a>) wirken wie normale Nav-Links */
+  :where(nav, .nav) :is(h2, h3, h4, h5, h6) {
+    margin: 0;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-tight);
+  }
+
+  :where(nav, .nav) a {
+    padding-block: var(--space-1);
+    line-height: var(--line-height-tight);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    text-decoration: none;
+    background: linear-gradient(currentcolor, currentcolor) 0 100% / 0 2px no-repeat;
+    transition:
+      color var(--transition-fast),
+      background-size var(--transition-base);
+  }
+
+  :where(nav, .nav) a:is(:hover, :focus-visible, [aria-current]) {
+    color: var(--color-primary);
+    background-size: 100% 2px;
+  }
+
+  /* Kopfbereich mit Navigation wird zur fixierten Leiste mit Milchglas */
+  :where(body > :is(header, .header):has(> :is(nav, .nav))) {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--z-sticky);
+    padding-block: var(--space-3);
+    background-color: color-mix(in srgb, var(--color-bg) 85%, transparent);
+    backdrop-filter: blur(12px) saturate(1.4);
+  }
+
+  /* Bilder und Figuren im Inhalt */
+  :where(main img, section img, article img, figure img) {
+    margin-block: var(--space-4);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  :where(figure) {
+    margin: var(--space-6) 0;
+  }
+
+  :where(figcaption) {
+    margin-block-start: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  /* <article> und <aside> als Karten */
+  :where(article, aside) {
+    margin-block: var(--space-6);
+    padding: var(--space-6);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  :where(article > :last-child, aside > :last-child) {
+    margin-block-end: 0;
+  }
+
+  /* <details> als aufklappbare Box */
+  :where(details) {
+    margin-block: var(--space-4);
+    padding: var(--space-4);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  :where(summary) {
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+  }
+
+  :where(details[open] > summary) {
+    margin-block-end: var(--space-3);
+  }
+
+  /* Tabellen */
+  :where(table) {
+    width: 100%;
+    margin-block: var(--space-4) var(--space-6);
+    font-size: var(--font-size-sm);
+    border: 1px solid var(--color-border);
+  }
+
+  :where(th, td) {
+    padding: var(--space-3) var(--space-4);
+    text-align: start;
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  :where(th) {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-subtle);
+  }
+
+  :where(tbody tr:hover) {
+    background-color: var(--color-bg-subtle);
+  }
+
+  /* Formulare */
+  :where(label) {
+    display: block;
+    margin-block-end: var(--space-1);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+  }
+
+  :where(fieldset) {
+    margin-block: var(--space-4);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  :where(legend) {
+    padding-inline: var(--space-2);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  :where(
+    input:not(
+      [type="checkbox"],
+      [type="radio"],
+      [type="range"],
+      [type="file"],
+      [type="color"],
+      [type="submit"],
+      [type="button"],
+      [type="reset"],
+      [type="image"]
+    ),
+    select,
+    textarea
+  ) {
+    display: block;
+    width: 100%;
+    min-height: 2.5rem;
+    margin-block-end: var(--space-4);
+    padding: var(--space-2) var(--space-3);
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition:
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+
+  :where(textarea) {
+    min-height: 6rem;
+    resize: vertical;
+  }
+
+  :where(input, select, textarea):focus-visible {
+    outline: none;
+    border-color: var(--color-focus);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-focus) 25%, transparent);
+  }
+
+  :where(input[type="checkbox"], input[type="radio"]) {
+    margin-inline-end: var(--space-2);
+    accent-color: var(--color-primary);
+  }
+
+  /* Buttons */
+  :where(button, input[type="submit"], input[type="button"], input[type="reset"]) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: 2.5rem;
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.2;
+    color: var(--color-primary-contrast);
+    background-color: var(--color-primary);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    transition:
+      background-color var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  :where(button, input[type="submit"], input[type="button"], input[type="reset"]):hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  :where(button, input[type="submit"], input[type="button"], input[type="reset"]):active {
+    transform: translateY(1px);
+  }
+
+  :where(button, input[type="submit"]):disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* <dialog> als Modal */
+  :where(dialog) {
+    width: min(90vw, 32rem);
+    padding: var(--space-6);
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 0;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  :where(dialog)::backdrop {
+    background-color: rgb(15 23 42 / 50%);
+    backdrop-filter: blur(2px);
+  }
+}

@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="de" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>css-toolkit – Beispielseite</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body class="fluid">
+    <a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+    <header class="navbar">
+      <a class="navbar__brand" href="#">css-toolkit</a>
+      <label class="visually-hidden" for="theme-select">Theme wählen</label>
+      <select class="form-control" id="theme-select" style="width: auto">
+        <option value="auto">Automatisch</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+        <option value="ocean">Ocean</option>
+        <option value="forest">Forest</option>
+        <option value="sunset">Sunset</option>
+        <option value="midnight">Midnight</option>
+        <option value="high-contrast">High Contrast</option>
+        <optgroup label="Minimalistisch">
+          <option value="mono">Mono</option>
+          <option value="paper">Paper</option>
+          <option value="swiss">Swiss</option>
+        </optgroup>
+        <optgroup label="Premium">
+          <option value="aurora">Aurora</option>
+          <option value="obsidian">Obsidian</option>
+          <option value="editorial">Editorial</option>
+          <option value="corporate">Corporate</option>
+        </optgroup>
+        <optgroup label="Business">
+          <option value="enterprise">Enterprise</option>
+          <option value="saas">SaaS</option>
+          <option value="fintech">Fintech</option>
+          <option value="healthcare">Healthcare</option>
+          <option value="graphite">Graphite</option>
+        </optgroup>
+      </select>
+      <ul class="navbar__menu">
+        <li><a class="navbar__link" href="#" aria-current="page">Start</a></li>
+        <li><a class="navbar__link" href="#komponenten">Komponenten</a></li>
+        <li><a class="navbar__link" href="#formular">Formular</a></li>
+      </ul>
+    </header>
+
+    <main id="main" class="container py-8">
+      <section class="mb-8">
+        <h1>Beispielseite</h1>
+        <p class="text-muted">
+          Diese Seite zeigt die wichtigsten Module des Toolkits im Zusammenspiel.
+        </p>
+        <div class="cluster">
+          <button class="btn">Primär</button>
+          <button class="btn btn--secondary">Sekundär</button>
+          <button class="btn btn--outline">Outline</button>
+          <button class="btn btn--ghost">Ghost</button>
+          <button class="btn btn--danger btn--sm">Löschen</button>
+          <button class="btn" disabled>Deaktiviert</button>
+        </div>
+      </section>
+
+      <section id="komponenten" class="mb-8">
+        <h2>Karten</h2>
+        <div class="grid grid--3">
+          <article class="card card--hover">
+            <div class="card__header">
+              <h3 class="card__title">Erste Karte</h3>
+              <p class="card__text">Kurzbeschreibung des Inhalts.</p>
+            </div>
+            <div class="card__body">
+              <p class="mb-0">Hier steht der eigentliche Inhalt.</p>
+            </div>
+            <div class="card__footer">
+              <a class="btn btn--sm" href="#">Mehr</a>
+            </div>
+          </article>
+
+          <article class="card card--hover">
+            <div class="card__header">
+              <h3 class="card__title">Zweite Karte</h3>
+              <p class="card__text">Mit Hover-Effekt.</p>
+            </div>
+            <div class="card__body">
+              <p class="mb-0">Inhalt der zweiten Karte.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card__header">
+              <h3 class="card__title">Dritte Karte</h3>
+            </div>
+            <div class="card__body">
+              <p class="mb-0">Ohne Interaktion.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="mb-8">
+        <h2>Hover-Effekte</h2>
+        <div class="grid grid--3">
+          <div class="card hover-lift">
+            <div class="card__body">
+              <h3 class="card__title">Anheben</h3>
+              <p class="card__text mb-0">
+                <code>.hover-lift</code> – Karte hebt sich mit Schatten.
+              </p>
+            </div>
+          </div>
+          <div class="card hover-glow">
+            <div class="card__body">
+              <h3 class="card__title">Leuchten</h3>
+              <p class="card__text mb-0"><code>.hover-glow</code> – Rahmen in Akzentfarbe.</p>
+            </div>
+          </div>
+          <div class="card hover-zoom">
+            <img
+              class="card__media"
+              src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%232563eb'/%3E%3C/svg%3E"
+              alt=""
+            />
+            <div class="card__body">
+              <h3 class="card__title">Zoomen</h3>
+              <p class="card__text mb-0"><code>.hover-zoom</code> – Bild vergrößert sich.</p>
+            </div>
+          </div>
+        </div>
+        <div class="cluster mt-6">
+          <button class="btn btn-shine hover-grow">Glanz &amp; Wachsen</button>
+          <a class="link-animated" href="#komponenten">Animierter Link</a>
+          <span class="gradient-text font-bold text-xl">Verlaufstext</span>
+          <div class="glass p-4 rounded-md">Glas-Optik</div>
+        </div>
+      </section>
+
+      <section class="mb-8 stack">
+        <h2>Hinweise</h2>
+        <div class="alert alert--info" role="status">
+          <div>
+            <p class="alert__title">Information</p>
+            <p class="alert__text">Allgemeiner Hinweis für den Nutzer.</p>
+          </div>
+        </div>
+        <div class="alert alert--success" role="status">
+          <div>
+            <p class="alert__title">Erfolgreich</p>
+            <p class="alert__text">Die Aktion wurde abgeschlossen.</p>
+          </div>
+        </div>
+        <div class="alert alert--warning" role="alert">
+          <div>
+            <p class="alert__title">Warnung</p>
+            <p class="alert__text">Bitte prüfe die Eingaben.</p>
+          </div>
+        </div>
+        <div class="alert alert--danger" role="alert">
+          <div>
+            <p class="alert__title">Fehler</p>
+            <p class="alert__text">Die Aktion konnte nicht ausgeführt werden.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-8">
+        <h2>Tabelle</h2>
+        <div class="table-wrapper">
+          <table class="table table--striped">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Rolle</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ada</td>
+                <td>Entwicklung</td>
+                <td><span class="text-success font-semibold">Aktiv</span></td>
+              </tr>
+              <tr>
+                <td>Linus</td>
+                <td>Design</td>
+                <td><span class="text-warning font-semibold">Ausstehend</span></td>
+              </tr>
+              <tr>
+                <td>Grace</td>
+                <td>Qualitätssicherung</td>
+                <td><span class="text-danger font-semibold">Gesperrt</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="formular" class="mb-8">
+        <h2>Formular</h2>
+        <form class="card" style="max-width: 32rem">
+          <div class="card__body">
+            <div class="form-group">
+              <label class="form-label" for="name">Name</label>
+              <input class="form-control" id="name" type="text" placeholder="Max Mustermann" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="mail">E-Mail</label>
+              <input class="form-control" id="mail" type="email" aria-describedby="mail-hint" />
+              <span class="form-hint" id="mail-hint">Wir geben sie nicht weiter.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="msg">Nachricht</label>
+              <textarea class="form-control" id="msg" rows="4"></textarea>
+            </div>
+            <div class="form-check">
+              <input id="terms" type="checkbox" />
+              <label for="terms">Ich stimme den Bedingungen zu</label>
+            </div>
+          </div>
+          <div class="card__footer justify-end">
+            <button class="btn btn--ghost" type="reset">Zurücksetzen</button>
+            <button class="btn" type="submit">Absenden</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="mb-8">
+        <h2>Code</h2>
+        <p>Inline-Code wie <code>--color-primary</code> wird automatisch formatiert.</p>
+        <pre><code>.btn { display: inline-flex; }</code></pre>
+      </section>
+
+      <section class="mb-8">
+        <button class="btn" id="open-modal">Modal öffnen</button>
+        <dialog class="modal" id="demo-modal" aria-labelledby="modal-title">
+          <div class="modal__header">
+            <h2 class="modal__title" id="modal-title">Bestätigen</h2>
+          </div>
+          <div class="modal__body">
+            <p class="mb-0">Möchtest du diese Aktion wirklich ausführen?</p>
+          </div>
+          <div class="modal__footer">
+            <button class="btn btn--ghost" data-close>Abbrechen</button>
+            <button class="btn" data-close>OK</button>
+          </div>
+        </dialog>
+      </section>
+    </main>
+
+    <footer class="container py-6 text-center text-muted text-sm">
+      <p class="mb-0">css-toolkit · MIT-Lizenz</p>
+    </footer>
+
+    <script>
+      // Theme-Wechsler: "auto" entfernt das Attribut und folgt dem System
+      const themeSelect = document.getElementById("theme-select");
+      themeSelect.value = document.documentElement.dataset.theme || "auto";
+      themeSelect.addEventListener("change", (e) => {
+        if (e.target.value === "auto") {
+          delete document.documentElement.dataset.theme;
+        } else {
+          document.documentElement.dataset.theme = e.target.value;
+        }
+      });
+
+      // Navbar bekommt einen Schatten, sobald gescrollt wird
+      const navbar = document.querySelector(".navbar");
+      const onScroll = () => navbar.classList.toggle("navbar--scrolled", window.scrollY > 8);
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      const modal = document.getElementById("demo-modal");
+      document.getElementById("open-modal").addEventListener("click", () => modal.showModal());
+      modal
+        .querySelectorAll("[data-close]")
+        .forEach((btn) => btn.addEventListener("click", () => modal.close()));
+    </script>
+  </body>
+</html>

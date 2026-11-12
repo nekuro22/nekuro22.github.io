@@ -1,0 +1,44 @@
+{
+    "pageTitle": "Mars Terraforming",
+    "aria": {
+        "scenePanel": "3D Terraforming Simulation",
+        "statusGrid": "Planetare Werte"
+    },
+    "mission": {
+        "subtitle": "Interaktive Skizze",
+        "heading": "Mars Terraforming",
+        "description": "Eine ruhige Annäherung daran, wie sich der Planet über sehr lange Zeit verändern könnte."
+    },
+    "statusGrid": {
+        "labels": ["Atmosphäre", "Wasser", "Magnetfeld"]
+    },
+    "timeline": {
+        "label": "Entwicklung",
+        "steps": ["Jetzt", "Atmosphäre", "Magnetfeld", "Fertig"]
+    },
+    "stageBadge": {
+        "stepPrefix": "Schritt"
+    },
+    "stages": [
+        {
+            "title": "Mars aktuell",
+            "year": "Sol 0",
+            "text": "Dünne CO2-Atmosphäre, Staubstürme, Eis an den Polen und kein globales Magnetfeld. Der Planet verliert Schutz und Wärme direkt an den Sonnenwind."
+        },
+        {
+            "title": "Atmosphäre",
+            "year": "Jahr 0-700",
+            "text": "Orbitale Laser erwärmen über mehr als 500 Jahre Oberfläche und Eis. Danach bringen Kapseln Stickstoff ein, damit Druck und Atmosphäre langsam wachsen."
+        },
+        {
+            "title": "Magnetfeld",
+            "year": "Jahr 700-850",
+            "text": "Ein geladener Plasmaring kreist um den Planeten. Er lenkt Sonnenwind ab und ersetzt das fehlende innere Magnetfeld durch einen technischen Schutz."
+        },
+        {
+            "title": "Stabilere Oberfläche",
+            "year": "Jahr 900+",
+            "text": "Ozeane, Wolken und erste Biosphären stabilisieren das Klima. Grüne Korridore breiten sich an Küsten und Äquatorzonen aus."
+        }
+    ]
+}

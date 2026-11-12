@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect</title>
+    <script>
+        const REDIRECTS = {
+            "kahoot": "https://kahoot.it/challenge/0144534?challenge-id=25622070-e0e2-4917-b306-7bc7ec33c8c2_1783277165647",
+            "test": "https://example.com"
+        };
+
+        const key = new URLSearchParams(window.location.search).keys().next().value;
+
+        if (key && REDIRECTS[key]) {
+            window.location.replace(REDIRECTS[key]);
+        } else if (key) {
+            document.getElementById("msg").textContent = "Kein Ziel für \"" + key + "\" konfiguriert.";
+        } else {
+            document.getElementById("msg").textContent = "Kein Parameter angegeben.";
+        }
+    </script>
+</head>
+<body>
+    <p id="msg"></p>
+</body>
+</html>

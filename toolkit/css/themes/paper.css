@@ -1,0 +1,41 @@
+/*
+ * Paper Theme
+ * Warmes Papier mit Serifenschrift – ruhig und lesefreundlich, wie ein gedrucktes Buch.
+ * Aktivierung: <html data-theme="paper">
+ */
+
+@layer themes {
+  :root[data-theme="paper"] {
+    --font-sans: georgia, "Times New Roman", serif;
+    --font-mono: "Courier New", monospace;
+    --line-height-base: 1.7;
+    --color-primary: #7a4a1e;
+    --color-primary-hover: #5c3614;
+    --color-primary-contrast: #fffdf8;
+    --color-secondary: #8c8577;
+    --color-success: #3d6b3a;
+    --color-warning: #9a6b10;
+    --color-danger: #9b2c2c;
+    --color-info: #2d5a7b;
+    --color-bg: #faf7f0;
+    --color-bg-subtle: #f3eee2;
+    --color-surface: #fffdf8;
+    --color-text: #2b2a26;
+    --color-text-muted: #6d6859;
+    --color-border: #e6e0d0;
+    --color-focus: #7a4a1e;
+    --radius-sm: 2px;
+    --radius-md: 2px;
+    --radius-lg: 4px;
+    --shadow-sm: 0 1px 0 rgb(0 0 0 / 4%);
+    --shadow-md: 0 2px 4px rgb(60 40 10 / 8%);
+    --shadow-lg: 0 6px 16px rgb(60 40 10 / 12%);
+  }
+
+  [data-theme="paper"] h1,
+  [data-theme="paper"] h2,
+  [data-theme="paper"] h3 {
+    font-style: italic;
+    font-weight: 400;
+  }
+}

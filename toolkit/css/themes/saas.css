@@ -1,0 +1,40 @@
+/*
+ * SaaS Theme
+ * Moderner Produkt-Look für Web-Apps und Dashboards. Kühles Zinkgrau,
+ * Indigo-Akzent, feine Rahmen und weiche, mehrschichtige Schatten.
+ * Aktivierung: <html data-theme="saas">
+ */
+
+@layer themes {
+  :root[data-theme="saas"] {
+    --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", roboto, sans-serif;
+    --color-primary: #5b5bd6;
+    --color-primary-hover: #4a4ac2;
+    --color-primary-contrast: #fff;
+    --color-secondary: #6b7280;
+    --color-success: #2f9e6b;
+    --color-warning: #c78a0a;
+    --color-danger: #d6455d;
+    --color-info: #3b82c4;
+    --color-bg: #fafafb;
+    --color-bg-subtle: #f3f3f5;
+    --color-surface: #fff;
+    --color-text: #1b1b1f;
+    --color-text-muted: #6e6e78;
+    --color-border: #e6e6ea;
+    --color-focus: #5b5bd6;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 10px;
+    --shadow-sm: 0 1px 2px rgb(20 20 30 / 5%);
+    --shadow-md: 0 1px 2px rgb(20 20 30 / 5%), 0 6px 16px -4px rgb(20 20 30 / 8%);
+    --shadow-lg: 0 2px 4px rgb(20 20 30 / 5%), 0 20px 40px -12px rgb(20 20 30 / 18%);
+  }
+
+  [data-theme="saas"] h1,
+  [data-theme="saas"] h2,
+  [data-theme="saas"] h3 {
+    letter-spacing: -0.022em;
+    font-weight: 600;
+  }
+}

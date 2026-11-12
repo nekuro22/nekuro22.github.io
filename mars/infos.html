@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Mars-Terraforming</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="info-shell">
+        <div class="info-content" id="content">
+            <!-- Markdown content will be loaded here -->
+        </div>
+    </main>
+    <div class="ai-notice">3D-Modell KI-generiert &middot; nur zur Visualisierung &middot; <a href="https://leidert.org/info/impressum/">Impressum</a></div>
+
+    <script type="module">
+        import { marked } from './vendor/marked.esm.js';
+
+        const contentDiv = document.getElementById('content');
+
+        console.log('Infos: versuche GitHub Raw zu laden...');
+        fetch('https://raw.githubusercontent.com/nekuro22/leidert.org/refs/heads/main/mars/infos.md')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Raw markdown not available');
+                }
+                console.log('Infos: GitHub Raw geladen');
+                return response.text();
+            })
+            .then(markdown => {
+                contentDiv.innerHTML = marked(markdown);
+
+                const backLinkDiv = document.createElement('div');
+                backLinkDiv.className = 'back-link';
+                backLinkDiv.innerHTML = `
+                    <a href="https://leidert.org/frontend/niklas-leidertde/mars/redirect.html?kahoot" target="_blank">Kahoot-Quiz</a>
+                    <a href="index.html">&larr; Zurück zur Simulation</a>
+                    <a href="ai-info.html">&rarr; KI-Info</a>
+                `;
+                contentDiv.appendChild(backLinkDiv);
+            })
+            .catch(() => {
+                console.log('Infos: GitHub Raw fehlgeschlagen, nehme lokalen Fallback...');
+                return fetch('infos.md')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Local markdown not found');
+                        }
+                        console.log('Infos: lokaler Fallback geladen');
+                        return response.text();
+                    })
+                    .then(markdown => {
+                        contentDiv.innerHTML = marked(markdown);
+
+                        const backLinkDiv = document.createElement('div');
+                        backLinkDiv.className = 'back-link';
+                        backLinkDiv.innerHTML = `
+                            <a href="https://leidert.org/frontend/niklas-leidertde/mars/redirect.html?kahoot" target="_blank">Kahoot-Quiz</a>
+                            <a href="index.html">&larr; Zurück zur Simulation</a>
+                            <a href="ai-info.html">&rarr; KI-Info</a>
+                        `;
+                        contentDiv.appendChild(backLinkDiv);
+                    });
+            })
+            .catch(error => {
+                console.error('Error loading markdown:', error);
+                contentDiv.innerHTML = '<p>Fehler beim Laden des Inhalts.</p>';
+            });
+    </script>
+</body>
+</html>
+

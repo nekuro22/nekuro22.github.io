@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle"></title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="style.css">
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "./vendor/three.module.min.js",
+            "three/addons/": "./vendor/addons/"
+        }
+    }
+    </script>
+</head>
+<body>
+    <main class="app-shell">
+        <section class="scene-panel" aria-label="3D Terraforming Simulation">
+            <canvas id="marsCanvas"></canvas>
+            <div class="stage-badge">
+                <span id="stageKicker"></span>
+                <strong id="stageTitle"></strong>
+            </div>
+            <div class="ai-notice">3D-Modell KI-generiert &middot; nur zur Visualisierung &middot; <a href="https://leidert.org/info/impressum/">Impressum</a></div>
+        </section>
+
+        <aside class="control-panel">
+            <header class="mission-header">
+                <p id="missionSubtitle"></p>
+                <h1 id="missionHeading"></h1>
+                <span id="missionDesc"></span>
+            </header>
+
+            <section class="status-grid">
+                <div>
+                    <span id="statusLabel0"></span>
+                    <strong id="atmoValue">1%</strong>
+                </div>
+                <div>
+                    <span id="statusLabel1"></span>
+                    <strong id="waterValue">0%</strong>
+                </div>
+                <div>
+                    <span id="statusLabel2"></span>
+                    <strong id="fieldValue">0%</strong>
+                </div>
+            </section>
+
+            <section class="timeline-control">
+                <label id="timelineLabel" for="terraformSlider"></label>
+                <input id="terraformSlider" type="range" min="0" max="3" value="0" step="0.01">
+                <div class="timeline-labels" aria-hidden="true">
+                    <span id="timelineStep0"></span>
+                    <span id="timelineStep1"></span>
+                    <span id="timelineStep2"></span>
+                    <span id="timelineStep3"></span>
+                </div>
+            </section>
+
+            <section class="stage-card" aria-live="polite">
+                <p id="stageYear"></p>
+                <h2 id="stageName"></h2>
+                <p id="stageText"></p>
+            </section>
+
+            <a class="info-link" href="https://leidert.org/frontend/niklas-leidertde/mars/redirect.html?kahoot" target="_blank">&rarr; Kahoot</a>
+            <a class="info-link" href="infos.html">&rarr; Info</a>
+            <a class="info-link" href="ai-info.html">&rarr; KI-Info</a>
+            <a class="info-link" href="quellen.html">&rarr; Quellen</a>
+        </aside>
+    </main>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+/*
+ * Swiss Theme
+ * Inspiriert vom Internationalen Typografischen Stil: Weiß, Schwarz, ein
+ * kräftiger Akzent, harte Linien und große, enge Überschriften.
+ * Aktivierung: <html data-theme="swiss">
+ */
+
+@layer themes {
+  :root[data-theme="swiss"] {
+    --font-sans: "Helvetica Neue", helvetica, arial, sans-serif;
+    --color-primary: #ff3b00;
+    --color-primary-hover: #cc2f00;
+    --color-primary-contrast: #fff;
+    --color-secondary: #000;
+    --color-success: #00a86b;
+    --color-warning: #ffb000;
+    --color-danger: #ff3b00;
+    --color-info: #0047ff;
+    --color-bg: #fff;
+    --color-bg-subtle: #f2f2f2;
+    --color-surface: #fff;
+    --color-text: #000;
+    --color-text-muted: #444;
+    --color-border: #000;
+    --color-focus: #ff3b00;
+    --radius-sm: 0;
+    --radius-md: 0;
+    --radius-lg: 0;
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+  }
+
+  [data-theme="swiss"] h1,
+  [data-theme="swiss"] h2,
+  [data-theme="swiss"] h3 {
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+
+  [data-theme="swiss"] .card,
+  [data-theme="swiss"] .table-wrapper,
+  [data-theme="swiss"] .navbar {
+    border-width: 1px;
+    border-color: var(--color-border);
+  }
+}

@@ -1,0 +1,258 @@
+/*
+ * Abstands-Utilities auf Basis der Design-Tokens (--space-*).
+ *
+ * Schema: {Eigenschaft}-{Stufe}
+ *   m / mx / my / mt / mb   – margin
+ *   p / px / py / pt / pb   – padding
+ *   gap-{Stufe}             – gap (Flex & Grid)
+ * Stufen: 0, 1, 2, 4, 6, 8
+ */
+
+@layer utilities {
+  /* margin */
+  .m-0 {
+    margin: var(--space-0);
+  }
+
+  .m-1 {
+    margin: var(--space-1);
+  }
+
+  .m-2 {
+    margin: var(--space-2);
+  }
+
+  .m-4 {
+    margin: var(--space-4);
+  }
+
+  .m-6 {
+    margin: var(--space-6);
+  }
+
+  .m-8 {
+    margin: var(--space-8);
+  }
+
+  .mx-0 {
+    margin-inline: var(--space-0);
+  }
+
+  .mx-1 {
+    margin-inline: var(--space-1);
+  }
+
+  .mx-2 {
+    margin-inline: var(--space-2);
+  }
+
+  .mx-4 {
+    margin-inline: var(--space-4);
+  }
+
+  .mx-6 {
+    margin-inline: var(--space-6);
+  }
+
+  .mx-8 {
+    margin-inline: var(--space-8);
+  }
+
+  .mx-auto {
+    margin-inline: auto;
+  }
+
+  .my-0 {
+    margin-block: var(--space-0);
+  }
+
+  .my-1 {
+    margin-block: var(--space-1);
+  }
+
+  .my-2 {
+    margin-block: var(--space-2);
+  }
+
+  .my-4 {
+    margin-block: var(--space-4);
+  }
+
+  .my-6 {
+    margin-block: var(--space-6);
+  }
+
+  .my-8 {
+    margin-block: var(--space-8);
+  }
+
+  .mt-0 {
+    margin-block-start: var(--space-0);
+  }
+
+  .mt-1 {
+    margin-block-start: var(--space-1);
+  }
+
+  .mt-2 {
+    margin-block-start: var(--space-2);
+  }
+
+  .mt-4 {
+    margin-block-start: var(--space-4);
+  }
+
+  .mt-6 {
+    margin-block-start: var(--space-6);
+  }
+
+  .mt-8 {
+    margin-block-start: var(--space-8);
+  }
+
+  .mb-0 {
+    margin-block-end: var(--space-0);
+  }
+
+  .mb-1 {
+    margin-block-end: var(--space-1);
+  }
+
+  .mb-2 {
+    margin-block-end: var(--space-2);
+  }
+
+  .mb-4 {
+    margin-block-end: var(--space-4);
+  }
+
+  .mb-6 {
+    margin-block-end: var(--space-6);
+  }
+
+  .mb-8 {
+    margin-block-end: var(--space-8);
+  }
+
+  /* padding */
+  .p-0 {
+    padding: var(--space-0);
+  }
+
+  .p-1 {
+    padding: var(--space-1);
+  }
+
+  .p-2 {
+    padding: var(--space-2);
+  }
+
+  .p-4 {
+    padding: var(--space-4);
+  }
+
+  .p-6 {
+    padding: var(--space-6);
+  }
+
+  .p-8 {
+    padding: var(--space-8);
+  }
+
+  .px-0 {
+    padding-inline: var(--space-0);
+  }
+
+  .px-1 {
+    padding-inline: var(--space-1);
+  }
+
+  .px-2 {
+    padding-inline: var(--space-2);
+  }
+
+  .px-4 {
+    padding-inline: var(--space-4);
+  }
+
+  .px-6 {
+    padding-inline: var(--space-6);
+  }
+
+  .px-8 {
+    padding-inline: var(--space-8);
+  }
+
+  .py-0 {
+    padding-block: var(--space-0);
+  }
+
+  .py-1 {
+    padding-block: var(--space-1);
+  }
+
+  .py-2 {
+    padding-block: var(--space-2);
+  }
+
+  .py-4 {
+    padding-block: var(--space-4);
+  }
+
+  .py-6 {
+    padding-block: var(--space-6);
+  }
+
+  .py-8 {
+    padding-block: var(--space-8);
+  }
+
+  .pt-0 {
+    padding-block-start: var(--space-0);
+  }
+
+  .pt-4 {
+    padding-block-start: var(--space-4);
+  }
+
+  .pt-8 {
+    padding-block-start: var(--space-8);
+  }
+
+  .pb-0 {
+    padding-block-end: var(--space-0);
+  }
+
+  .pb-4 {
+    padding-block-end: var(--space-4);
+  }
+
+  .pb-8 {
+    padding-block-end: var(--space-8);
+  }
+
+  /* gap */
+  .gap-0 {
+    gap: var(--space-0);
+  }
+
+  .gap-1 {
+    gap: var(--space-1);
+  }
+
+  .gap-2 {
+    gap: var(--space-2);
+  }
+
+  .gap-4 {
+    gap: var(--space-4);
+  }
+
+  .gap-6 {
+    gap: var(--space-6);
+  }
+
+  .gap-8 {
+    gap: var(--space-8);
+  }
+}

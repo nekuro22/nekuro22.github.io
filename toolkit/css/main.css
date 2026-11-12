@@ -1,0 +1,51 @@
+/*!
+ * css-toolkit – Haupteinstiegspunkt
+ * Lädt alle Module in fester Reihenfolge. Die Reihenfolge der Layers bestimmt
+ * die Priorität: später deklarierte Layers überschreiben früher deklarierte.
+ *
+ * Verwendung:
+ *   <link rel="stylesheet" href="css/main.css">
+ */
+
+@layer reset, base, layout, components, utilities, themes, print;
+
+@import url("base/reset.css") layer(reset);
+@import url("base/variables.css") layer(base);
+@import url("base/typography.css") layer(base);
+@import url("base/classless.css") layer(base);
+@import url("base/accessibility.css") layer(base);
+@import url("layout/container.css") layer(layout);
+@import url("layout/grid.css") layer(layout);
+@import url("components/button.css") layer(components);
+@import url("components/card.css") layer(components);
+@import url("components/form.css") layer(components);
+@import url("components/navbar.css") layer(components);
+@import url("components/alert.css") layer(components);
+@import url("components/table.css") layer(components);
+@import url("components/modal.css") layer(components);
+@import url("utilities/spacing.css") layer(utilities);
+@import url("utilities/text.css") layer(utilities);
+@import url("utilities/display.css") layer(utilities);
+@import url("utilities/effects.css") layer(utilities);
+@import url("utilities/animations.css") layer(utilities);
+@import url("utilities/interactions.css") layer(utilities);
+@import url("themes/light.css") layer(themes);
+@import url("themes/dark.css") layer(themes);
+@import url("themes/ocean.css") layer(themes);
+@import url("themes/forest.css") layer(themes);
+@import url("themes/sunset.css") layer(themes);
+@import url("themes/midnight.css") layer(themes);
+@import url("themes/high-contrast.css") layer(themes);
+@import url("themes/mono.css") layer(themes);
+@import url("themes/paper.css") layer(themes);
+@import url("themes/swiss.css") layer(themes);
+@import url("themes/aurora.css") layer(themes);
+@import url("themes/obsidian.css") layer(themes);
+@import url("themes/editorial.css") layer(themes);
+@import url("themes/corporate.css") layer(themes);
+@import url("themes/enterprise.css") layer(themes);
+@import url("themes/saas.css") layer(themes);
+@import url("themes/fintech.css") layer(themes);
+@import url("themes/healthcare.css") layer(themes);
+@import url("themes/graphite.css") layer(themes);
+@import url("print.css") layer(print);

@@ -1,0 +1,25 @@
+/*
+ * Forest Theme
+ * Natürliche Grüntöne, passend für Umwelt-, Bio- oder Outdoor-Projekte.
+ * Aktivierung: <html data-theme="forest">
+ */
+
+@layer themes {
+  :root[data-theme="forest"] {
+    --color-primary: #15803d;
+    --color-primary-hover: #166534;
+    --color-primary-contrast: #fff;
+    --color-secondary: #65a30d;
+    --color-success: #15803d;
+    --color-warning: #a16207;
+    --color-danger: #b91c1c;
+    --color-info: #0d9488;
+    --color-bg: #f7fdf4;
+    --color-bg-subtle: #eef9e8;
+    --color-surface: #fff;
+    --color-text: #14532d;
+    --color-text-muted: #567a61;
+    --color-border: #d6eccb;
+    --color-focus: #15803d;
+  }
+}

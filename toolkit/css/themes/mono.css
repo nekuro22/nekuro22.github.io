@@ -1,0 +1,32 @@
+/*
+ * Mono Theme
+ * Reines Schwarz-Weiß ohne Radien und Schatten. Minimalistisch und fokussiert.
+ * Aktivierung: <html data-theme="mono">
+ */
+
+@layer themes {
+  :root[data-theme="mono"] {
+    --font-sans: "Helvetica Neue", helvetica, arial, sans-serif;
+    --color-primary: #000;
+    --color-primary-hover: #333;
+    --color-primary-contrast: #fff;
+    --color-secondary: #6b6b6b;
+    --color-success: #2f2f2f;
+    --color-warning: #555;
+    --color-danger: #000;
+    --color-info: #555;
+    --color-bg: #fff;
+    --color-bg-subtle: #f4f4f4;
+    --color-surface: #fff;
+    --color-text: #111;
+    --color-text-muted: #6b6b6b;
+    --color-border: #ddd;
+    --color-focus: #000;
+    --radius-sm: 0;
+    --radius-md: 0;
+    --radius-lg: 0;
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+  }
+}

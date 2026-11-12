@@ -1,0 +1,58 @@
+/*
+ * Dark Mode
+ *
+ * Aktivierung:
+ *   1. Automatisch über die Systemeinstellung (prefers-color-scheme)
+ *   2. Manuell über das Attribut:  <html data-theme="dark">
+ *
+ * Manuell auf Hell erzwingen:      <html data-theme="light">
+ *
+ * Hinweis: Die Token-Liste muss bei Änderungen in base/variables.css
+ * in beiden Blöcken synchron gehalten werden.
+ */
+
+@layer themes {
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --color-primary: #60a5fa;
+      --color-primary-hover: #93c5fd;
+      --color-primary-contrast: #0f172a;
+      --color-secondary: #94a3b8;
+      --color-success: #4ade80;
+      --color-warning: #fbbf24;
+      --color-danger: #f87171;
+      --color-info: #22d3ee;
+      --color-bg: #0f172a;
+      --color-bg-subtle: #1e293b;
+      --color-surface: #1e293b;
+      --color-text: #f1f5f9;
+      --color-text-muted: #94a3b8;
+      --color-border: #334155;
+      --color-focus: #60a5fa;
+      --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 50%), 0 2px 4px -2px rgb(0 0 0 / 50%);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 50%), 0 4px 6px -4px rgb(0 0 0 / 50%);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --color-primary: #60a5fa;
+    --color-primary-hover: #93c5fd;
+    --color-primary-contrast: #0f172a;
+    --color-secondary: #94a3b8;
+    --color-success: #4ade80;
+    --color-warning: #fbbf24;
+    --color-danger: #f87171;
+    --color-info: #22d3ee;
+    --color-bg: #0f172a;
+    --color-bg-subtle: #1e293b;
+    --color-surface: #1e293b;
+    --color-text: #f1f5f9;
+    --color-text-muted: #94a3b8;
+    --color-border: #334155;
+    --color-focus: #60a5fa;
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 50%), 0 2px 4px -2px rgb(0 0 0 / 50%);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 50%), 0 4px 6px -4px rgb(0 0 0 / 50%);
+  }
+}

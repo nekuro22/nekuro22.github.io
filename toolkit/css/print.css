@@ -1,0 +1,59 @@
+/*
+ * Druckoptimierung
+ * Entfernt Hintergründe und Schatten, macht Links lesbar und verhindert
+ * unschöne Seitenumbrüche innerhalb von Blöcken.
+ */
+
+@layer print {
+  @media print {
+    @page {
+      margin: 2cm;
+    }
+
+    *,
+    *::before,
+    *::after {
+      color: #000 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+
+    body {
+      font-size: 11pt;
+    }
+
+    a[href]::after {
+      content: " (" attr(href) ")";
+      font-size: 0.8em;
+    }
+
+    a[href^="#"]::after,
+    a[href^="javascript:"]::after {
+      content: "";
+    }
+
+    .navbar,
+    .btn,
+    .modal,
+    .skip-link,
+    .no-print {
+      display: none !important;
+    }
+
+    h1,
+    h2,
+    h3 {
+      break-after: avoid;
+    }
+
+    pre,
+    blockquote,
+    tr,
+    img,
+    figure,
+    .card {
+      break-inside: avoid;
+    }
+  }
+}

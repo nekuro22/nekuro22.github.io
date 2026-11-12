@@ -1,0 +1,180 @@
+/*
+ * Typografie-Grundlagen für Überschriften, Fließtext, Code und Zitate.
+ */
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-block: 0 var(--space-4);
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+    color: var(--color-text);
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: var(--font-size-4xl);
+  }
+
+  h2 {
+    font-size: var(--font-size-3xl);
+  }
+
+  h3 {
+    font-size: var(--font-size-2xl);
+  }
+
+  h4 {
+    font-size: var(--font-size-xl);
+  }
+
+  h5 {
+    font-size: var(--font-size-lg);
+  }
+
+  h6 {
+    font-size: var(--font-size-base);
+  }
+
+  p {
+    margin-block: 0 var(--space-4);
+    max-width: 75ch;
+  }
+
+  small {
+    font-size: var(--font-size-sm);
+  }
+
+  a {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, currentcolor 35%, transparent);
+    text-underline-offset: 0.2em;
+    transition:
+      color var(--transition-fast),
+      text-decoration-color var(--transition-fast);
+  }
+
+  a:hover {
+    color: var(--color-primary);
+    text-decoration-color: currentcolor;
+  }
+
+  /* Begriffsdefinition: <dfn>Kernel</dfn>
+     Optionale Erklärung beim Hover/Fokus: <dfn data-definition="…" tabindex="0"> */
+  :where(dfn) {
+    padding: 0.05em 0.4em;
+    font-style: normal;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    border-radius: var(--radius-sm);
+    box-decoration-break: clone;
+  }
+
+  :where(dfn[data-definition], dfn[title], abbr[title]) {
+    cursor: help;
+  }
+
+  :where(abbr[title]) {
+    text-decoration: underline dotted;
+    text-decoration-color: var(--color-text-muted);
+    text-underline-offset: 0.2em;
+  }
+
+  :where(dfn[data-definition]) {
+    position: relative;
+  }
+
+  :where(dfn[data-definition])::after {
+    content: attr(data-definition);
+    position: absolute;
+    inset-block-start: calc(100% + var(--space-2));
+    inset-inline-start: 0;
+    z-index: var(--z-dropdown);
+    width: max-content;
+    max-width: min(18rem, 80vw);
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-tight);
+    white-space: normal;
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition:
+      opacity var(--transition-fast),
+      transform var(--transition-fast),
+      visibility var(--transition-fast);
+    pointer-events: none;
+  }
+
+  :where(dfn[data-definition]:hover, dfn[data-definition]:focus-visible)::after {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+
+  code,
+  kbd {
+    padding: 0.125em 0.375em;
+    background-color: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+  }
+
+  pre {
+    padding: var(--space-4);
+    overflow-x: auto;
+    background-color: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  pre code {
+    padding: 0;
+    background: none;
+    border: 0;
+  }
+
+  blockquote {
+    margin: var(--space-6) 0;
+    padding-inline-start: var(--space-4);
+    border-inline-start: 4px solid var(--color-primary);
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  hr {
+    margin-block: var(--space-8);
+    border: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  mark {
+    padding: 0 0.2em;
+    background-color: color-mix(in srgb, var(--color-warning) 30%, transparent);
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-primary) 25%, transparent);
+  }
+}

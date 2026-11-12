@@ -1,0 +1,25 @@
+/*
+ * Ocean Theme
+ * Kühle Türkis- und Petrol-Töne für ruhige, vertrauenswürdige Oberflächen.
+ * Aktivierung: <html data-theme="ocean">
+ */
+
+@layer themes {
+  :root[data-theme="ocean"] {
+    --color-primary: #0e7490;
+    --color-primary-hover: #155e75;
+    --color-primary-contrast: #fff;
+    --color-secondary: #0f766e;
+    --color-success: #0f766e;
+    --color-warning: #b45309;
+    --color-danger: #b91c1c;
+    --color-info: #0284c7;
+    --color-bg: #f0fdfa;
+    --color-bg-subtle: #e6fbf6;
+    --color-surface: #fff;
+    --color-text: #134e4a;
+    --color-text-muted: #4b7a75;
+    --color-border: #ccfbf1;
+    --color-focus: #0e7490;
+  }
+}

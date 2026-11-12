@@ -1,0 +1,100 @@
+/*
+ * Buttons
+ *
+ * <button class="btn">Primär</button>
+ * <button class="btn btn--secondary btn--sm">Klein</button>
+ * <a class="btn btn--outline btn--lg" href="#">Link als Button</a>
+ */
+
+@layer components {
+  .btn {
+    --btn-bg: var(--color-primary);
+    --btn-color: var(--color-primary-contrast);
+    --btn-border: transparent;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: 2.5rem;
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.2;
+    text-decoration: none;
+    white-space: nowrap;
+    user-select: none;
+    color: var(--btn-color);
+    background-color: var(--btn-bg);
+    border: 1px solid var(--btn-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition:
+      background-color var(--transition-fast),
+      filter var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .btn:hover {
+    filter: brightness(0.92);
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* Varianten */
+  .btn--secondary {
+    --btn-bg: var(--color-secondary);
+  }
+
+  .btn--success {
+    --btn-bg: var(--color-success);
+  }
+
+  .btn--danger {
+    --btn-bg: var(--color-danger);
+  }
+
+  .btn--outline {
+    --btn-bg: transparent;
+    --btn-color: var(--color-primary);
+    --btn-border: var(--color-primary);
+  }
+
+  .btn--outline:hover,
+  .btn--ghost:hover {
+    filter: none;
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  }
+
+  .btn--ghost {
+    --btn-bg: transparent;
+    --btn-color: var(--color-text);
+  }
+
+  /* Größen */
+  .btn--sm {
+    min-height: 2rem;
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--font-size-xs);
+  }
+
+  .btn--lg {
+    min-height: 3rem;
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--font-size-base);
+  }
+
+  .btn--block {
+    display: flex;
+    width: 100%;
+  }
+}

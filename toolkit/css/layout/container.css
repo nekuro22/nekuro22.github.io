@@ -1,0 +1,43 @@
+/*
+ * Container – zentrierter Inhaltsbereich mit responsivem Seitenabstand.
+ *
+ * <div class="container">…</div>
+ * <div class="container container--md">…</div>
+ */
+
+@layer layout {
+  .container {
+    width: 100%;
+    max-width: var(--container-xl);
+    margin-inline: auto;
+    padding-inline: var(--space-4);
+  }
+
+  @media (width >= 640px) {
+    .container {
+      padding-inline: var(--space-6);
+    }
+  }
+
+  @media (width >= 1024px) {
+    .container {
+      padding-inline: var(--space-8);
+    }
+  }
+
+  .container--sm {
+    max-width: var(--container-sm);
+  }
+
+  .container--md {
+    max-width: var(--container-md);
+  }
+
+  .container--lg {
+    max-width: var(--container-lg);
+  }
+
+  .container--fluid {
+    max-width: none;
+  }
+}

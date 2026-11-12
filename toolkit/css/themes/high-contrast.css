@@ -1,0 +1,28 @@
+/*
+ * High-Contrast Theme
+ * Maximaler Kontrast für bessere Lesbarkeit (WCAG AAA-Ziel für Text).
+ * Aktivierung: <html data-theme="high-contrast">
+ */
+
+@layer themes {
+  :root[data-theme="high-contrast"] {
+    --color-primary: #ff0;
+    --color-primary-hover: #fff;
+    --color-primary-contrast: #000;
+    --color-secondary: #fff;
+    --color-success: #00ff7f;
+    --color-warning: #ffd700;
+    --color-danger: #ff4d4d;
+    --color-info: #00e5ff;
+    --color-bg: #000;
+    --color-bg-subtle: #111;
+    --color-surface: #000;
+    --color-text: #fff;
+    --color-text-muted: #e5e5e5;
+    --color-border: #fff;
+    --color-focus: #ff0;
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+  }
+}

@@ -1,0 +1,51 @@
+/*
+ * Hinweis- und Statusboxen
+ *
+ * <div class="alert alert--success" role="status">
+ *   <div>
+ *     <p class="alert__title">Gespeichert</p>
+ *     <p class="alert__text">Die Änderungen wurden übernommen.</p>
+ *   </div>
+ * </div>
+ */
+
+@layer components {
+  .alert {
+    --alert-color: var(--color-info);
+
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    color: var(--color-text);
+    background-color: color-mix(in srgb, var(--alert-color) 10%, var(--color-surface));
+    border: 1px solid color-mix(in srgb, var(--alert-color) 35%, transparent);
+    border-inline-start: 4px solid var(--alert-color);
+    border-radius: var(--radius-md);
+  }
+
+  .alert__title {
+    margin: 0 0 var(--space-1);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .alert__text {
+    margin: 0;
+    font-size: var(--font-size-sm);
+  }
+
+  .alert--success {
+    --alert-color: var(--color-success);
+  }
+
+  .alert--warning {
+    --alert-color: var(--color-warning);
+  }
+
+  .alert--danger {
+    --alert-color: var(--color-danger);
+  }
+
+  .alert--info {
+    --alert-color: var(--color-info);
+  }
+}

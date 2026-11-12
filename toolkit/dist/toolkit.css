@@ -1,0 +1,3009 @@
+/*! css-toolkit | MIT */
+@layer reset, base, layout, components, utilities, themes, print;
+
+/* base/reset.css */
+/*
+ * Moderner, minimaler CSS-Reset
+ * Entfernt Browser-Eigenheiten, ohne Standard-Semantik (z. B. Listen) zu zerstören.
+ */
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  html {
+    text-size-adjust: 100%;
+    tab-size: 4;
+    scroll-behavior: smooth;
+
+    /* Ankerziele nicht unter der sticky Navbar verstecken */
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    min-height: 100vh;
+    font-family: var(--font-sans);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizelegibility;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  ul[role="list"],
+  ol[role="list"] {
+    list-style: none;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  :target {
+    scroll-margin-block: var(--space-16);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* base/variables.css */
+/*
+ * Design-Tokens
+ * Zentrale Stelle für Farben, Typografie, Abstände, Radien, Schatten und Layout.
+ * Werte hier anpassen, um das gesamte Toolkit zu thematisieren.
+ */
+
+@layer base {
+  :root {
+    /* Farben – Marke & Status */
+    --color-primary: #2563eb;
+    --color-primary-hover: #1d4ed8;
+    --color-primary-contrast: #fff;
+    --color-secondary: #64748b;
+    --color-success: #16a34a;
+    --color-warning: #d97706;
+    --color-danger: #dc2626;
+    --color-info: #0891b2;
+
+    /* Farben – Flächen & Text */
+    --color-bg: #fff;
+    --color-bg-subtle: #f8fafc;
+    --color-surface: #fff;
+    --color-text: #0f172a;
+    --color-text-muted: #64748b;
+    --color-border: #e2e8f0;
+    --color-focus: #2563eb;
+
+    /* Typografie */
+    --font-sans: system-ui, -apple-system, "Segoe UI", roboto, "Helvetica Neue", arial, sans-serif;
+    --font-mono: ui-monospace, "SFMono-Regular", menlo, consolas, "Liberation Mono", monospace;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    --line-height-tight: 1.25;
+    --line-height-base: 1.6;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Abstände (basiert auf einem 4px-Raster) */
+    --space-0: 0;
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+
+    /* Radien */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-full: 9999px;
+
+    /* Schatten */
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -4px rgb(0 0 0 / 10%);
+
+    /* Container-Breiten */
+    --container-sm: 640px;
+    --container-md: 768px;
+    --container-lg: 1024px;
+    --container-xl: 1280px;
+
+    /* Übergänge */
+    --transition-fast: 150ms ease;
+    --transition-base: 200ms ease;
+    --transition-slow: 300ms ease;
+
+    /* Z-Index-Skala */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-modal: 1050;
+    --z-toast: 1080;
+  }
+}
+
+/* base/typography.css */
+/*
+ * Typografie-Grundlagen für Überschriften, Fließtext, Code und Zitate.
+ */
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-block: 0 var(--space-4);
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+    color: var(--color-text);
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: var(--font-size-4xl);
+  }
+
+  h2 {
+    font-size: var(--font-size-3xl);
+  }
+
+  h3 {
+    font-size: var(--font-size-2xl);
+  }
+
+  h4 {
+    font-size: var(--font-size-xl);
+  }
+
+  h5 {
+    font-size: var(--font-size-lg);
+  }
+
+  h6 {
+    font-size: var(--font-size-base);
+  }
+
+  p {
+    margin-block: 0 var(--space-4);
+    max-width: 75ch;
+  }
+
+  small {
+    font-size: var(--font-size-sm);
+  }
+
+  a {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, currentcolor 35%, transparent);
+    text-underline-offset: 0.2em;
+    transition:
+      color var(--transition-fast),
+      text-decoration-color var(--transition-fast);
+  }
+
+  a:hover {
+    color: var(--color-primary);
+    text-decoration-color: currentcolor;
+  }
+
+  /* Begriffsdefinition: <dfn>Kernel</dfn>
+     Optionale Erklärung beim Hover/Fokus: <dfn data-definition="…" tabindex="0"> */
+  :where(dfn) {
+    padding: 0.05em 0.4em;
+    font-style: normal;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    border-radius: var(--radius-sm);
+    box-decoration-break: clone;
+  }
+
+  :where(dfn[data-definition], dfn[title], abbr[title]) {
+    cursor: help;
+  }
+
+  :where(abbr[title]) {
+    text-decoration: underline dotted;
+    text-decoration-color: var(--color-text-muted);
+    text-underline-offset: 0.2em;
+  }
+
+  :where(dfn[data-definition]) {
+    position: relative;
+  }
+
+  :where(dfn[data-definition])::after {
+    content: attr(data-definition);
+    position: absolute;
+    inset-block-start: calc(100% + var(--space-2));
+    inset-inline-start: 0;
+    z-index: var(--z-dropdown);
+    width: max-content;
+    max-width: min(18rem, 80vw);
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-tight);
+    white-space: normal;
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition:
+      opacity var(--transition-fast),
+      transform var(--transition-fast),
+      visibility var(--transition-fast);
+    pointer-events: none;
+  }
+
+  :where(dfn[data-definition]:hover, dfn[data-definition]:focus-visible)::after {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+
+  code,
+  kbd {
+    padding: 0.125em 0.375em;
+    background-color: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+  }
+
+  pre {
+    padding: var(--space-4);
+    overflow-x: auto;
+    background-color: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  pre code {
+    padding: 0;
+    background: none;
+    border: 0;
+  }
+
+  blockquote {
+    margin: var(--space-6) 0;
+    padding-inline-start: var(--space-4);
+    border-inline-start: 4px solid var(--color-primary);
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  hr {
+    margin-block: var(--space-8);
+    border: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  mark {
+    padding: 0 0.2em;
+    background-color: color-mix(in srgb, var(--color-warning) 30%, transparent);
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-primary) 25%, transparent);
+  }
+}
+
+/* base/classless.css */
+/*
+ * Klassenloses Styling
+ * Gestaltet semantisches HTML direkt über Element-Selektoren, ganz ohne Klassen:
+ * Seitenrahmen, Navigation, Überschriften, Listen, Bilder, Karten (<article>),
+ * Tabellen, Formulare, Buttons, <details>, <dialog>.
+ *
+ * Alle Selektoren stehen in :where() (Spezifität 0). Dadurch überschreiben
+ * Klassen und Komponenten dieses Toolkits sowie eigene Styles die Regeln
+ * jederzeit, ohne Spezifitäts-Kämpfe.
+ *
+ * Opt-out für Seiten, die den Rahmen selbst bauen (z. B. mit .container):
+ *   <body class="fluid">
+ */
+
+@layer base {
+  /* Seitenrahmen: <body> ist der zentrierte Inhaltsbereich */
+  :where(body:not(.fluid)) {
+    max-width: calc(var(--container-lg) + 2 * var(--space-6));
+    margin-inline: auto;
+    padding: 0 var(--space-6) var(--space-16);
+  }
+
+  /* Kopfbereich und Fußbereich */
+  :where(body > :is(header, .header)) {
+    margin-block-end: var(--space-8);
+    padding-block: var(--space-6) var(--space-4);
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  :where(body > footer) {
+    margin-block-start: var(--space-12);
+    padding-block-start: var(--space-6);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  /* Abschnitte und Überschriften */
+  :where(section) {
+    margin-block: var(--space-10);
+  }
+
+  :where(h2, h3, h4):not(:first-child) {
+    margin-block-start: var(--space-8);
+  }
+
+  /* Listen im Inhalt */
+  :where(ul, ol) {
+    margin-block: 0 var(--space-4);
+    padding-inline-start: var(--space-6);
+  }
+
+  :where(li + li) {
+    margin-block-start: var(--space-1);
+  }
+
+  :where(li)::marker {
+    color: var(--color-text-muted);
+  }
+
+  /* Navigation: <nav> oder <div class="nav"> – Listen werden zur horizontalen Leiste.
+     Kopfbereich: <header> oder <div class="header"> */
+  :where(header, .header, nav, .nav, footer) :is(ul, ol) {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  :where(nav, .nav) :is(ul, ol) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1) var(--space-6);
+  }
+
+  :where(:is(nav, .nav) li + li) {
+    margin: 0;
+  }
+
+  /* <h1> in der Navigation = Titel/Marke links, Links rechts */
+  :where(:is(nav, .nav) li:has(> h1)) {
+    margin-inline-end: auto;
+  }
+
+  :where(nav, .nav) h1 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-tight);
+    letter-spacing: -0.01em;
+  }
+
+  /* Überschriften um Links herum (z. B. <li><h2><a>) wirken wie normale Nav-Links */
+  :where(nav, .nav) :is(h2, h3, h4, h5, h6) {
+    margin: 0;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-tight);
+  }
+
+  :where(nav, .nav) a {
+    padding-block: var(--space-1);
+    line-height: var(--line-height-tight);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    text-decoration: none;
+    background: linear-gradient(currentcolor, currentcolor) 0 100% / 0 2px no-repeat;
+    transition:
+      color var(--transition-fast),
+      background-size var(--transition-base);
+  }
+
+  :where(nav, .nav) a:is(:hover, :focus-visible, [aria-current]) {
+    color: var(--color-primary);
+    background-size: 100% 2px;
+  }
+
+  /* Kopfbereich mit Navigation wird zur fixierten Leiste mit Milchglas */
+  :where(body > :is(header, .header):has(> :is(nav, .nav))) {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--z-sticky);
+    padding-block: var(--space-3);
+    background-color: color-mix(in srgb, var(--color-bg) 85%, transparent);
+    backdrop-filter: blur(12px) saturate(1.4);
+  }
+
+  /* Bilder und Figuren im Inhalt */
+  :where(main img, section img, article img, figure img) {
+    margin-block: var(--space-4);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  :where(figure) {
+    margin: var(--space-6) 0;
+  }
+
+  :where(figcaption) {
+    margin-block-start: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  /* <article> und <aside> als Karten */
+  :where(article, aside) {
+    margin-block: var(--space-6);
+    padding: var(--space-6);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  :where(article > :last-child, aside > :last-child) {
+    margin-block-end: 0;
+  }
+
+  /* <details> als aufklappbare Box */
+  :where(details) {
+    margin-block: var(--space-4);
+    padding: var(--space-4);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  :where(summary) {
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+  }
+
+  :where(details[open] > summary) {
+    margin-block-end: var(--space-3);
+  }
+
+  /* Tabellen */
+  :where(table) {
+    width: 100%;
+    margin-block: var(--space-4) var(--space-6);
+    font-size: var(--font-size-sm);
+    border: 1px solid var(--color-border);
+  }
+
+  :where(th, td) {
+    padding: var(--space-3) var(--space-4);
+    text-align: start;
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  :where(th) {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-subtle);
+  }
+
+  :where(tbody tr:hover) {
+    background-color: var(--color-bg-subtle);
+  }
+
+  /* Formulare */
+  :where(label) {
+    display: block;
+    margin-block-end: var(--space-1);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+  }
+
+  :where(fieldset) {
+    margin-block: var(--space-4);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  :where(legend) {
+    padding-inline: var(--space-2);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  :where(
+    input:not(
+      [type="checkbox"],
+      [type="radio"],
+      [type="range"],
+      [type="file"],
+      [type="color"],
+      [type="submit"],
+      [type="button"],
+      [type="reset"],
+      [type="image"]
+    ),
+    select,
+    textarea
+  ) {
+    display: block;
+    width: 100%;
+    min-height: 2.5rem;
+    margin-block-end: var(--space-4);
+    padding: var(--space-2) var(--space-3);
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition:
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+
+  :where(textarea) {
+    min-height: 6rem;
+    resize: vertical;
+  }
+
+  :where(input, select, textarea):focus-visible {
+    outline: none;
+    border-color: var(--color-focus);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-focus) 25%, transparent);
+  }
+
+  :where(input[type="checkbox"], input[type="radio"]) {
+    margin-inline-end: var(--space-2);
+    accent-color: var(--color-primary);
+  }
+
+  /* Buttons */
+  :where(button, input[type="submit"], input[type="button"], input[type="reset"]) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: 2.5rem;
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.2;
+    color: var(--color-primary-contrast);
+    background-color: var(--color-primary);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    transition:
+      background-color var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  :where(button, input[type="submit"], input[type="button"], input[type="reset"]):hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  :where(button, input[type="submit"], input[type="button"], input[type="reset"]):active {
+    transform: translateY(1px);
+  }
+
+  :where(button, input[type="submit"]):disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* <dialog> als Modal */
+  :where(dialog) {
+    width: min(90vw, 32rem);
+    padding: var(--space-6);
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 0;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  :where(dialog)::backdrop {
+    background-color: rgb(15 23 42 / 50%);
+    backdrop-filter: blur(2px);
+  }
+}
+
+/* base/accessibility.css */
+/*
+ * Barrierefreiheit
+ * - sichtbarer Fokusrahmen nur bei Tastaturnutzung (:focus-visible)
+ * - Screenreader-only-Hilfsklassen
+ * - Skip-Link zum Überspringen der Navigation
+ */
+
+@layer base {
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  .skip-link {
+    position: absolute;
+    inset-block-start: var(--space-2);
+    inset-inline-start: var(--space-2);
+    z-index: var(--z-toast);
+    padding: var(--space-2) var(--space-4);
+    color: var(--color-primary-contrast);
+    background-color: var(--color-primary);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transform: translateY(-200%);
+    transition: transform var(--transition-fast);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+}
+
+/* layout/container.css */
+/*
+ * Container – zentrierter Inhaltsbereich mit responsivem Seitenabstand.
+ *
+ * <div class="container">…</div>
+ * <div class="container container--md">…</div>
+ */
+
+@layer layout {
+  .container {
+    width: 100%;
+    max-width: var(--container-xl);
+    margin-inline: auto;
+    padding-inline: var(--space-4);
+  }
+
+  @media (width >= 640px) {
+    .container {
+      padding-inline: var(--space-6);
+    }
+  }
+
+  @media (width >= 1024px) {
+    .container {
+      padding-inline: var(--space-8);
+    }
+  }
+
+  .container--sm {
+    max-width: var(--container-sm);
+  }
+
+  .container--md {
+    max-width: var(--container-md);
+  }
+
+  .container--lg {
+    max-width: var(--container-lg);
+  }
+
+  .container--fluid {
+    max-width: none;
+  }
+}
+
+/* layout/grid.css */
+/*
+ * Layout-Primitive: Grid, Stack und Cluster.
+ *
+ * .grid              – automatisch umbrechendes Raster
+ * .grid--2/3/4       – feste Spaltenzahl (ab Tablet-Breite)
+ * .stack             – vertikaler Abstand zwischen direkten Kindern
+ * .cluster           – horizontale Gruppe mit Umbruch
+ */
+
+@layer layout {
+  .grid {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min, 16rem)), 1fr));
+  }
+
+  .grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grid--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .grid--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .grid--gap-lg {
+    gap: var(--space-8);
+  }
+
+  .col-span-2 {
+    grid-column: span 2;
+  }
+
+  .col-span-full {
+    grid-column: 1 / -1;
+  }
+
+  @media (width <= 767px) {
+    .grid--2,
+    .grid--3,
+    .grid--4 {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .col-span-2 {
+      grid-column: auto;
+    }
+  }
+
+  .stack > * + * {
+    margin-block-start: var(--space-4);
+  }
+
+  .cluster {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+  }
+}
+
+/* components/button.css */
+/*
+ * Buttons
+ *
+ * <button class="btn">Primär</button>
+ * <button class="btn btn--secondary btn--sm">Klein</button>
+ * <a class="btn btn--outline btn--lg" href="#">Link als Button</a>
+ */
+
+@layer components {
+  .btn {
+    --btn-bg: var(--color-primary);
+    --btn-color: var(--color-primary-contrast);
+    --btn-border: transparent;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: 2.5rem;
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.2;
+    text-decoration: none;
+    white-space: nowrap;
+    user-select: none;
+    color: var(--btn-color);
+    background-color: var(--btn-bg);
+    border: 1px solid var(--btn-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition:
+      background-color var(--transition-fast),
+      filter var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .btn:hover {
+    filter: brightness(0.92);
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* Varianten */
+  .btn--secondary {
+    --btn-bg: var(--color-secondary);
+  }
+
+  .btn--success {
+    --btn-bg: var(--color-success);
+  }
+
+  .btn--danger {
+    --btn-bg: var(--color-danger);
+  }
+
+  .btn--outline {
+    --btn-bg: transparent;
+    --btn-color: var(--color-primary);
+    --btn-border: var(--color-primary);
+  }
+
+  .btn--outline:hover,
+  .btn--ghost:hover {
+    filter: none;
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  }
+
+  .btn--ghost {
+    --btn-bg: transparent;
+    --btn-color: var(--color-text);
+  }
+
+  /* Größen */
+  .btn--sm {
+    min-height: 2rem;
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--font-size-xs);
+  }
+
+  .btn--lg {
+    min-height: 3rem;
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--font-size-base);
+  }
+
+  .btn--block {
+    display: flex;
+    width: 100%;
+  }
+}
+
+/* components/card.css */
+/*
+ * Karten
+ *
+ * <article class="card card--hover">
+ *   <img class="card__media" src="…" alt="…">
+ *   <div class="card__header"><h3 class="card__title">Titel</h3></div>
+ *   <div class="card__body">Inhalt</div>
+ *   <div class="card__footer">Aktionen</div>
+ * </article>
+ */
+
+@layer components {
+  .card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card__media {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .card__header,
+  .card__body,
+  .card__footer {
+    padding: var(--space-5);
+  }
+
+  .card__header {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .card__body {
+    flex: 1;
+  }
+
+  .card__footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    background-color: var(--color-bg-subtle);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .card__title {
+    margin: 0 0 var(--space-2);
+    font-size: var(--font-size-lg);
+  }
+
+  .card__text {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  .card--hover {
+    transition:
+      box-shadow var(--transition-base),
+      transform var(--transition-base);
+  }
+
+  .card--hover:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+}
+
+/* components/form.css */
+/*
+ * Formularelemente
+ *
+ * <div class="form-group">
+ *   <label class="form-label" for="mail">E-Mail</label>
+ *   <input class="form-control" id="mail" type="email" aria-describedby="mail-hint">
+ *   <span class="form-hint" id="mail-hint">Wir teilen sie nicht.</span>
+ * </div>
+ */
+
+@layer components {
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-block-end: var(--space-4);
+  }
+
+  .form-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+  }
+
+  .form-control {
+    width: 100%;
+    min-height: 2.5rem;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition:
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+
+  .form-control::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+  }
+
+  .form-control:focus,
+  .form-control:focus-visible {
+    outline: none;
+    border-color: var(--color-focus);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-focus) 25%, transparent);
+  }
+
+  .form-control:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: var(--color-bg-subtle);
+  }
+
+  .form-control[aria-invalid="true"] {
+    border-color: var(--color-danger);
+  }
+
+  textarea.form-control {
+    min-height: 6rem;
+    resize: vertical;
+  }
+
+  select.form-control {
+    appearance: auto;
+  }
+
+  .form-hint {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+  }
+
+  .form-error {
+    font-size: var(--font-size-xs);
+    color: var(--color-danger);
+  }
+
+  .form-check {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .form-check input {
+    width: 1rem;
+    height: 1rem;
+    accent-color: var(--color-primary);
+  }
+}
+
+/* components/navbar.css */
+/*
+ * Navigationsleiste
+ *
+ * <header class="navbar">
+ *   <a class="navbar__brand" href="/">Logo</a>
+ *   <ul class="navbar__menu">
+ *     <li><a class="navbar__link" href="/" aria-current="page">Start</a></li>
+ *   </ul>
+ * </header>
+ */
+
+@layer components {
+  .navbar {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--z-sticky);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    background-color: color-mix(in srgb, var(--color-surface) 80%, transparent);
+    backdrop-filter: blur(12px) saturate(1.4);
+    border-block-end: 1px solid var(--color-border);
+    transition: box-shadow var(--transition-base);
+  }
+
+  .navbar--scrolled {
+    box-shadow: var(--shadow-md);
+  }
+
+  .navbar__brand {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .navbar__menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .navbar__link {
+    position: relative;
+    display: inline-block;
+    padding: var(--space-2) var(--space-3);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: color var(--transition-fast);
+  }
+
+  /* Animierte Unterstreichung, die von der Mitte aus wächst */
+  .navbar__link::after {
+    content: "";
+    position: absolute;
+    inset-inline: var(--space-3);
+    inset-block-end: 2px;
+    height: 2px;
+    background-color: var(--color-primary);
+    border-radius: var(--radius-full);
+    transform: scaleX(0);
+    transition: transform var(--transition-base);
+  }
+
+  .navbar__link:hover {
+    color: var(--color-text);
+  }
+
+  .navbar__link:hover::after,
+  .navbar__link[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+
+  .navbar__link[aria-current="page"] {
+    color: var(--color-primary);
+  }
+}
+
+/* components/alert.css */
+/*
+ * Hinweis- und Statusboxen
+ *
+ * <div class="alert alert--success" role="status">
+ *   <div>
+ *     <p class="alert__title">Gespeichert</p>
+ *     <p class="alert__text">Die Änderungen wurden übernommen.</p>
+ *   </div>
+ * </div>
+ */
+
+@layer components {
+  .alert {
+    --alert-color: var(--color-info);
+
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    color: var(--color-text);
+    background-color: color-mix(in srgb, var(--alert-color) 10%, var(--color-surface));
+    border: 1px solid color-mix(in srgb, var(--alert-color) 35%, transparent);
+    border-inline-start: 4px solid var(--alert-color);
+    border-radius: var(--radius-md);
+  }
+
+  .alert__title {
+    margin: 0 0 var(--space-1);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .alert__text {
+    margin: 0;
+    font-size: var(--font-size-sm);
+  }
+
+  .alert--success {
+    --alert-color: var(--color-success);
+  }
+
+  .alert--warning {
+    --alert-color: var(--color-warning);
+  }
+
+  .alert--danger {
+    --alert-color: var(--color-danger);
+  }
+
+  .alert--info {
+    --alert-color: var(--color-info);
+  }
+}
+
+/* components/table.css */
+/*
+ * Tabellen
+ *
+ * <div class="table-wrapper">
+ *   <table class="table table--striped">…</table>
+ * </div>
+ *
+ * Der Wrapper macht breite Tabellen auf kleinen Bildschirmen horizontal scrollbar.
+ */
+
+@layer components {
+  .table-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .table {
+    width: 100%;
+    font-size: var(--font-size-sm);
+    border-collapse: collapse;
+  }
+
+  .table th,
+  .table td {
+    padding: var(--space-3) var(--space-4);
+    text-align: start;
+    vertical-align: middle;
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .table th {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-subtle);
+  }
+
+  .table tbody tr:last-child td {
+    border-block-end: 0;
+  }
+
+  .table tbody tr:hover {
+    background-color: var(--color-bg-subtle);
+  }
+
+  .table--striped tbody tr:nth-child(even) {
+    background-color: var(--color-bg-subtle);
+  }
+
+  .table--compact th,
+  .table--compact td {
+    padding: var(--space-2) var(--space-3);
+  }
+}
+
+/* components/modal.css */
+/*
+ * Modal-Dialog (basierend auf dem nativen <dialog>-Element)
+ *
+ * <dialog class="modal" aria-labelledby="dlg-title">
+ *   <div class="modal__header">
+ *     <h2 class="modal__title" id="dlg-title">Titel</h2>
+ *   </div>
+ *   <div class="modal__body">Inhalt</div>
+ *   <div class="modal__footer">
+ *     <button class="btn btn--ghost">Abbrechen</button>
+ *     <button class="btn">OK</button>
+ *   </div>
+ * </dialog>
+ */
+
+@layer components {
+  .modal {
+    width: min(90vw, 32rem);
+    max-height: 85vh;
+    padding: 0;
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 0;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .modal::backdrop {
+    background-color: rgb(15 23 42 / 50%);
+    backdrop-filter: blur(2px);
+  }
+
+  .modal[open] {
+    animation: modal-in var(--transition-base);
+  }
+
+  .modal__header,
+  .modal__body,
+  .modal__footer {
+    padding: var(--space-5);
+  }
+
+  .modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .modal__title {
+    margin: 0;
+    font-size: var(--font-size-lg);
+  }
+
+  .modal__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-2);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  @keyframes modal-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* utilities/spacing.css */
+/*
+ * Abstands-Utilities auf Basis der Design-Tokens (--space-*).
+ *
+ * Schema: {Eigenschaft}-{Stufe}
+ *   m / mx / my / mt / mb   – margin
+ *   p / px / py / pt / pb   – padding
+ *   gap-{Stufe}             – gap (Flex & Grid)
+ * Stufen: 0, 1, 2, 4, 6, 8
+ */
+
+@layer utilities {
+  /* margin */
+  .m-0 {
+    margin: var(--space-0);
+  }
+
+  .m-1 {
+    margin: var(--space-1);
+  }
+
+  .m-2 {
+    margin: var(--space-2);
+  }
+
+  .m-4 {
+    margin: var(--space-4);
+  }
+
+  .m-6 {
+    margin: var(--space-6);
+  }
+
+  .m-8 {
+    margin: var(--space-8);
+  }
+
+  .mx-0 {
+    margin-inline: var(--space-0);
+  }
+
+  .mx-1 {
+    margin-inline: var(--space-1);
+  }
+
+  .mx-2 {
+    margin-inline: var(--space-2);
+  }
+
+  .mx-4 {
+    margin-inline: var(--space-4);
+  }
+
+  .mx-6 {
+    margin-inline: var(--space-6);
+  }
+
+  .mx-8 {
+    margin-inline: var(--space-8);
+  }
+
+  .mx-auto {
+    margin-inline: auto;
+  }
+
+  .my-0 {
+    margin-block: var(--space-0);
+  }
+
+  .my-1 {
+    margin-block: var(--space-1);
+  }
+
+  .my-2 {
+    margin-block: var(--space-2);
+  }
+
+  .my-4 {
+    margin-block: var(--space-4);
+  }
+
+  .my-6 {
+    margin-block: var(--space-6);
+  }
+
+  .my-8 {
+    margin-block: var(--space-8);
+  }
+
+  .mt-0 {
+    margin-block-start: var(--space-0);
+  }
+
+  .mt-1 {
+    margin-block-start: var(--space-1);
+  }
+
+  .mt-2 {
+    margin-block-start: var(--space-2);
+  }
+
+  .mt-4 {
+    margin-block-start: var(--space-4);
+  }
+
+  .mt-6 {
+    margin-block-start: var(--space-6);
+  }
+
+  .mt-8 {
+    margin-block-start: var(--space-8);
+  }
+
+  .mb-0 {
+    margin-block-end: var(--space-0);
+  }
+
+  .mb-1 {
+    margin-block-end: var(--space-1);
+  }
+
+  .mb-2 {
+    margin-block-end: var(--space-2);
+  }
+
+  .mb-4 {
+    margin-block-end: var(--space-4);
+  }
+
+  .mb-6 {
+    margin-block-end: var(--space-6);
+  }
+
+  .mb-8 {
+    margin-block-end: var(--space-8);
+  }
+
+  /* padding */
+  .p-0 {
+    padding: var(--space-0);
+  }
+
+  .p-1 {
+    padding: var(--space-1);
+  }
+
+  .p-2 {
+    padding: var(--space-2);
+  }
+
+  .p-4 {
+    padding: var(--space-4);
+  }
+
+  .p-6 {
+    padding: var(--space-6);
+  }
+
+  .p-8 {
+    padding: var(--space-8);
+  }
+
+  .px-0 {
+    padding-inline: var(--space-0);
+  }
+
+  .px-1 {
+    padding-inline: var(--space-1);
+  }
+
+  .px-2 {
+    padding-inline: var(--space-2);
+  }
+
+  .px-4 {
+    padding-inline: var(--space-4);
+  }
+
+  .px-6 {
+    padding-inline: var(--space-6);
+  }
+
+  .px-8 {
+    padding-inline: var(--space-8);
+  }
+
+  .py-0 {
+    padding-block: var(--space-0);
+  }
+
+  .py-1 {
+    padding-block: var(--space-1);
+  }
+
+  .py-2 {
+    padding-block: var(--space-2);
+  }
+
+  .py-4 {
+    padding-block: var(--space-4);
+  }
+
+  .py-6 {
+    padding-block: var(--space-6);
+  }
+
+  .py-8 {
+    padding-block: var(--space-8);
+  }
+
+  .pt-0 {
+    padding-block-start: var(--space-0);
+  }
+
+  .pt-4 {
+    padding-block-start: var(--space-4);
+  }
+
+  .pt-8 {
+    padding-block-start: var(--space-8);
+  }
+
+  .pb-0 {
+    padding-block-end: var(--space-0);
+  }
+
+  .pb-4 {
+    padding-block-end: var(--space-4);
+  }
+
+  .pb-8 {
+    padding-block-end: var(--space-8);
+  }
+
+  /* gap */
+  .gap-0 {
+    gap: var(--space-0);
+  }
+
+  .gap-1 {
+    gap: var(--space-1);
+  }
+
+  .gap-2 {
+    gap: var(--space-2);
+  }
+
+  .gap-4 {
+    gap: var(--space-4);
+  }
+
+  .gap-6 {
+    gap: var(--space-6);
+  }
+
+  .gap-8 {
+    gap: var(--space-8);
+  }
+}
+
+/* utilities/text.css */
+/*
+ * Text-Utilities: Ausrichtung, Farbe, Größe, Gewicht, Umbruch.
+ */
+
+@layer utilities {
+  /* Ausrichtung */
+  .text-start {
+    text-align: start;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .text-end {
+    text-align: end;
+  }
+
+  /* Farbe */
+  .text-default {
+    color: var(--color-text);
+  }
+
+  .text-muted {
+    color: var(--color-text-muted);
+  }
+
+  .text-primary {
+    color: var(--color-primary);
+  }
+
+  .text-success {
+    color: var(--color-success);
+  }
+
+  .text-warning {
+    color: var(--color-warning);
+  }
+
+  .text-danger {
+    color: var(--color-danger);
+  }
+
+  .text-info {
+    color: var(--color-info);
+  }
+
+  /* Größe */
+  .text-xs {
+    font-size: var(--font-size-xs);
+  }
+
+  .text-sm {
+    font-size: var(--font-size-sm);
+  }
+
+  .text-base {
+    font-size: var(--font-size-base);
+  }
+
+  .text-lg {
+    font-size: var(--font-size-lg);
+  }
+
+  .text-xl {
+    font-size: var(--font-size-xl);
+  }
+
+  .text-2xl {
+    font-size: var(--font-size-2xl);
+  }
+
+  /* Gewicht & Stil */
+  .font-normal {
+    font-weight: var(--font-weight-normal);
+  }
+
+  .font-medium {
+    font-weight: var(--font-weight-medium);
+  }
+
+  .font-semibold {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .font-bold {
+    font-weight: var(--font-weight-bold);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  .italic {
+    font-style: italic;
+  }
+
+  .uppercase {
+    text-transform: uppercase;
+  }
+
+  .lowercase {
+    text-transform: lowercase;
+  }
+
+  .capitalize {
+    text-transform: capitalize;
+  }
+
+  /* Umbruch & Überlauf */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-nowrap {
+    white-space: nowrap;
+  }
+
+  .truncate {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+/* utilities/display.css */
+/*
+ * Anzeige-, Flex- und Sichtbarkeits-Utilities.
+ */
+
+@layer utilities {
+  /* display */
+  .d-none {
+    display: none;
+  }
+
+  .d-block {
+    display: block;
+  }
+
+  .d-inline {
+    display: inline;
+  }
+
+  .d-inline-block {
+    display: inline-block;
+  }
+
+  .d-flex {
+    display: flex;
+  }
+
+  .d-inline-flex {
+    display: inline-flex;
+  }
+
+  .d-grid {
+    display: grid;
+  }
+
+  /* Flexbox */
+  .flex-row {
+    flex-direction: row;
+  }
+
+  .flex-col {
+    flex-direction: column;
+  }
+
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
+
+  .flex-nowrap {
+    flex-wrap: nowrap;
+  }
+
+  .flex-1 {
+    flex: 1 1 0%;
+  }
+
+  .flex-shrink-0 {
+    flex-shrink: 0;
+  }
+
+  .items-start {
+    align-items: flex-start;
+  }
+
+  .items-center {
+    align-items: center;
+  }
+
+  .items-end {
+    align-items: flex-end;
+  }
+
+  .items-stretch {
+    align-items: stretch;
+  }
+
+  .justify-start {
+    justify-content: flex-start;
+  }
+
+  .justify-center {
+    justify-content: center;
+  }
+
+  .justify-end {
+    justify-content: flex-end;
+  }
+
+  .justify-between {
+    justify-content: space-between;
+  }
+
+  .justify-around {
+    justify-content: space-around;
+  }
+
+  .self-center {
+    align-self: center;
+  }
+
+  /* Sichtbarkeit nach Breakpoint */
+  @media (width <= 767px) {
+    .hide-mobile {
+      display: none !important;
+    }
+  }
+
+  @media (width >= 768px) {
+    .hide-desktop {
+      display: none !important;
+    }
+  }
+
+  /* Overflow & Position */
+  .overflow-hidden {
+    overflow: hidden;
+  }
+
+  .overflow-auto {
+    overflow: auto;
+  }
+
+  .relative {
+    position: relative;
+  }
+
+  .absolute {
+    position: absolute;
+  }
+
+  .sticky-top {
+    position: sticky;
+    inset-block-start: 0;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+
+  .h-full {
+    height: 100%;
+  }
+
+  .max-w-prose {
+    max-width: 75ch;
+  }
+}
+
+/* utilities/effects.css */
+/*
+ * Effekt-Utilities: Radien, Schatten, Rahmen, Hintergründe.
+ */
+
+@layer utilities {
+  /* Radien */
+  .rounded-none {
+    border-radius: 0;
+  }
+
+  .rounded-sm {
+    border-radius: var(--radius-sm);
+  }
+
+  .rounded-md {
+    border-radius: var(--radius-md);
+  }
+
+  .rounded-lg {
+    border-radius: var(--radius-lg);
+  }
+
+  .rounded-full {
+    border-radius: var(--radius-full);
+  }
+
+  /* Schatten */
+  .shadow-none {
+    box-shadow: none;
+  }
+
+  .shadow-sm {
+    box-shadow: var(--shadow-sm);
+  }
+
+  .shadow-md {
+    box-shadow: var(--shadow-md);
+  }
+
+  .shadow-lg {
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Rahmen */
+  .border {
+    border: 1px solid var(--color-border);
+  }
+
+  .border-0 {
+    border: 0;
+  }
+
+  .border-top {
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .border-bottom {
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  /* Hintergründe */
+  .bg-default {
+    background-color: var(--color-bg);
+  }
+
+  .bg-surface {
+    background-color: var(--color-surface);
+  }
+
+  .bg-subtle {
+    background-color: var(--color-bg-subtle);
+  }
+
+  .bg-primary {
+    background-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+  }
+
+  .bg-success {
+    background-color: var(--color-success);
+    color: #fff;
+  }
+
+  .bg-danger {
+    background-color: var(--color-danger);
+    color: #fff;
+  }
+
+  /* Deckkraft */
+  .opacity-50 {
+    opacity: 0.5;
+  }
+
+  .opacity-75 {
+    opacity: 0.75;
+  }
+
+  .pointer-events-none {
+    pointer-events: none;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+}
+
+/* utilities/animations.css */
+/*
+ * Animations-Utilities.
+ * Alle Animationen werden bei prefers-reduced-motion deaktiviert.
+ */
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fade-in var(--transition-slow) both;
+  }
+
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes pulse {
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in,
+    .animate-spin,
+    .animate-pulse {
+      animation: none;
+    }
+  }
+}
+
+/* utilities/interactions.css */
+/*
+ * Interaktions-Effekte: Hover-Zustände, Glas-Optik, Verläufe, Scroll-Reveal.
+ * Alles ist bei prefers-reduced-motion abgeschaltet.
+ */
+
+@layer utilities {
+  /* Hover: Anheben mit Schatten */
+  .hover-lift {
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Hover: leichtes Vergrößern */
+  .hover-grow {
+    transition: transform var(--transition-base);
+  }
+
+  .hover-grow:hover {
+    transform: scale(1.03);
+  }
+
+  /* Bild im Container zoomt beim Hover */
+  .hover-zoom {
+    overflow: hidden;
+  }
+
+  .hover-zoom > img,
+  .hover-zoom > .card__media {
+    transition: transform 400ms ease;
+  }
+
+  .hover-zoom:hover > img,
+  .hover-zoom:hover > .card__media {
+    transform: scale(1.06);
+  }
+
+  /* Button mit Lichtreflex, der beim Hover darüber gleitet */
+  .btn-shine {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .btn-shine::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      120deg,
+      transparent 30%,
+      rgb(255 255 255 / 35%) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    transition: transform 600ms ease;
+  }
+
+  .btn-shine:hover::after {
+    transform: translateX(100%);
+  }
+
+  /* Rahmen leuchtet beim Hover in Akzentfarbe */
+  .hover-glow {
+    transition:
+      border-color var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .hover-glow:hover {
+    border-color: var(--color-primary);
+    box-shadow:
+      0 0 0 1px var(--color-primary),
+      0 8px 24px -8px var(--color-primary);
+  }
+
+  /* Tabellenzeile hebt sich mit Akzentbalken hervor */
+  .hover-row tbody tr {
+    transition:
+      background-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+
+  .hover-row tbody tr:hover {
+    background-color: color-mix(in srgb, var(--color-primary) 6%, transparent);
+    box-shadow: inset 3px 0 0 var(--color-primary);
+  }
+
+  /* Link mit wachsender Unterstreichung */
+  .link-animated {
+    position: relative;
+    text-decoration: none;
+    background-image: linear-gradient(currentcolor, currentcolor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 2px;
+    transition: background-size var(--transition-base);
+  }
+
+  .link-animated:hover,
+  .link-animated:focus-visible {
+    background-size: 100% 2px;
+  }
+
+  /* Glas-Optik (Milchglas) */
+  .glass {
+    background-color: color-mix(in srgb, var(--color-surface) 65%, transparent);
+    backdrop-filter: blur(16px) saturate(1.5);
+    border: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Farbverlauf als Text */
+  .gradient-text {
+    background-image: linear-gradient(90deg, var(--color-primary), var(--color-info));
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Verlauf als Hintergrund-Hero */
+  .gradient-bg {
+    color: var(--color-primary-contrast);
+    background-image: linear-gradient(135deg, var(--color-primary), var(--color-info));
+  }
+
+  /*
+   * Scroll-Reveal: Elemente blenden beim Erscheinen im Viewport ein.
+   * Browser ohne animation-timeline zeigen die Elemente einfach sofort an.
+   */
+  .reveal {
+    animation: reveal-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+
+  @keyframes reveal-in {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hover-lift:hover,
+    .hover-grow:hover {
+      transform: none;
+    }
+
+    .reveal {
+      animation: none;
+    }
+  }
+}
+
+/* themes/light.css */
+/*
+ * Light Theme
+ * Explizit helles Theme, z. B. wenn das Systemtheme dunkel ist.
+ * Aktivierung: <html data-theme="light">
+ */
+
+@layer themes {
+  :root[data-theme="light"] {
+    --color-primary: #2563eb;
+    --color-primary-hover: #1d4ed8;
+    --color-primary-contrast: #fff;
+    --color-secondary: #64748b;
+    --color-success: #16a34a;
+    --color-warning: #d97706;
+    --color-danger: #dc2626;
+    --color-info: #0891b2;
+    --color-bg: #fff;
+    --color-bg-subtle: #f8fafc;
+    --color-surface: #fff;
+    --color-text: #0f172a;
+    --color-text-muted: #64748b;
+    --color-border: #e2e8f0;
+    --color-focus: #2563eb;
+  }
+}
+
+/* themes/dark.css */
+/*
+ * Dark Mode
+ *
+ * Aktivierung:
+ *   1. Automatisch über die Systemeinstellung (prefers-color-scheme)
+ *   2. Manuell über das Attribut:  <html data-theme="dark">
+ *
+ * Manuell auf Hell erzwingen:      <html data-theme="light">
+ *
+ * Hinweis: Die Token-Liste muss bei Änderungen in base/variables.css
+ * in beiden Blöcken synchron gehalten werden.
+ */
+
+@layer themes {
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --color-primary: #60a5fa;
+      --color-primary-hover: #93c5fd;
+      --color-primary-contrast: #0f172a;
+      --color-secondary: #94a3b8;
+      --color-success: #4ade80;
+      --color-warning: #fbbf24;
+      --color-danger: #f87171;
+      --color-info: #22d3ee;
+      --color-bg: #0f172a;
+      --color-bg-subtle: #1e293b;
+      --color-surface: #1e293b;
+      --color-text: #f1f5f9;
+      --color-text-muted: #94a3b8;
+      --color-border: #334155;
+      --color-focus: #60a5fa;
+      --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 50%), 0 2px 4px -2px rgb(0 0 0 / 50%);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 50%), 0 4px 6px -4px rgb(0 0 0 / 50%);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --color-primary: #60a5fa;
+    --color-primary-hover: #93c5fd;
+    --color-primary-contrast: #0f172a;
+    --color-secondary: #94a3b8;
+    --color-success: #4ade80;
+    --color-warning: #fbbf24;
+    --color-danger: #f87171;
+    --color-info: #22d3ee;
+    --color-bg: #0f172a;
+    --color-bg-subtle: #1e293b;
+    --color-surface: #1e293b;
+    --color-text: #f1f5f9;
+    --color-text-muted: #94a3b8;
+    --color-border: #334155;
+    --color-focus: #60a5fa;
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 50%), 0 2px 4px -2px rgb(0 0 0 / 50%);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 50%), 0 4px 6px -4px rgb(0 0 0 / 50%);
+  }
+}
+
+/* themes/ocean.css */
+/*
+ * Ocean Theme
+ * Kühle Türkis- und Petrol-Töne für ruhige, vertrauenswürdige Oberflächen.
+ * Aktivierung: <html data-theme="ocean">
+ */
+
+@layer themes {
+  :root[data-theme="ocean"] {
+    --color-primary: #0e7490;
+    --color-primary-hover: #155e75;
+    --color-primary-contrast: #fff;
+    --color-secondary: #0f766e;
+    --color-success: #0f766e;
+    --color-warning: #b45309;
+    --color-danger: #b91c1c;
+    --color-info: #0284c7;
+    --color-bg: #f0fdfa;
+    --color-bg-subtle: #e6fbf6;
+    --color-surface: #fff;
+    --color-text: #134e4a;
+    --color-text-muted: #4b7a75;
+    --color-border: #ccfbf1;
+    --color-focus: #0e7490;
+  }
+}
+
+/* themes/forest.css */
+/*
+ * Forest Theme
+ * Natürliche Grüntöne, passend für Umwelt-, Bio- oder Outdoor-Projekte.
+ * Aktivierung: <html data-theme="forest">
+ */
+
+@layer themes {
+  :root[data-theme="forest"] {
+    --color-primary: #15803d;
+    --color-primary-hover: #166534;
+    --color-primary-contrast: #fff;
+    --color-secondary: #65a30d;
+    --color-success: #15803d;
+    --color-warning: #a16207;
+    --color-danger: #b91c1c;
+    --color-info: #0d9488;
+    --color-bg: #f7fdf4;
+    --color-bg-subtle: #eef9e8;
+    --color-surface: #fff;
+    --color-text: #14532d;
+    --color-text-muted: #567a61;
+    --color-border: #d6eccb;
+    --color-focus: #15803d;
+  }
+}
+
+/* themes/sunset.css */
+/*
+ * Sunset Theme
+ * Warme Orange- und Rosatöne für kreative, einladende Designs.
+ * Aktivierung: <html data-theme="sunset">
+ */
+
+@layer themes {
+  :root[data-theme="sunset"] {
+    --color-primary: #c2410c;
+    --color-primary-hover: #9a3412;
+    --color-primary-contrast: #fff;
+    --color-secondary: #be185d;
+    --color-success: #15803d;
+    --color-warning: #b45309;
+    --color-danger: #b91c1c;
+    --color-info: #7c3aed;
+    --color-bg: #fff7ed;
+    --color-bg-subtle: #ffedd5;
+    --color-surface: #fff;
+    --color-text: #431407;
+    --color-text-muted: #8a5a44;
+    --color-border: #fed7aa;
+    --color-focus: #c2410c;
+  }
+}
+
+/* themes/midnight.css */
+/*
+ * Midnight Theme
+ * Tiefes Violett-Blau mit hellen Akzenten für Dashboards und Medienprojekte.
+ * Aktivierung: <html data-theme="midnight">
+ */
+
+@layer themes {
+  :root[data-theme="midnight"] {
+    --color-primary: #a78bfa;
+    --color-primary-hover: #c4b5fd;
+    --color-primary-contrast: #1e1b4b;
+    --color-secondary: #93c5fd;
+    --color-success: #34d399;
+    --color-warning: #fcd34d;
+    --color-danger: #fb7185;
+    --color-info: #67e8f9;
+    --color-bg: #13112b;
+    --color-bg-subtle: #1c1a3d;
+    --color-surface: #1c1a3d;
+    --color-text: #ede9fe;
+    --color-text-muted: #a5a1c7;
+    --color-border: #322f5c;
+    --color-focus: #a78bfa;
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
+    --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 50%);
+    --shadow-lg: 0 12px 24px -6px rgb(0 0 0 / 60%);
+  }
+}
+
+/* themes/high-contrast.css */
+/*
+ * High-Contrast Theme
+ * Maximaler Kontrast für bessere Lesbarkeit (WCAG AAA-Ziel für Text).
+ * Aktivierung: <html data-theme="high-contrast">
+ */
+
+@layer themes {
+  :root[data-theme="high-contrast"] {
+    --color-primary: #ff0;
+    --color-primary-hover: #fff;
+    --color-primary-contrast: #000;
+    --color-secondary: #fff;
+    --color-success: #00ff7f;
+    --color-warning: #ffd700;
+    --color-danger: #ff4d4d;
+    --color-info: #00e5ff;
+    --color-bg: #000;
+    --color-bg-subtle: #111;
+    --color-surface: #000;
+    --color-text: #fff;
+    --color-text-muted: #e5e5e5;
+    --color-border: #fff;
+    --color-focus: #ff0;
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+  }
+}
+
+/* themes/mono.css */
+/*
+ * Mono Theme
+ * Reines Schwarz-Weiß ohne Radien und Schatten. Minimalistisch und fokussiert.
+ * Aktivierung: <html data-theme="mono">
+ */
+
+@layer themes {
+  :root[data-theme="mono"] {
+    --font-sans: "Helvetica Neue", helvetica, arial, sans-serif;
+    --color-primary: #000;
+    --color-primary-hover: #333;
+    --color-primary-contrast: #fff;
+    --color-secondary: #6b6b6b;
+    --color-success: #2f2f2f;
+    --color-warning: #555;
+    --color-danger: #000;
+    --color-info: #555;
+    --color-bg: #fff;
+    --color-bg-subtle: #f4f4f4;
+    --color-surface: #fff;
+    --color-text: #111;
+    --color-text-muted: #6b6b6b;
+    --color-border: #ddd;
+    --color-focus: #000;
+    --radius-sm: 0;
+    --radius-md: 0;
+    --radius-lg: 0;
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+  }
+}
+
+/* themes/paper.css */
+/*
+ * Paper Theme
+ * Warmes Papier mit Serifenschrift – ruhig und lesefreundlich, wie ein gedrucktes Buch.
+ * Aktivierung: <html data-theme="paper">
+ */
+
+@layer themes {
+  :root[data-theme="paper"] {
+    --font-sans: georgia, "Times New Roman", serif;
+    --font-mono: "Courier New", monospace;
+    --line-height-base: 1.7;
+    --color-primary: #7a4a1e;
+    --color-primary-hover: #5c3614;
+    --color-primary-contrast: #fffdf8;
+    --color-secondary: #8c8577;
+    --color-success: #3d6b3a;
+    --color-warning: #9a6b10;
+    --color-danger: #9b2c2c;
+    --color-info: #2d5a7b;
+    --color-bg: #faf7f0;
+    --color-bg-subtle: #f3eee2;
+    --color-surface: #fffdf8;
+    --color-text: #2b2a26;
+    --color-text-muted: #6d6859;
+    --color-border: #e6e0d0;
+    --color-focus: #7a4a1e;
+    --radius-sm: 2px;
+    --radius-md: 2px;
+    --radius-lg: 4px;
+    --shadow-sm: 0 1px 0 rgb(0 0 0 / 4%);
+    --shadow-md: 0 2px 4px rgb(60 40 10 / 8%);
+    --shadow-lg: 0 6px 16px rgb(60 40 10 / 12%);
+  }
+
+  [data-theme="paper"] h1,
+  [data-theme="paper"] h2,
+  [data-theme="paper"] h3 {
+    font-style: italic;
+    font-weight: 400;
+  }
+}
+
+/* themes/swiss.css */
+/*
+ * Swiss Theme
+ * Inspiriert vom Internationalen Typografischen Stil: Weiß, Schwarz, ein
+ * kräftiger Akzent, harte Linien und große, enge Überschriften.
+ * Aktivierung: <html data-theme="swiss">
+ */
+
+@layer themes {
+  :root[data-theme="swiss"] {
+    --font-sans: "Helvetica Neue", helvetica, arial, sans-serif;
+    --color-primary: #ff3b00;
+    --color-primary-hover: #cc2f00;
+    --color-primary-contrast: #fff;
+    --color-secondary: #000;
+    --color-success: #00a86b;
+    --color-warning: #ffb000;
+    --color-danger: #ff3b00;
+    --color-info: #0047ff;
+    --color-bg: #fff;
+    --color-bg-subtle: #f2f2f2;
+    --color-surface: #fff;
+    --color-text: #000;
+    --color-text-muted: #444;
+    --color-border: #000;
+    --color-focus: #ff3b00;
+    --radius-sm: 0;
+    --radius-md: 0;
+    --radius-lg: 0;
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+  }
+
+  [data-theme="swiss"] h1,
+  [data-theme="swiss"] h2,
+  [data-theme="swiss"] h3 {
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+
+  [data-theme="swiss"] .card,
+  [data-theme="swiss"] .table-wrapper,
+  [data-theme="swiss"] .navbar {
+    border-width: 1px;
+    border-color: var(--color-border);
+  }
+}
+
+/* themes/aurora.css */
+/*
+ * Aurora Theme
+ * Edles Dark-Theme mit dezentem Indigo-Verlauf und feinen Glasflächen.
+ * Aktivierung: <html data-theme="aurora">
+ */
+
+@layer themes {
+  :root[data-theme="aurora"] {
+    --color-primary: #818cf8;
+    --color-primary-hover: #a5b4fc;
+    --color-primary-contrast: #0b1020;
+    --color-secondary: #94a3b8;
+    --color-success: #34d399;
+    --color-warning: #fbbf24;
+    --color-danger: #f87171;
+    --color-info: #38bdf8;
+    --color-bg: #0b1020;
+    --color-bg-subtle: #121a30;
+    --color-surface: #141c33;
+    --color-text: #e8ecf8;
+    --color-text-muted: #8f9bb8;
+    --color-border: #232d4a;
+    --color-focus: #818cf8;
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
+    --shadow-md: 0 8px 20px -6px rgb(0 0 0 / 55%);
+    --shadow-lg: 0 20px 40px -12px rgb(0 0 0 / 65%);
+  }
+
+  [data-theme="aurora"] body {
+    background-image:
+      radial-gradient(60rem 30rem at 10% -10%, rgb(129 140 248 / 14%), transparent 60%),
+      radial-gradient(50rem 30rem at 100% 0%, rgb(56 189 248 / 10%), transparent 60%);
+    background-attachment: fixed;
+  }
+}
+
+/* themes/obsidian.css */
+/*
+ * Obsidian Theme
+ * Tiefes Schwarz mit zurückhaltendem Gold-Akzent. Luxuriös und ruhig.
+ * Aktivierung: <html data-theme="obsidian">
+ */
+
+@layer themes {
+  :root[data-theme="obsidian"] {
+    --color-primary: #c9a45c;
+    --color-primary-hover: #dcb978;
+    --color-primary-contrast: #111;
+    --color-secondary: #8a8a8a;
+    --color-success: #6fbf8e;
+    --color-warning: #d9a441;
+    --color-danger: #d96b6b;
+    --color-info: #7fa8c9;
+    --color-bg: #0e0e0f;
+    --color-bg-subtle: #161617;
+    --color-surface: #171718;
+    --color-text: #ededed;
+    --color-text-muted: #8c8c8f;
+    --color-border: #2a2a2c;
+    --color-focus: #c9a45c;
+    --radius-sm: 2px;
+    --radius-md: 4px;
+    --radius-lg: 6px;
+    --shadow-sm: none;
+    --shadow-md: 0 8px 24px -8px rgb(0 0 0 / 70%);
+    --shadow-lg: 0 24px 48px -16px rgb(0 0 0 / 80%);
+  }
+
+  [data-theme="obsidian"] h1,
+  [data-theme="obsidian"] h2,
+  [data-theme="obsidian"] h3 {
+    letter-spacing: -0.01em;
+    font-weight: 500;
+  }
+}
+
+/* themes/editorial.css */
+/*
+ * Editorial Theme
+ * Magazin-Look: Serifen-Überschriften, großzügiger Weißraum, tiefes Blau als Akzent.
+ * Aktivierung: <html data-theme="editorial">
+ */
+
+@layer themes {
+  :root[data-theme="editorial"] {
+    --font-serif: georgia, "Iowan Old Style", "Times New Roman", serif;
+    --line-height-base: 1.75;
+    --color-primary: #1e3a8a;
+    --color-primary-hover: #172e6e;
+    --color-primary-contrast: #fff;
+    --color-secondary: #57534e;
+    --color-success: #166534;
+    --color-warning: #a16207;
+    --color-danger: #991b1b;
+    --color-info: #1d4ed8;
+    --color-bg: #fcfbf9;
+    --color-bg-subtle: #f4f2ee;
+    --color-surface: #fff;
+    --color-text: #1c1917;
+    --color-text-muted: #6b665f;
+    --color-border: #e7e3dc;
+    --color-focus: #1e3a8a;
+    --radius-sm: 2px;
+    --radius-md: 3px;
+    --radius-lg: 4px;
+    --shadow-sm: none;
+    --shadow-md: 0 2px 8px rgb(28 25 23 / 6%);
+    --shadow-lg: 0 12px 28px -10px rgb(28 25 23 / 14%);
+  }
+
+  [data-theme="editorial"] h1,
+  [data-theme="editorial"] h2,
+  [data-theme="editorial"] h3,
+  [data-theme="editorial"] h4 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+}
+
+/* themes/corporate.css */
+/*
+ * Corporate Theme
+ * Klarer Business-Stil: neutrales Grau, sattes Blau, präzise kleine Radien.
+ * Aktivierung: <html data-theme="corporate">
+ */
+
+@layer themes {
+  :root[data-theme="corporate"] {
+    --color-primary: #0f4c81;
+    --color-primary-hover: #0b3a64;
+    --color-primary-contrast: #fff;
+    --color-secondary: #475569;
+    --color-success: #15803d;
+    --color-warning: #b45309;
+    --color-danger: #b91c1c;
+    --color-info: #0369a1;
+    --color-bg: #f5f7fa;
+    --color-bg-subtle: #eaeef3;
+    --color-surface: #fff;
+    --color-text: #1a2433;
+    --color-text-muted: #5b6778;
+    --color-border: #d8dee8;
+    --color-focus: #0f4c81;
+    --radius-sm: 3px;
+    --radius-md: 4px;
+    --radius-lg: 6px;
+    --shadow-sm: 0 1px 2px rgb(15 30 55 / 6%);
+    --shadow-md: 0 3px 8px rgb(15 30 55 / 8%);
+    --shadow-lg: 0 10px 24px -8px rgb(15 30 55 / 16%);
+  }
+}
+
+/* themes/enterprise.css */
+/*
+ * Enterprise Theme
+ * Sachlich und robust für interne Tools, Admin-Oberflächen und Fachanwendungen.
+ * Neutrale Grautöne, ein klares Blau, dichte Abstände, präzise Kanten.
+ * Aktivierung: <html data-theme="enterprise">
+ */
+
+@layer themes {
+  :root[data-theme="enterprise"] {
+    --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", roboto, sans-serif;
+    --font-size-base: 0.9375rem;
+    --color-primary: #0f62fe;
+    --color-primary-hover: #0050e6;
+    --color-primary-contrast: #fff;
+    --color-secondary: #525b6b;
+    --color-success: #198038;
+    --color-warning: #b28600;
+    --color-danger: #da1e28;
+    --color-info: #0072c3;
+    --color-bg: #f4f5f7;
+    --color-bg-subtle: #eceef1;
+    --color-surface: #fff;
+    --color-text: #161b22;
+    --color-text-muted: #596172;
+    --color-border: #dcdfe5;
+    --color-focus: #0f62fe;
+    --radius-sm: 2px;
+    --radius-md: 4px;
+    --radius-lg: 6px;
+    --shadow-sm: 0 1px 1px rgb(22 27 34 / 4%);
+    --shadow-md: 0 1px 2px rgb(22 27 34 / 6%), 0 4px 12px rgb(22 27 34 / 6%);
+    --shadow-lg: 0 2px 4px rgb(22 27 34 / 6%), 0 16px 32px -8px rgb(22 27 34 / 16%);
+  }
+
+  [data-theme="enterprise"] .table td,
+  [data-theme="enterprise"] .table th {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* themes/saas.css */
+/*
+ * SaaS Theme
+ * Moderner Produkt-Look für Web-Apps und Dashboards. Kühles Zinkgrau,
+ * Indigo-Akzent, feine Rahmen und weiche, mehrschichtige Schatten.
+ * Aktivierung: <html data-theme="saas">
+ */
+
+@layer themes {
+  :root[data-theme="saas"] {
+    --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", roboto, sans-serif;
+    --color-primary: #5b5bd6;
+    --color-primary-hover: #4a4ac2;
+    --color-primary-contrast: #fff;
+    --color-secondary: #6b7280;
+    --color-success: #2f9e6b;
+    --color-warning: #c78a0a;
+    --color-danger: #d6455d;
+    --color-info: #3b82c4;
+    --color-bg: #fafafb;
+    --color-bg-subtle: #f3f3f5;
+    --color-surface: #fff;
+    --color-text: #1b1b1f;
+    --color-text-muted: #6e6e78;
+    --color-border: #e6e6ea;
+    --color-focus: #5b5bd6;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 10px;
+    --shadow-sm: 0 1px 2px rgb(20 20 30 / 5%);
+    --shadow-md: 0 1px 2px rgb(20 20 30 / 5%), 0 6px 16px -4px rgb(20 20 30 / 8%);
+    --shadow-lg: 0 2px 4px rgb(20 20 30 / 5%), 0 20px 40px -12px rgb(20 20 30 / 18%);
+  }
+
+  [data-theme="saas"] h1,
+  [data-theme="saas"] h2,
+  [data-theme="saas"] h3 {
+    letter-spacing: -0.022em;
+    font-weight: 600;
+  }
+}
+
+/* themes/fintech.css */
+/*
+ * Fintech Theme
+ * Vertrauenswürdig und ruhig für Banking, Versicherung und Finanzprodukte.
+ * Tiefes Marineblau, sattes Petrol als Akzent, großzügige Weißflächen.
+ * Aktivierung: <html data-theme="fintech">
+ */
+
+@layer themes {
+  :root[data-theme="fintech"] {
+    --color-primary: #0a3d62;
+    --color-primary-hover: #072e4b;
+    --color-primary-contrast: #fff;
+    --color-secondary: #0e7c86;
+    --color-success: #0b7a4b;
+    --color-warning: #a8670a;
+    --color-danger: #b42318;
+    --color-info: #0e7c86;
+    --color-bg: #f6f8fa;
+    --color-bg-subtle: #edf1f5;
+    --color-surface: #fff;
+    --color-text: #0c1f33;
+    --color-text-muted: #5a6b7d;
+    --color-border: #dbe3ea;
+    --color-focus: #0e7c86;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --shadow-sm: 0 1px 2px rgb(10 40 70 / 6%);
+    --shadow-md: 0 2px 4px rgb(10 40 70 / 5%), 0 8px 20px -6px rgb(10 40 70 / 10%);
+    --shadow-lg: 0 4px 8px rgb(10 40 70 / 5%), 0 24px 44px -12px rgb(10 40 70 / 20%);
+  }
+
+  [data-theme="fintech"] .table td,
+  [data-theme="fintech"] .table th {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* themes/healthcare.css */
+/*
+ * Healthcare Theme
+ * Klar, freundlich und gut lesbar für Gesundheit, Pflege und öffentliche Dienste.
+ * Beruhigendes Teal, hoher Kontrast, großzügige Schrift und Abstände.
+ * Aktivierung: <html data-theme="healthcare">
+ */
+
+@layer themes {
+  :root[data-theme="healthcare"] {
+    --font-size-base: 1.0625rem;
+    --line-height-base: 1.7;
+    --color-primary: #00796b;
+    --color-primary-hover: #00605a;
+    --color-primary-contrast: #fff;
+    --color-secondary: #4a5f6d;
+    --color-success: #1b7a3e;
+    --color-warning: #9a5b00;
+    --color-danger: #b3261e;
+    --color-info: #1565a8;
+    --color-bg: #f7fafa;
+    --color-bg-subtle: #eaf2f2;
+    --color-surface: #fff;
+    --color-text: #12262b;
+    --color-text-muted: #4d6168;
+    --color-border: #d3e0e1;
+    --color-focus: #00796b;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --shadow-sm: 0 1px 2px rgb(10 50 55 / 6%);
+    --shadow-md: 0 2px 6px rgb(10 50 55 / 8%);
+    --shadow-lg: 0 14px 30px -10px rgb(10 50 55 / 18%);
+  }
+}
+
+/* themes/graphite.css */
+/*
+ * Graphite Theme
+ * Dunkles Entwickler- und Tool-Theme: ruhiges Anthrazit statt Schwarz,
+ * gedämpfte Farben, sehr feine Rahmen. Angenehm bei langer Nutzung.
+ * Aktivierung: <html data-theme="graphite">
+ */
+
+@layer themes {
+  :root[data-theme="graphite"] {
+    --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", roboto, sans-serif;
+    --color-primary: #4c9aff;
+    --color-primary-hover: #79b4ff;
+    --color-primary-contrast: #0d1117;
+    --color-secondary: #8b949e;
+    --color-success: #3fb27f;
+    --color-warning: #d29922;
+    --color-danger: #f0646b;
+    --color-info: #58a6ff;
+    --color-bg: #0d1117;
+    --color-bg-subtle: #151b23;
+    --color-surface: #161b22;
+    --color-text: #e6edf3;
+    --color-text-muted: #8b949e;
+    --color-border: #272e38;
+    --color-focus: #4c9aff;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --shadow-sm: none;
+    --shadow-md: 0 4px 12px rgb(0 0 0 / 35%);
+    --shadow-lg: 0 16px 32px -8px rgb(0 0 0 / 55%);
+  }
+}
+
+/* print.css */
+/*
+ * Druckoptimierung
+ * Entfernt Hintergründe und Schatten, macht Links lesbar und verhindert
+ * unschöne Seitenumbrüche innerhalb von Blöcken.
+ */
+
+@layer print {
+  @media print {
+    @page {
+      margin: 2cm;
+    }
+
+    *,
+    *::before,
+    *::after {
+      color: #000 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+
+    body {
+      font-size: 11pt;
+    }
+
+    a[href]::after {
+      content: " (" attr(href) ")";
+      font-size: 0.8em;
+    }
+
+    a[href^="#"]::after,
+    a[href^="javascript:"]::after {
+      content: "";
+    }
+
+    .navbar,
+    .btn,
+    .modal,
+    .skip-link,
+    .no-print {
+      display: none !important;
+    }
+
+    h1,
+    h2,
+    h3 {
+      break-after: avoid;
+    }
+
+    pre,
+    blockquote,
+    tr,
+    img,
+    figure,
+    .card {
+      break-inside: avoid;
+    }
+  }
+}

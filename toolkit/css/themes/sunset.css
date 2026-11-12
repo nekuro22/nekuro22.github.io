@@ -1,0 +1,25 @@
+/*
+ * Sunset Theme
+ * Warme Orange- und Rosatöne für kreative, einladende Designs.
+ * Aktivierung: <html data-theme="sunset">
+ */
+
+@layer themes {
+  :root[data-theme="sunset"] {
+    --color-primary: #c2410c;
+    --color-primary-hover: #9a3412;
+    --color-primary-contrast: #fff;
+    --color-secondary: #be185d;
+    --color-success: #15803d;
+    --color-warning: #b45309;
+    --color-danger: #b91c1c;
+    --color-info: #7c3aed;
+    --color-bg: #fff7ed;
+    --color-bg-subtle: #ffedd5;
+    --color-surface: #fff;
+    --color-text: #431407;
+    --color-text-muted: #8a5a44;
+    --color-border: #fed7aa;
+    --color-focus: #c2410c;
+  }
+}

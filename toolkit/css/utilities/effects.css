@@ -1,0 +1,105 @@
+/*
+ * Effekt-Utilities: Radien, Schatten, Rahmen, Hintergründe.
+ */
+
+@layer utilities {
+  /* Radien */
+  .rounded-none {
+    border-radius: 0;
+  }
+
+  .rounded-sm {
+    border-radius: var(--radius-sm);
+  }
+
+  .rounded-md {
+    border-radius: var(--radius-md);
+  }
+
+  .rounded-lg {
+    border-radius: var(--radius-lg);
+  }
+
+  .rounded-full {
+    border-radius: var(--radius-full);
+  }
+
+  /* Schatten */
+  .shadow-none {
+    box-shadow: none;
+  }
+
+  .shadow-sm {
+    box-shadow: var(--shadow-sm);
+  }
+
+  .shadow-md {
+    box-shadow: var(--shadow-md);
+  }
+
+  .shadow-lg {
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Rahmen */
+  .border {
+    border: 1px solid var(--color-border);
+  }
+
+  .border-0 {
+    border: 0;
+  }
+
+  .border-top {
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .border-bottom {
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  /* Hintergründe */
+  .bg-default {
+    background-color: var(--color-bg);
+  }
+
+  .bg-surface {
+    background-color: var(--color-surface);
+  }
+
+  .bg-subtle {
+    background-color: var(--color-bg-subtle);
+  }
+
+  .bg-primary {
+    background-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+  }
+
+  .bg-success {
+    background-color: var(--color-success);
+    color: #fff;
+  }
+
+  .bg-danger {
+    background-color: var(--color-danger);
+    color: #fff;
+  }
+
+  /* Deckkraft */
+  .opacity-50 {
+    opacity: 0.5;
+  }
+
+  .opacity-75 {
+    opacity: 0.75;
+  }
+
+  .pointer-events-none {
+    pointer-events: none;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+}

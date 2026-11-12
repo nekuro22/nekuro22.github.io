@@ -1,0 +1,35 @@
+/*
+ * Aurora Theme
+ * Edles Dark-Theme mit dezentem Indigo-Verlauf und feinen Glasflächen.
+ * Aktivierung: <html data-theme="aurora">
+ */
+
+@layer themes {
+  :root[data-theme="aurora"] {
+    --color-primary: #818cf8;
+    --color-primary-hover: #a5b4fc;
+    --color-primary-contrast: #0b1020;
+    --color-secondary: #94a3b8;
+    --color-success: #34d399;
+    --color-warning: #fbbf24;
+    --color-danger: #f87171;
+    --color-info: #38bdf8;
+    --color-bg: #0b1020;
+    --color-bg-subtle: #121a30;
+    --color-surface: #141c33;
+    --color-text: #e8ecf8;
+    --color-text-muted: #8f9bb8;
+    --color-border: #232d4a;
+    --color-focus: #818cf8;
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
+    --shadow-md: 0 8px 20px -6px rgb(0 0 0 / 55%);
+    --shadow-lg: 0 20px 40px -12px rgb(0 0 0 / 65%);
+  }
+
+  [data-theme="aurora"] body {
+    background-image:
+      radial-gradient(60rem 30rem at 10% -10%, rgb(129 140 248 / 14%), transparent 60%),
+      radial-gradient(50rem 30rem at 100% 0%, rgb(56 189 248 / 10%), transparent 60%);
+    background-attachment: fixed;
+  }
+}

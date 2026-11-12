@@ -1,0 +1,164 @@
+/*
+ * Interaktions-Effekte: Hover-Zustände, Glas-Optik, Verläufe, Scroll-Reveal.
+ * Alles ist bei prefers-reduced-motion abgeschaltet.
+ */
+
+@layer utilities {
+  /* Hover: Anheben mit Schatten */
+  .hover-lift {
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Hover: leichtes Vergrößern */
+  .hover-grow {
+    transition: transform var(--transition-base);
+  }
+
+  .hover-grow:hover {
+    transform: scale(1.03);
+  }
+
+  /* Bild im Container zoomt beim Hover */
+  .hover-zoom {
+    overflow: hidden;
+  }
+
+  .hover-zoom > img,
+  .hover-zoom > .card__media {
+    transition: transform 400ms ease;
+  }
+
+  .hover-zoom:hover > img,
+  .hover-zoom:hover > .card__media {
+    transform: scale(1.06);
+  }
+
+  /* Button mit Lichtreflex, der beim Hover darüber gleitet */
+  .btn-shine {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .btn-shine::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      120deg,
+      transparent 30%,
+      rgb(255 255 255 / 35%) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    transition: transform 600ms ease;
+  }
+
+  .btn-shine:hover::after {
+    transform: translateX(100%);
+  }
+
+  /* Rahmen leuchtet beim Hover in Akzentfarbe */
+  .hover-glow {
+    transition:
+      border-color var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .hover-glow:hover {
+    border-color: var(--color-primary);
+    box-shadow:
+      0 0 0 1px var(--color-primary),
+      0 8px 24px -8px var(--color-primary);
+  }
+
+  /* Tabellenzeile hebt sich mit Akzentbalken hervor */
+  .hover-row tbody tr {
+    transition:
+      background-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+
+  .hover-row tbody tr:hover {
+    background-color: color-mix(in srgb, var(--color-primary) 6%, transparent);
+    box-shadow: inset 3px 0 0 var(--color-primary);
+  }
+
+  /* Link mit wachsender Unterstreichung */
+  .link-animated {
+    position: relative;
+    text-decoration: none;
+    background-image: linear-gradient(currentcolor, currentcolor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 2px;
+    transition: background-size var(--transition-base);
+  }
+
+  .link-animated:hover,
+  .link-animated:focus-visible {
+    background-size: 100% 2px;
+  }
+
+  /* Glas-Optik (Milchglas) */
+  .glass {
+    background-color: color-mix(in srgb, var(--color-surface) 65%, transparent);
+    backdrop-filter: blur(16px) saturate(1.5);
+    border: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Farbverlauf als Text */
+  .gradient-text {
+    background-image: linear-gradient(90deg, var(--color-primary), var(--color-info));
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Verlauf als Hintergrund-Hero */
+  .gradient-bg {
+    color: var(--color-primary-contrast);
+    background-image: linear-gradient(135deg, var(--color-primary), var(--color-info));
+  }
+
+  /*
+   * Scroll-Reveal: Elemente blenden beim Erscheinen im Viewport ein.
+   * Browser ohne animation-timeline zeigen die Elemente einfach sofort an.
+   */
+  .reveal {
+    animation: reveal-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+
+  @keyframes reveal-in {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hover-lift:hover,
+    .hover-grow:hover {
+      transform: none;
+    }
+
+    .reveal {
+      animation: none;
+    }
+  }
+}

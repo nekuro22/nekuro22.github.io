@@ -1,0 +1,28 @@
+/*
+ * Midnight Theme
+ * Tiefes Violett-Blau mit hellen Akzenten für Dashboards und Medienprojekte.
+ * Aktivierung: <html data-theme="midnight">
+ */
+
+@layer themes {
+  :root[data-theme="midnight"] {
+    --color-primary: #a78bfa;
+    --color-primary-hover: #c4b5fd;
+    --color-primary-contrast: #1e1b4b;
+    --color-secondary: #93c5fd;
+    --color-success: #34d399;
+    --color-warning: #fcd34d;
+    --color-danger: #fb7185;
+    --color-info: #67e8f9;
+    --color-bg: #13112b;
+    --color-bg-subtle: #1c1a3d;
+    --color-surface: #1c1a3d;
+    --color-text: #ede9fe;
+    --color-text-muted: #a5a1c7;
+    --color-border: #322f5c;
+    --color-focus: #a78bfa;
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
+    --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 50%);
+    --shadow-lg: 0 12px 24px -6px rgb(0 0 0 / 60%);
+  }
+}

@@ -1,0 +1,42 @@
+/*
+ * Editorial Theme
+ * Magazin-Look: Serifen-Überschriften, großzügiger Weißraum, tiefes Blau als Akzent.
+ * Aktivierung: <html data-theme="editorial">
+ */
+
+@layer themes {
+  :root[data-theme="editorial"] {
+    --font-serif: georgia, "Iowan Old Style", "Times New Roman", serif;
+    --line-height-base: 1.75;
+    --color-primary: #1e3a8a;
+    --color-primary-hover: #172e6e;
+    --color-primary-contrast: #fff;
+    --color-secondary: #57534e;
+    --color-success: #166534;
+    --color-warning: #a16207;
+    --color-danger: #991b1b;
+    --color-info: #1d4ed8;
+    --color-bg: #fcfbf9;
+    --color-bg-subtle: #f4f2ee;
+    --color-surface: #fff;
+    --color-text: #1c1917;
+    --color-text-muted: #6b665f;
+    --color-border: #e7e3dc;
+    --color-focus: #1e3a8a;
+    --radius-sm: 2px;
+    --radius-md: 3px;
+    --radius-lg: 4px;
+    --shadow-sm: none;
+    --shadow-md: 0 2px 8px rgb(28 25 23 / 6%);
+    --shadow-lg: 0 12px 28px -10px rgb(28 25 23 / 14%);
+  }
+
+  [data-theme="editorial"] h1,
+  [data-theme="editorial"] h2,
+  [data-theme="editorial"] h3,
+  [data-theme="editorial"] h4 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+}

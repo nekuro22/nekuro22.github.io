@@ -1,0 +1,91 @@
+/*
+ * Formularelemente
+ *
+ * <div class="form-group">
+ *   <label class="form-label" for="mail">E-Mail</label>
+ *   <input class="form-control" id="mail" type="email" aria-describedby="mail-hint">
+ *   <span class="form-hint" id="mail-hint">Wir teilen sie nicht.</span>
+ * </div>
+ */
+
+@layer components {
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-block-end: var(--space-4);
+  }
+
+  .form-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+  }
+
+  .form-control {
+    width: 100%;
+    min-height: 2.5rem;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition:
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+
+  .form-control::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+  }
+
+  .form-control:focus,
+  .form-control:focus-visible {
+    outline: none;
+    border-color: var(--color-focus);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-focus) 25%, transparent);
+  }
+
+  .form-control:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: var(--color-bg-subtle);
+  }
+
+  .form-control[aria-invalid="true"] {
+    border-color: var(--color-danger);
+  }
+
+  textarea.form-control {
+    min-height: 6rem;
+    resize: vertical;
+  }
+
+  select.form-control {
+    appearance: auto;
+  }
+
+  .form-hint {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+  }
+
+  .form-error {
+    font-size: var(--font-size-xs);
+    color: var(--color-danger);
+  }
+
+  .form-check {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .form-check input {
+    width: 1rem;
+    height: 1rem;
+    accent-color: var(--color-primary);
+  }
+}

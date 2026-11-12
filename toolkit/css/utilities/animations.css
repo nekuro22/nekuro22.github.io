@@ -1,0 +1,48 @@
+/*
+ * Animations-Utilities.
+ * Alle Animationen werden bei prefers-reduced-motion deaktiviert.
+ */
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fade-in var(--transition-slow) both;
+  }
+
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes pulse {
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in,
+    .animate-spin,
+    .animate-pulse {
+      animation: none;
+    }
+  }
+}

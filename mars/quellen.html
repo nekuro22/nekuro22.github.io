@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quellen</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="quellen">
+    <main class="info-shell">
+        <div class="info-content" id="content">
+            <!-- Markdown content will be loaded here -->
+        </div>
+    </main>
+
+    <script type="module">
+        import { marked } from './vendor/marked.esm.js';
+
+        const contentDiv = document.getElementById('content');
+
+        console.log('Quellen: versuche GitHub Raw zu laden...');
+        fetch('https://raw.githubusercontent.com/nekuro22/leidert.org/refs/heads/main/mars/quellen.md')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Raw markdown not available');
+                }
+                console.log('Quellen: GitHub Raw geladen');
+                return response.text();
+            })
+            .then(markdown => {
+                contentDiv.innerHTML = marked(markdown);
+
+                const backLinkDiv = document.createElement('div');
+                backLinkDiv.className = 'back-link';
+                backLinkDiv.style.padding = '0 clamp(24px, 4vw, 48px) 2rem';
+                backLinkDiv.innerHTML = `
+                    <a href="index.html">&larr; Zurück zur Simulation</a>
+                    <a href="infos.html">&rarr; Info</a>
+                    <a href="ai-info.html">&rarr; KI-Info</a>
+                `;
+                contentDiv.appendChild(backLinkDiv);
+            })
+            .catch(() => {
+                console.log('Quellen: GitHub Raw fehlgeschlagen, nehme lokalen Fallback...');
+                return fetch('quellen.md')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Local markdown not found');
+                        }
+                        console.log('Quellen: lokaler Fallback geladen');
+                        return response.text();
+                    })
+                    .then(markdown => {
+                        contentDiv.innerHTML = marked(markdown);
+
+                        const backLinkDiv = document.createElement('div');
+                        backLinkDiv.className = 'back-link';
+                        backLinkDiv.style.padding = '0 clamp(24px, 4vw, 48px) 2rem';
+                        backLinkDiv.innerHTML = `
+                            <a href="index.html">&larr; Zurück zur Simulation</a>
+                            <a href="infos.html">&rarr; Info</a>
+                            <a href="ai-info.html">&rarr; KI-Info</a>
+                        `;
+                        contentDiv.appendChild(backLinkDiv);
+                    });
+            })
+            .catch(error => {
+                console.error('Error loading markdown:', error);
+                contentDiv.innerHTML = '<p>Fehler beim Laden des Inhalts.</p>';
+            });
+    </script>
+</body>
+</html>

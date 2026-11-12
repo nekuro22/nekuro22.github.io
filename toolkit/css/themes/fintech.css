@@ -1,0 +1,37 @@
+/*
+ * Fintech Theme
+ * Vertrauenswürdig und ruhig für Banking, Versicherung und Finanzprodukte.
+ * Tiefes Marineblau, sattes Petrol als Akzent, großzügige Weißflächen.
+ * Aktivierung: <html data-theme="fintech">
+ */
+
+@layer themes {
+  :root[data-theme="fintech"] {
+    --color-primary: #0a3d62;
+    --color-primary-hover: #072e4b;
+    --color-primary-contrast: #fff;
+    --color-secondary: #0e7c86;
+    --color-success: #0b7a4b;
+    --color-warning: #a8670a;
+    --color-danger: #b42318;
+    --color-info: #0e7c86;
+    --color-bg: #f6f8fa;
+    --color-bg-subtle: #edf1f5;
+    --color-surface: #fff;
+    --color-text: #0c1f33;
+    --color-text-muted: #5a6b7d;
+    --color-border: #dbe3ea;
+    --color-focus: #0e7c86;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --shadow-sm: 0 1px 2px rgb(10 40 70 / 6%);
+    --shadow-md: 0 2px 4px rgb(10 40 70 / 5%), 0 8px 20px -6px rgb(10 40 70 / 10%);
+    --shadow-lg: 0 4px 8px rgb(10 40 70 / 5%), 0 24px 44px -12px rgb(10 40 70 / 20%);
+  }
+
+  [data-theme="fintech"] .table td,
+  [data-theme="fintech"] .table th {
+    font-variant-numeric: tabular-nums;
+  }
+}
