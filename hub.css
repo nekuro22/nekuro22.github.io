@@ -182,3 +182,8 @@ h2.plist-head { font-size: var(--text-xl); margin: var(--space-2xl) 0 var(--spac
 /* Fußzeile: Linie nur so breit wie der Inhalt */
 .foot { border-top: 0; position: relative; }
 .foot::before { content: ""; position: absolute; top: 0; left: var(--gutter); right: var(--gutter); border-top: 1px solid var(--color-rule); }
+
+/* Startseite: weitere Projekte unter dem Hub */
+.more-projects { padding-bottom: var(--section-gap-s); font-family: var(--font-body); line-height: 1.55; }
+.more-projects h2.sec { margin-bottom: var(--space-xl); }
+.plist h3 { font-size: var(--text-xl); font-weight: 700; line-height: 1.2; }
