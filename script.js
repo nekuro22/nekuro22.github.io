@@ -75,6 +75,18 @@ function createStars() {
       const options = await response.json();
       maintenanceActive = options.maintenance_mode === true;
       if (typeof options.api_base === 'string') apiBase = options.api_base.replace(/\/+$/, '');
+      // Link zum Freundes-Bereich, sobald die Adresse eingetragen ist
+      if (typeof options.friends_url === 'string' && /^https:\/\//.test(options.friends_url)) {
+        const links = document.querySelector('.nav-links');
+        const gh = links && links.querySelector('.nav-github');
+        if (links && !links.querySelector('.nav-friends')) {
+          const a = document.createElement('a');
+          a.href = options.friends_url;
+          a.className = 'nav-friends';
+          a.textContent = 'Freunde';
+          links.insertBefore(a, gh);
+        }
+      }
     }
   } catch (e) {
     maintenanceActive = false;

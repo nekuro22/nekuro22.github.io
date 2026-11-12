@@ -1,4 +1,5 @@
 {
   "maintenance_mode": false,
-  "api_base": ""
+  "api_base": "",
+  "friends_url": ""
 }
