@@ -4,7 +4,7 @@ const msg = document.getElementById('msg');
 const form = document.getElementById('f');
 const next = (() => {
   const n = new URLSearchParams(location.search).get('next') || 'freunde.html';
-  return /^[a-z0-9-]+\.html(\?[^#]*)?$/i.test(n) ? n : 'freunde.html'; // nur eigene Seiten
+  return /^[a-z0-9-]+(\.html)?(\?[^#]*)?$/i.test(n) ? n : 'freunde.html'; // nur eigene Seiten
 })();
 
 const hashError = takeHash();

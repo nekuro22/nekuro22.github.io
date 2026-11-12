@@ -30,15 +30,19 @@
   
       <h3>Datenschutzerklärung</h3><h4>Allgemeine Hinweise</h4>Diese Website dient ausschließlich der Darstellung persönlicher Projekte.
 
-<h4>Hosting</h4>Diese Website wird über GitHub Pages bereitgestellt.
+<h4>Hosting</h4>Diese Website und ihr Backend (api.niklas-leidert.de) laufen bei Cloudflare (Cloudflare Pages und Cloudflare Workers).
 
 Anbieter:
-GitHub, Inc.
-88 Colin P. Kelly Jr. Street
+Cloudflare, Inc.
+101 Townsend St
 San Francisco, CA 94107
 USA
 
-Beim Aufruf der Website können durch den Hostinganbieter technische Zugriffsdaten (z. B. IP-Adresse, Datum und Uhrzeit des Zugriffs) in Server-Logfiles gespeichert werden. Diese Daten dienen der technischen Bereitstellung und Sicherheit der Website.
+Beim Aufruf der Website können durch den Hostinganbieter technische Zugriffsdaten (z. B. IP-Adresse, Datum und Uhrzeit des Zugriffs) verarbeitet werden. Diese Daten dienen der technischen Bereitstellung und Sicherheit der Website.
+
+<h4>Projektliste</h4>Die Liste der Projekte kommt über das eigene Backend von GitHub. Ist das Backend nicht erreichbar, fragt dein Browser direkt bei api.github.com an. Dabei erhält GitHub deine IP-Adresse.
+
+<h4>Login und Private Pages</h4>Der Bereich „Private Pages" ist nur für eingeladene Freunde. Gespeichert werden dafür der Name und ein Hash des Passworts (nicht das Passwort selbst), bei der Anmeldung mit GitHub nur der GitHub-Name. Nach dem Login liegt ein Anmelde-Token im Speicher deines Browsers (localStorage), bis du dich abmeldest oder es nach 14 Tagen abläuft. Gegen das Erraten von Passwörtern wird die Zahl der Fehlversuche pro IP-Adresse 10 Minuten lang gezählt. Wer mit GitHub anmeldet, wird dafür kurz zu github.com weitergeleitet.
 
 <h4>Externe Inhalte</h4>Auf der Projektseite wird ein Bild von ghchart.rshah.org geladen (GitHub-Aktivität). Dabei erhält der Betreiber dieses Dienstes deine IP-Adresse.
 
