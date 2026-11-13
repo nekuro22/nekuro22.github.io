@@ -3,14 +3,14 @@ import { apiBase, api, token, takeHash, show } from './account.js';
 const msg = document.getElementById('msg');
 const form = document.getElementById('f');
 const next = (() => {
-  const n = new URLSearchParams(location.search).get('next') || 'freunde.html';
+  const n = new URLSearchParams(location.search).get('next') || 'private-pages.html';
   if (/^[a-z0-9-]+(\.html)?(\?[^#]*)?$/i.test(n)) return n;
   // Rücksprung zu einer geschützten Seite auf der eigenen Domain oder einer Subdomain
   try {
     const u = new URL(n);
     if (u.protocol === 'https:' && (u.hostname === 'niklas-leidert.de' || u.hostname.endsWith('.niklas-leidert.de'))) return u.toString();
   } catch { }
-  return 'freunde.html';
+  return 'private-pages.html';
 })();
 
 // Einmal-Link (#invite=…) merken, bevor der #-Teil aus der Adresse verschwindet

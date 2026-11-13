@@ -102,10 +102,10 @@ function createStars() {
         const gh = links && links.querySelector('.nav-github');
         if (links && !links.querySelector('.nav-friends')) {
           const a = document.createElement('a');
-          a.href = 'freunde.html';
+          a.href = 'private-pages.html';
           a.className = 'nav-friends';
           a.textContent = 'Private Pages';
-          if (/\/(freunde|admin|login)(\.html)?$/.test(location.pathname)) a.setAttribute('aria-current', 'page');
+          if (/\/(private-pages|freunde|admin|login)(\.html)?$/.test(location.pathname)) a.setAttribute('aria-current', 'page');
           links.insertBefore(a, gh);
         }
       }

@@ -45,7 +45,7 @@ export async function onRequest({ request, next, env }) {
 async function privat(request, url, api) {
   if (request.method !== 'GET' && request.method !== 'HEAD') return new Response('Nur GET', { status: 405 });
   const m = url.pathname.match(/^\/([a-z0-9-]+)(\/.*)?$/i);
-  if (!m) return Response.redirect(`https://${DOMAIN}/freunde`, 302);
+  if (!m) return Response.redirect(`https://${DOMAIN}/private-pages`, 302);
   const path = m[1].toLowerCase();
   if (m[2] === undefined) return Response.redirect(`${url.origin}/${path}/${url.search}`, 301); // damit relative Links stimmen
 

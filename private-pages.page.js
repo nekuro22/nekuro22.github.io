@@ -35,8 +35,15 @@ async function main() {
   if (me.admin) $('admin-link').hidden = false;
   try {
     const pages = await api(base, 'GET', '/api/pages');
-    $('pages').innerHTML = pages.map(p => `<li><span class="noicon" aria-hidden="true">${esc(p.title.charAt(0).toUpperCase())}</span><div><h2>${esc(p.title)}</h2><p class="owner">Aktualisiert am ${esc(new Date(p.updated).toLocaleDateString('de-DE'))}</p></div><a class="go" href="freunde.html?p=${encodeURIComponent(p.slug)}">Öffnen</a></li>`).join('');
-    $('empty').hidden = pages.length > 0;
+    // Eigene HTML-Seiten (Schutz-Skript). Ein älteres Backend kennt die Liste noch nicht.
+    let sites = [];
+    try { sites = await api(base, 'GET', '/api/sites'); } catch { }
+    const row = (title, note, href, ext) => `<li><span class="noicon" aria-hidden="true">${esc(title.charAt(0).toUpperCase())}</span><div><h2>${esc(title)}</h2><p class="owner">${esc(note)}</p></div><a class="go" href="${esc(href)}"${ext ? ' rel="noopener"' : ''}>Öffnen</a></li>`;
+    $('pages').innerHTML = [
+      ...sites.filter(x => /^https:\/\//.test(x.url)).map(x => row(x.title, new URL(x.url).host, x.url, true)),
+      ...pages.map(p => row(p.title, 'Aktualisiert am ' + new Date(p.updated).toLocaleDateString('de-DE'), 'private-pages.html?p=' + encodeURIComponent(p.slug))),
+    ].join('');
+    $('empty').hidden = pages.length + sites.length > 0;
   } catch (e) {
     show($('msg'), e.message);
   }

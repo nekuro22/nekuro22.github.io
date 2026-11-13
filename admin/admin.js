@@ -129,7 +129,7 @@ function newPage() {
 async function loadPages() {
   const pages = await api('GET', '/api/pages');
   $('page-list').innerHTML = pages.length ? pages.map(p => `<li>
-    <div><div class="name">${esc(p.title)}</div><div class="note">${esc(accessLabel(p))}, freunde.html?p=${esc(p.slug)}, geändert am ${esc(new Date(p.updated).toLocaleDateString('de-DE'))}</div></div>
+    <div><div class="name">${esc(p.title)}</div><div class="note">${esc(accessLabel(p))}, private-pages.html?p=${esc(p.slug)}, geändert am ${esc(new Date(p.updated).toLocaleDateString('de-DE'))}</div></div>
     <div class="btns"><button class="ghost small" data-edit="${esc(p.slug)}">Bearbeiten</button><button class="ghost small" data-del-page="${esc(p.slug)}" data-title="${esc(p.title)}">Löschen</button></div>
   </li>`).join('') : '<li class="empty">Noch keine Seiten.</li>';
 }
@@ -147,7 +147,7 @@ $('page-form').addEventListener('submit', ev => {
   busy(ev.submitter || $('page-form').querySelector('.btn'), 'Speichert …', async () => {
     const slug = $('p-slug').value.trim();
     await api('PUT', '/api/pages/' + encodeURIComponent(slug), { title: $('p-title').value, content: $('p-content').value, ...readWidget($('page-form')) });
-    say(`Gespeichert. Freunde sehen die Seite unter freunde.html?p=${slug}.`);
+    say(`Gespeichert. Freunde sehen die Seite unter private-pages.html?p=${slug}.`);
     editing = slug; $('p-slug').readOnly = true; $('editor-title').textContent = 'Seite bearbeiten';
     await loadPages();
   });
